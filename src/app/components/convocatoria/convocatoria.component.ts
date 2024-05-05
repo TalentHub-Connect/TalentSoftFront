@@ -13,21 +13,31 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditarConvocatoriaComponent } from '../editar-convocatoria/editar-convocatoria.component';
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
 
-
 @Component({
   selector: 'app-convocatoria',
   templateUrl: './convocatoria.component.html',
-  styleUrl: './convocatoria.component.css'
+  styleUrl: './convocatoria.component.css',
 })
 export class ConvocatoriaComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
   statusFilterValue: string = ''; // Agrega una variable para almacenar el valor del filtro de status
-  constructor(private router: Router, private _liveAnnouncer: LiveAnnouncer, 
-    private convocatoriaService: offerService, private dialog: MatDialog,
-    private snackBar: MatSnackBar,private aspiranteEditService:ComunicacionAspService) { }
-  displayedColumns: string[] = ['tittleOffer', 'publishDate', 'experience', 'status', 'action'];
-  dataSource = new MatTableDataSource<offer>;
+  constructor(
+    private router: Router,
+    private _liveAnnouncer: LiveAnnouncer,
+    private convocatoriaService: offerService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private aspiranteEditService: ComunicacionAspService
+  ) {}
+  displayedColumns: string[] = [
+    'tittleOffer',
+    'publishDate',
+    'experience',
+    'status',
+    'action',
+  ];
+  dataSource = new MatTableDataSource<offer>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -37,7 +47,7 @@ export class ConvocatoriaComponent implements AfterViewInit {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    })
+    });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.aspiranteEditService.onAspiranteEdit().subscribe(() => {
@@ -65,7 +75,7 @@ export class ConvocatoriaComponent implements AfterViewInit {
     this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
   }
   onChange($event: any) {
-    if ($event.value === "") {
+    if ($event.value === '') {
       this.dataSource = new MatTableDataSource(this.apiResponse);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -86,11 +96,11 @@ export class ConvocatoriaComponent implements AfterViewInit {
       this.apiResponse[index].status = 'Cerrada';
       if (element.id !== undefined) {
         this.convocatoriaService.editoffer(element.id, 'Cerrada').subscribe(
-          response => {
+          (response) => {
             console.log('Convocatoria editado con éxito');
             this.showSuccessMessage();
           },
-          error => {
+          (error) => {
             console.error('Error al editar convocatoria:', error);
             this.apiResponse[index].status = element.status;
           }
@@ -103,14 +113,13 @@ export class ConvocatoriaComponent implements AfterViewInit {
       this.dataSource.sort = this.sort;
     }
   }
-  
+
   showSuccessMessage() {
     this.snackBar.open('El estado se cambió a Cerrado con éxito', 'Cerrar', {
-      duration: 3000, 
-      verticalPosition: 'top' 
+      duration: 3000,
+      verticalPosition: 'top',
     });
   }
-  
 
   routAgregar() {
     this.router.navigate(['/agregar-convocatoria']);
@@ -118,26 +127,21 @@ export class ConvocatoriaComponent implements AfterViewInit {
 
   Openpopup(convocatoria: offer) {
     const dialogRef = this.dialog.open(DetallesConvocatoriaComponent, {
-
-      data: { convocatoria: convocatoria } 
+      data: { convocatoria: convocatoria },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Popup cerrado');
     });
   }
   editpopup(convocatoria: offer) {
     console.log('Datos de la convocatoria:', convocatoria);
     const dialogRef = this.dialog.open(EditarConvocatoriaComponent, {
-      data: { aspirante: convocatoria } 
+      data: { aspirante: convocatoria },
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
+
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Popup cerrado');
     });
   }
 }
-
-
-
-
