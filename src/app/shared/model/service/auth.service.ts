@@ -14,7 +14,7 @@ import { encrypt } from '../../../utils/encrypt';
 export class AuthService {
   constructor(private http: HttpClient) { }
   login(username: string, password: string): Observable<TokenResponse> {
-    password;
+    password=password;
     console.log(password);
     const authReq: AuthenticationRequest = {
       username: username,
