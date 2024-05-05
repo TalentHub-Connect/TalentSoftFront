@@ -30,47 +30,181 @@ import { WorkingComponent } from './components/working/working.component';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'working', component: WorkingComponent },
   {
     path: '', // Utiliza una ruta vacía como prefijo para las rutas con Navbar
     component: SlidebarComponent, // Este componente actúa como un layout
     children: [
-      { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'SST', 'NOMINA_ELECTRONICA', 'DESPIDO', 'RECLUTAMIENTO', 'BI'] } },
-      { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'payments', component: PaymentsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'payment-info', component: PaymentInfoComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'registrar-hoja', component: RegistrarHojaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'RECLUTAMIENTO'] } },
-      { path: 'lista-nomina', component: ListaNominaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'NOMINA_ELECTRONICA'] } },
-      { path: 'crear-usuario', component: CrearUsuarioComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'cambiar-plan', component: CambiarPlanComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'visa', component: TarjetaVisaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'causales-despido', component: CausalesDespidoComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'DESPIDO'] } },
-      { path: 'progreso-salida', component: ProgresoSalidaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'DESPIDO'] } },
-      { path: 'editar-empresa', component: EditarEmpresaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'aspirante', component: AspirantesComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'RECLUTAMIENTO'] } },
-      { path: 'progreso-detalles/:id', component: ProgresoDetallesComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'DESPIDO'] } },
-      { path: 'registrar-causal', component: RegistrarCausalComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'DESPIDO'] } },
-      { path: 'editar-causal/:id', component: EditarCausalComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'DESPIDO'] } },
-      { path: 'registrar-despido', component: RegistrarDespidoComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'DESPIDO'] } },
-      { path: 'agregar-aspirante', component: AgregarAspirantesComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'RECLUTAMIENTO'] } },
-      { path: 'convocatoria', component: ConvocatoriaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'RECLUTAMIENTO'] } },
-      { path: 'agregar-convocatoria', component: AgregarConvocatoriaComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'RECLUTAMIENTO'] } },
-      { path: 'cambiar-mp', component: CambiarMPComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'cupon', component: CuponComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'editar-perfil', component: EditarPerfilComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'SST', 'NOMINA_ELECTRONICA', 'DESPIDO', 'RECLUTAMIENTO', 'BI'] } }
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard],
+        data: {
+          roles: [
+            'ADMIN',
+            'SST',
+            'NOMINA_ELECTRONICA',
+            'DESPIDO',
+            'RECLUTAMIENTO',
+            'BI',
+          ],
+        },
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'payments',
+        component: PaymentsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'payment-info',
+        component: PaymentInfoComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'registrar-hoja',
+        component: RegistrarHojaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'RECLUTAMIENTO'] },
+      },
+      {
+        path: 'lista-nomina',
+        component: ListaNominaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'NOMINA_ELECTRONICA'] },
+      },
+      {
+        path: 'crear-usuario',
+        component: CrearUsuarioComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'cambiar-plan',
+        component: CambiarPlanComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'visa',
+        component: TarjetaVisaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'causales-despido',
+        component: CausalesDespidoComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'DESPIDO'] },
+      },
+      {
+        path: 'progreso-salida',
+        component: ProgresoSalidaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'DESPIDO'] },
+      },
+      {
+        path: 'editar-empresa',
+        component: EditarEmpresaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'aspirante',
+        component: AspirantesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'RECLUTAMIENTO'] },
+      },
+      {
+        path: 'progreso-detalles/:id',
+        component: ProgresoDetallesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'DESPIDO'] },
+      },
+      {
+        path: 'registrar-causal',
+        component: RegistrarCausalComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'DESPIDO'] },
+      },
+      {
+        path: 'editar-causal/:id',
+        component: EditarCausalComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'DESPIDO'] },
+      },
+      {
+        path: 'registrar-despido',
+        component: RegistrarDespidoComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'DESPIDO'] },
+      },
+      {
+        path: 'agregar-aspirante',
+        component: AgregarAspirantesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'RECLUTAMIENTO'] },
+      },
+      {
+        path: 'convocatoria',
+        component: ConvocatoriaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'RECLUTAMIENTO'] },
+      },
+      {
+        path: 'agregar-convocatoria',
+        component: AgregarConvocatoriaComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN', 'RECLUTAMIENTO'] },
+      },
+      {
+        path: 'cambiar-mp',
+        component: CambiarMPComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'cupon',
+        component: CuponComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'editar-perfil',
+        component: EditarPerfilComponent,
+        canActivate: [AuthGuard],
+        data: {
+          roles: [
+            'ADMIN',
+            'SST',
+            'NOMINA_ELECTRONICA',
+            'DESPIDO',
+            'RECLUTAMIENTO',
+            'BI',
+          ],
+        },
+      },
 
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí
-    ]
+    ],
   },
 
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

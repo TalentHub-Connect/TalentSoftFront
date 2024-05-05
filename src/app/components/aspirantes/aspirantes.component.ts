@@ -25,12 +25,24 @@ export class AspirantesComponent implements AfterViewInit {
   apiResponse: any = [];
   offersMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
-  constructor(private router: Router, private _liveAnnouncer: LiveAnnouncer,
-    private aspiranteService: CandidateService, private dialog: MatDialog,
-    private snackBar: MatSnackBar, private aspiranteEditService: ComunicacionAspService,
-    private offerService: offerService) { }
-  displayedColumns: string[] = ['name', 'surname', 'phoneNumber', 'offer', 'status', 'action'];
-  dataSource = new MatTableDataSource<candidate>;
+  constructor(
+    private router: Router,
+    private _liveAnnouncer: LiveAnnouncer,
+    private aspiranteService: CandidateService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private aspiranteEditService: ComunicacionAspService,
+    private offerService: offerService
+  ) {}
+  displayedColumns: string[] = [
+    'name',
+    'surname',
+    'phoneNumber',
+    'offer',
+    'status',
+    'action',
+  ];
+  dataSource = new MatTableDataSource<candidate>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -41,7 +53,7 @@ export class AspirantesComponent implements AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loadOfferTitles();
-    })
+    });
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -71,9 +83,11 @@ export class AspirantesComponent implements AfterViewInit {
   }
   loadOfferTitles() {
     this.apiResponse.forEach((candidate: candidate) => {
-      this.offerService.getoffer(candidate.offer_id).subscribe((offer: offer) => {
-        this.offersMap.set(candidate.offer_id, offer.tittleOffer); 
-      });
+      this.offerService
+        .getoffer(candidate.offer_id)
+        .subscribe((offer: offer) => {
+          this.offersMap.set(candidate.offer_id, offer.tittleOffer);
+        });
     });
   }
 
@@ -81,7 +95,7 @@ export class AspirantesComponent implements AfterViewInit {
     return this.offersMap.get(offerId) || ''; // Return offer title from map
   }
   onChange($event: any) {
-    if ($event.value === "") {
+    if ($event.value === '') {
       // Si se selecciona "Todos", mostrar todos los datos
       this.dataSource = new MatTableDataSource(this.apiResponse);
       this.dataSource.paginator = this.paginator;
@@ -99,16 +113,18 @@ export class AspirantesComponent implements AfterViewInit {
   }
 
   edit(element: candidate) {
-    const index = this.apiResponse.findIndex((item: candidate) => item === element);
+    const index = this.apiResponse.findIndex(
+      (item: candidate) => item === element
+    );
     if (index !== -1) {
       this.apiResponse[index].status = 'Rechazado';
       if (element.id !== undefined) {
         this.aspiranteService.editCandidate(element.id, 'Rechazado').subscribe(
-          response => {
+          (response) => {
             console.log('Aspirante editado con éxito');
             this.showSuccessMessage();
           },
-          error => {
+          (error) => {
             console.error('Error al editar aspirante:', error);
             this.apiResponse[index].status = element.status;
           }
@@ -125,10 +141,9 @@ export class AspirantesComponent implements AfterViewInit {
   showSuccessMessage() {
     this.snackBar.open('El estado se cambió a Rechazado con éxito', 'Cerrar', {
       duration: 3000,
-      verticalPosition: 'top'
+      verticalPosition: 'top',
     });
   }
-
 
   routAgregar() {
     this.router.navigate(['/agregar-aspirante']);
@@ -136,26 +151,22 @@ export class AspirantesComponent implements AfterViewInit {
 
   Openpopup(aspirante: candidate) {
     const dialogRef = this.dialog.open(DetallesAspiranteComponent, {
-
-      data: { aspirante: aspirante } // Pasa el objeto aspirante al popup
+      data: { aspirante: aspirante }, // Pasa el objeto aspirante al popup
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Popup cerrado');
     });
   }
   editpopup(aspirante: candidate) {
     console.log('Datos del aspirante:', aspirante);
     const dialogRef = this.dialog.open(EditarAspiranteComponent, {
-      data: { aspirante: aspirante } // Pasa el objeto aspirante al popup
+      data: { aspirante: aspirante }, // Pasa el objeto aspirante al popup
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Popup cerrado');
       // Aquí puedes manejar cualquier lógica después de cerrar el diálogo, si es necesario
     });
   }
 }
-
-
-
