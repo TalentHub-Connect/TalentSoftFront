@@ -20,15 +20,7 @@ export class SlidebarComponent implements OnInit {
       
       sidebar.classList.toggle("expand");
     });
-    // Obtener el nombre de la empresa
-    this.sidebarService.obtenerNombreEmpresa().subscribe(
-      (nombre: string) => {
-        this.nombreEmpresa = nombre;
-      },
-      (error) => {
-        console.error('Error al obtener el nombre de la empresa:', error);
-      }
-    );
+    
 
     // Obtener los módulos
     this.sidebarService.obtenerModulos().subscribe(

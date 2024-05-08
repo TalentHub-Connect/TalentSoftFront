@@ -3,27 +3,27 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { EventosService } from 'src/app/shared/model/service/eventos.service';
+import { IncidentesService } from 'src/app/shared/model/service/incidentes.service';
 import { event } from 'src/app/shared/model/Entities/event';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 import { DetallesEventoComponent } from '../detalles-evento/detalles-evento.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditarEventoComponent } from '../editar-evento/editar-evento.component';
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
-import { TipoeventoService } from 'src/app/shared/model/service/tipoevento.service';
-import { typeevent } from 'src/app/shared/model/Entities/typeevent';
-
-
-
+import { TipoincidenteService } from 'src/app/shared/model/service/tipoincidente.service';
+import { typeincident } from 'src/app/shared/model/Entities/typeincident';
+import { incident } from 'src/app/shared/model/Entities/incident';
+import { Empleado } from 'src/app/shared/model/Entities/empleado';
+import { EditarIncidenteComponent } from '../editar-incidente/editar-incidente.component';
+import { DetallesIncidenteComponent } from '../detalles-incidente/detalles-incidente.component';
 
 @Component({
-  selector: 'app-eventos',
-  templateUrl: './eventos.component.html',
-  styleUrl: './eventos.component.css'
+  selector: 'app-incidentes',
+  templateUrl: './incidentes.component.html',
+  styleUrl: './incidentes.component.css'
 })
-export class EventosComponent implements AfterViewInit {
+export class IncidentesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
   teventsMap: Map<number, string> = new Map<number, string>();
@@ -31,17 +31,16 @@ export class EventosComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private _liveAnnouncer: LiveAnnouncer,
-    private eventoService: EventosService,
+    private eventoService: IncidentesService ,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private aspiranteEditService: ComunicacionAspService,
-    private teventService: TipoeventoService
+    private teventService: TipoincidenteService
   ) {}
   displayedColumns: string[] = [
-    'nameevent',
-    'place',
-    'dateevent',
-    'typeevent',
+    'nameempleado',
+    'dateincident',
+    'nameincident',
     'status',
     'action',
   ];
@@ -50,11 +49,13 @@ export class EventosComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.eventoService.getevents().subscribe((response: any) => {
+    this.eventoService.getincidents().subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.loadEmployeeNames();
+      this.loadIncidentName();
     });
 
     this.dataSource.paginator = this.paginator;
@@ -65,7 +66,7 @@ export class EventosComponent implements AfterViewInit {
   }
 
   refreshTableData() {
-    this.eventoService.getevents().subscribe((response: any) => {
+    this.eventoService.getincidents().subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -83,10 +84,31 @@ export class EventosComponent implements AfterViewInit {
   applyFilter() {
     this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
   }
-  
+  loadEmployeeNames() {
+    this.apiResponse.forEach((evento: incident) => {
+      this.teventService
+        .getincident(evento.employeeid)
+        .subscribe((tevent: Empleado) => {
+          this.teventsMap.set(evento.employeeid, tevent.nombre);
+        });
+    });
+  }
 
-  getOfferTitle(eventId: number): string {
-    return this.teventsMap.get(eventId) || ''; // Return offer title from map
+  loadIncidentName() {
+    this.apiResponse.forEach((evento: incident) => {
+      this.teventService
+        .getincident(evento.typeincidentid)
+        .subscribe((tevent: typeincident) => {
+          this.teventsMap.set(evento.typeincidentid, tevent.nameincident);
+        });
+    });
+  }
+  getEmployeeName(employeeId: number): string {
+    return this.teventsMap.get(employeeId) || ''; // Return offer title from map
+  }
+
+  getIncidentName(eventId: number): string {
+    return this.teventsMap.get(eventId) || ''; 
   }
   onChange($event: any) {
     if ($event.value === '') {
@@ -111,9 +133,9 @@ export class EventosComponent implements AfterViewInit {
       (item: event) => item === element
     );
     if (index !== -1) {
-      this.apiResponse[index].status = 'Rechazado';
+      this.apiResponse[index].status = 'Cerrado';
       if (element.id !== undefined) {
-        this.eventoService.editevent(element.id, 'Rechazado').subscribe(
+        this.eventoService.editincident(element.id, 'Cerrado').subscribe(
           (response) => {
             console.log('evento editado con éxito');
             this.showSuccessMessage();
@@ -133,18 +155,18 @@ export class EventosComponent implements AfterViewInit {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se cambió a Rechazado con éxito', 'Cerrar', {
+    this.snackBar.open('El estado se cambió a Cerrado con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
   }
 
   routAgregar() {
-    this.router.navigate(['/agregar-evento']);
+    this.router.navigate(['/agregar-incidente']);
   }
 
   Openpopup(evento: event) {
-    const dialogRef = this.dialog.open(DetallesEventoComponent, {
+    const dialogRef = this.dialog.open(DetallesIncidenteComponent, {
       data: { evento: evento }, 
     });
 
@@ -154,7 +176,7 @@ export class EventosComponent implements AfterViewInit {
   }
   editpopup(evento: event) {
     console.log('Datos del evento:', evento);
-    const dialogRef = this.dialog.open(EditarEventoComponent, {
+    const dialogRef = this.dialog.open(EditarIncidenteComponent, {
       data: { evento: evento }, 
     });
 
@@ -163,3 +185,4 @@ export class EventosComponent implements AfterViewInit {
     });
   }
 }
+

@@ -48,6 +48,10 @@ import { EventosComponent } from './components/eventos/eventos.component';
 import { EditarEventoComponent } from './components/editar-evento/editar-evento.component';
 import { DetallesEventoComponent } from './components/detalles-evento/detalles-evento.component';
 import { AgregarEventoComponent } from './components/agregar-evento/agregar-evento.component';
+import { AgregarIncidenteComponent } from './components/agregar-incidente/agregar-incidente.component';
+import { DetallesIncidenteComponent } from './components/detalles-incidente/detalles-incidente.component';
+import { EditarIncidenteComponent } from './components/editar-incidente/editar-incidente.component';
+import { IncidentesComponent } from './components/incidentes/incidentes.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +93,11 @@ import { AgregarEventoComponent } from './components/agregar-evento/agregar-even
     EventosComponent,
     EditarEventoComponent,
     DetallesEventoComponent,
-    AgregarEventoComponent
+    AgregarEventoComponent,
+    AgregarIncidenteComponent,
+    DetallesIncidenteComponent,
+    EditarIncidenteComponent,
+    IncidentesComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,11 @@ export class TipoincidenteService {
 
   constructor(private http: HttpClient) { }
 
-  getevents(): Observable<typeincident[]> {
+  getincidents(): Observable<typeincident[]> {
     return this.http.get<typeincident[]>(this.apiUrl);
+  }
+  getincident(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<any>(url);
   }
 }

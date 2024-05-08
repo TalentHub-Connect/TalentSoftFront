@@ -30,6 +30,8 @@ import { WorkingComponent } from './components/working/working.component';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
 import { EventosComponent } from './components/eventos/eventos.component';
 import { AgregarEventoComponent } from './components/agregar-evento/agregar-evento.component';
+import { AgregarIncidenteComponent } from './components/agregar-incidente/agregar-incidente.component';
+import { IncidentesComponent } from './components/incidentes/incidentes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -205,7 +207,14 @@ const routes: Routes = [
         path: 'eventos',
         component: EventosComponent
       },
-
+      {
+        path: 'agregar-incidente',
+        component: AgregarIncidenteComponent,
+      },
+      {
+        path: 'incidentes',
+        component: IncidentesComponent
+      },
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí
     ],

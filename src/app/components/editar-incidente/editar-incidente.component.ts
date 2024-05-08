@@ -1,35 +1,34 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EventosService } from 'src/app/shared/model/service/eventos.service';
+import { IncidentesService } from 'src/app/shared/model/service/incidentes.service';
 import { BehaviorSubject } from 'rxjs';
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-editar-evento',
-  templateUrl: './editar-evento.component.html',
-  styleUrl: './editar-evento.component.css'
+  selector: 'app-editar-incidente',
+  templateUrl: './editar-incidente.component.html',
+  styleUrl: './editar-incidente.component.css'
 })
-export class EditarEventoComponent implements OnInit {
-  estados = ['Abierto', 'Aplazado', 'Cancelado'];
+export class EditarIncidenteComponent implements OnInit {
+  estados = ['Abierto', 'Proceso', 'Resuelto', 'Cerrado'];
   inputdata: any;
-  currentEvento: any;
+  currentIncidente: any;
   editForm!: FormGroup;
   closemessage = 'closed using directive'
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ref: MatDialogRef<EditarEventoComponent>, private formBuilder: FormBuilder,
-    private service: EventosService, private aspiranteEditService: ComunicacionAspService, private dialog: MatDialog) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ref: MatDialogRef<EditarIncidenteComponent>, private formBuilder: FormBuilder,
+    private service: IncidentesService, private aspiranteEditService: ComunicacionAspService, private dialog: MatDialog) {
 
   }
   ngOnInit(): void {
     this.inputdata = this.data;
     console.log('Datos del evento:', this.inputdata);
     this.editForm = this.formBuilder.group({
-      nameevent: [''],
       description: [''],
       status: ['']
     });
-    this.currentEvento= { ...this.inputdata.evento };
+    this.currentIncidente= { ...this.inputdata.incident };
 
   }
 
@@ -46,12 +45,11 @@ export class EditarEventoComponent implements OnInit {
       const id = this.inputdata.evento.id;
 
 
-      const newStatus = this.editForm.get('status')?.value || this.currentEvento.status;
-      const newNameEvent = this.editForm.get('nameevent')?.value || this.currentEvento.nameevent;
-      const newDescription = this.editForm.get('description')?.value || this.currentEvento.description;
+      const newStatus = this.editForm.get('status')?.value || this.currentIncidente.status;
+      const newDescription = this.editForm.get('description')?.value || this.currentIncidente.description;
       console.log('id:', newStatus);
 
-      this.service.editevent1(id, newStatus, newNameEvent, newDescription).subscribe(
+      this.service.editincident1(id, newStatus, newDescription).subscribe(
         () => {
           console.log('Evento editado exitosamente');
           this.ref.close('Evento editado exitosamente');
@@ -71,3 +69,4 @@ export class EditarEventoComponent implements OnInit {
 
 
 }
+
