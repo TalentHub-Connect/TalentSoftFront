@@ -44,6 +44,10 @@ import { AspirantesComponent } from './components/aspirantes/aspirantes.componen
 import { CurriculumComponent } from './components/curriculum/curriculum.component';
 import { contrato } from './shared/model/Entities/contrato';
 import { ContratoComponent } from './components/contrato/contrato.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { EditarEventoComponent } from './components/editar-evento/editar-evento.component';
+import { DetallesEventoComponent } from './components/detalles-evento/detalles-evento.component';
+import { AgregarEventoComponent } from './components/agregar-evento/agregar-evento.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +85,11 @@ import { ContratoComponent } from './components/contrato/contrato.component';
     DateFormatPipe,
     AspirantesComponent,
     CurriculumComponent,
-    ContratoComponent
+    ContratoComponent,
+    EventosComponent,
+    EditarEventoComponent,
+    DetallesEventoComponent,
+    AgregarEventoComponent
   ],
   imports: [
     BrowserModule,

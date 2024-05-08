@@ -1,0 +1,29 @@
+
+mat-card{
+    margin: 2%;
+    text-align: left;
+}
+h1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-family: "DM Sans", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    color: #ffffff;
+}
+
+.mat-mdc-form-field {
+    width: 98%;
+    margin: 1%;
+}
+
+.mat-50{
+    width: 48%;
+    margin: 1%;
+}
+
+button{
+    margin: 2px;
+    background-color: #388089!important;
+}

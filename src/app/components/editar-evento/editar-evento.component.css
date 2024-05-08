@@ -1,0 +1,29 @@
+.form-row {
+    display: flex!important;
+    flex-direction: row!important;
+    justify-content: space-between!important;
+    
+}
+h1 {
+    font-family: "DM Sans", sans-serif!important;
+    font-weight: bold!important;
+    font-size: 35px!important;
+    color: #388089!important; 
+  }
+button {
+    
+    font-family: "poppins", sans-serif!important;
+    font-weight: bold!important;
+    font-size: 16px!important;
+    color: #fff!important;
+    border-radius: 5px!important;
+    padding: 17px 20px 8px 20px!important;
+    margin-right: 20px!important;
+    background-color: #388089!important;
+    border: none!important;
+    margin-top: 0px!important;
+}
+button:hover {
+    background-color: #48a9b5;
+    color: #fff;
+}

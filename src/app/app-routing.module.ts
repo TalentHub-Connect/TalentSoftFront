@@ -28,12 +28,15 @@ import { AgregarConvocatoriaComponent } from './components/agregar-convocatoria/
 import { AuthGuard } from './shared/auth/auth.guard';
 import { WorkingComponent } from './components/working/working.component';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { AgregarEventoComponent } from './components/agregar-evento/agregar-evento.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'working', component: WorkingComponent },
+
   {
     path: '', // Utiliza una ruta vacía como prefijo para las rutas con Navbar
     component: SlidebarComponent, // Este componente actúa como un layout
@@ -194,6 +197,14 @@ const routes: Routes = [
           ],
         },
       },
+      {
+        path: 'agregar-evento',
+        component: AgregarEventoComponent,
+      },
+      {
+        path: 'eventos',
+        component: EventosComponent
+      },
 
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí
@@ -207,4 +218,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
