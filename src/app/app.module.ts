@@ -52,6 +52,7 @@ import { AgregarIncidenteComponent } from './components/agregar-incidente/agrega
 import { DetallesIncidenteComponent } from './components/detalles-incidente/detalles-incidente.component';
 import { EditarIncidenteComponent } from './components/editar-incidente/editar-incidente.component';
 import { IncidentesComponent } from './components/incidentes/incidentes.component';
+import { BiComponent } from './components/bi/bi.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { IncidentesComponent } from './components/incidentes/incidentes.componen
     AgregarIncidenteComponent,
     DetallesIncidenteComponent,
     EditarIncidenteComponent,
-    IncidentesComponent
+    IncidentesComponent,
+    BiComponent
   ],
   imports: [
     BrowserModule,

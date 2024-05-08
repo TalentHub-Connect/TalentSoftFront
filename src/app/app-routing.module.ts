@@ -32,6 +32,7 @@ import { EventosComponent } from './components/eventos/eventos.component';
 import { AgregarEventoComponent } from './components/agregar-evento/agregar-evento.component';
 import { AgregarIncidenteComponent } from './components/agregar-incidente/agregar-incidente.component';
 import { IncidentesComponent } from './components/incidentes/incidentes.component';
+import { BiComponent } from './components/bi/bi.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -214,6 +215,10 @@ const routes: Routes = [
       {
         path: 'incidentes',
         component: IncidentesComponent
+      },
+      {
+        path: 'bi',
+        component: BiComponent
       },
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí
