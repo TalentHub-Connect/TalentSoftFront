@@ -20,9 +20,9 @@ export class EventosService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, { status });
   }
-  editevent1(id: number, nameevent:string, status: string, description: string): Observable<any> {
+  editevent1(id: number,status: string, description: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.put(url, { status, nameevent,description });
+    return this.http.put(url, { status, description });
   }
   agregarevent(event: event): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, event);

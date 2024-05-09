@@ -26,7 +26,6 @@ export class AgregarEventoComponent {
 
   ngOnInit(): void {
     this.customerform.setValue({
-      nameevent: 'MeVale',
       place: 'Monda',
       description: 'aaaaaaa@gmail.com',
       evento: '',
@@ -36,45 +35,23 @@ export class AgregarEventoComponent {
     this.loadEventos();
   }
   customerform = this.builder.group({
-    nameevent: ['', Validators.required],
     place: ['', Validators.required],
     description: ['', Validators.required],
     dateevent: [new Date().toLocaleDateString('es-CO'), Validators.required],
     evento: ['', Validators.required],
     status: ['', Validators.required],
   });
-  openCurriculumDialog(): void {
-
-    if (this.customerform.valid) {
-      const publishDateValue = this.customerform.value.dateevent;
-      const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
-      console.log('Valor de offer antes de convertir a número:', this.customerform.value.nameevent);
-      const eventId = Number(this.customerform.value.nameevent);
-      console.log('Valor de offer después de convertir a número:', eventId);
-
-      const eventoData: event = {
-        nameevent: this.customerform.value.nameevent|| '',
-        place: this.customerform.value.place || '',
-        description: this.customerform.value.description|| '',
-        dateevent: currentDate.toJSON().slice(0, 10), 
-        typeeventid: eventId || 0,
-        status: this.customerform.value.status || '',
-      };
-      console.log('Datos del aspirante:', eventoData);
-    }
-  }
-
+  
   SaveCustomer() {
     console.log('Evento', this.customerform);
     if (this.customerform.valid) {
       const publishDateValue = this.customerform.value.dateevent;
       const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
-      console.log('Valor de event antes de convertir a número:', this.customerform.value.nameevent);
-      const eventId = Number(this.customerform.value.nameevent);
+      console.log('Valor de event antes de convertir a número:', this.customerform.value.evento);
+      const eventId = Number(this.customerform.value.evento);
       console.log('Valor de event después de convertir a número:', eventId);
 
       const eventoData: event = {
-        nameevent: this.customerform.value.nameevent|| '',
         place: this.customerform.value.place || '',
         description: this.customerform.value.description|| '',
         dateevent: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora

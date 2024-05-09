@@ -25,7 +25,6 @@ export class EditarEventoComponent implements OnInit {
     this.inputdata = this.data;
     console.log('Datos del evento:', this.inputdata);
     this.editForm = this.formBuilder.group({
-      nameevent: [''],
       description: [''],
       status: ['']
     });
@@ -47,11 +46,10 @@ export class EditarEventoComponent implements OnInit {
 
 
       const newStatus = this.editForm.get('status')?.value || this.currentEvento.status;
-      const newNameEvent = this.editForm.get('nameevent')?.value || this.currentEvento.nameevent;
       const newDescription = this.editForm.get('description')?.value || this.currentEvento.description;
       console.log('id:', newStatus);
 
-      this.service.editevent1(id, newStatus, newNameEvent, newDescription).subscribe(
+      this.service.editevent1(id, newStatus, newDescription).subscribe(
         () => {
           console.log('Evento editado exitosamente');
           this.ref.close('Evento editado exitosamente');

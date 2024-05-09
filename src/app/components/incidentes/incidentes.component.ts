@@ -4,11 +4,9 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { IncidentesService } from 'src/app/shared/model/service/incidentes.service';
-import { event } from 'src/app/shared/model/Entities/event';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
-import { DetallesEventoComponent } from '../detalles-evento/detalles-evento.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
 import { TipoincidenteService } from 'src/app/shared/model/service/tipoincidente.service';
@@ -26,16 +24,16 @@ import { DetallesIncidenteComponent } from '../detalles-incidente/detalles-incid
 export class IncidentesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
-  teventsMap: Map<number, string> = new Map<number, string>();
+  tincidentsMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
   constructor(
     private router: Router,
     private _liveAnnouncer: LiveAnnouncer,
-    private eventoService: IncidentesService ,
+    private incidentService: IncidentesService ,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private aspiranteEditService: ComunicacionAspService,
-    private teventService: TipoincidenteService
+    private tincidentService: TipoincidenteService
   ) {}
   displayedColumns: string[] = [
     'nameempleado',
@@ -44,12 +42,12 @@ export class IncidentesComponent implements AfterViewInit {
     'status',
     'action',
   ];
-  dataSource = new MatTableDataSource<event>();
+  dataSource = new MatTableDataSource<incident>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.eventoService.getincidents().subscribe((response: any) => {
+    this.incidentService.getincidents().subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -66,7 +64,7 @@ export class IncidentesComponent implements AfterViewInit {
   }
 
   refreshTableData() {
-    this.eventoService.getincidents().subscribe((response: any) => {
+    this.incidentService.getincidents().subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -85,30 +83,30 @@ export class IncidentesComponent implements AfterViewInit {
     this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
   }
   loadEmployeeNames() {
-    this.apiResponse.forEach((evento: incident) => {
-      this.teventService
-        .getincident(evento.employeeid)
-        .subscribe((tevent: Empleado) => {
-          this.teventsMap.set(evento.employeeid, tevent.nombre);
+    this.apiResponse.forEach((incidente: incident) => {
+      this.tincidentService
+        .getincident(incidente.employeeid)
+        .subscribe((empleado: Empleado) => {
+          this.tincidentsMap.set(incidente.employeeid, empleado.nombre);
         });
     });
   }
 
   loadIncidentName() {
-    this.apiResponse.forEach((evento: incident) => {
-      this.teventService
-        .getincident(evento.typeincidentid)
-        .subscribe((tevent: typeincident) => {
-          this.teventsMap.set(evento.typeincidentid, tevent.nameincident);
+    this.apiResponse.forEach((incidente: incident) => {
+      this.tincidentService
+        .getincident(incidente.typeincidentid)
+        .subscribe((tincident: typeincident) => {
+          this.tincidentsMap.set(incidente.typeincidentid, tincident.nameincident);
         });
     });
   }
   getEmployeeName(employeeId: number): string {
-    return this.teventsMap.get(employeeId) || ''; // Return offer title from map
+    return this.tincidentsMap.get(employeeId) || ''; // Return offer title from map
   }
 
-  getIncidentName(eventId: number): string {
-    return this.teventsMap.get(eventId) || ''; 
+  getIncidentName(incidentId: number): string {
+    return this.tincidentsMap.get(incidentId) || ''; 
   }
   onChange($event: any) {
     if ($event.value === '') {
@@ -128,20 +126,20 @@ export class IncidentesComponent implements AfterViewInit {
     this.dataSource.filter = $event.target.value;
   }
 
-  edit(element: event) {
+  edit(element: incident) {
     const index = this.apiResponse.findIndex(
-      (item: event) => item === element
+      (item: incident) => item === element
     );
     if (index !== -1) {
       this.apiResponse[index].status = 'Cerrado';
       if (element.id !== undefined) {
-        this.eventoService.editincident(element.id, 'Cerrado').subscribe(
+        this.incidentService.editincident(element.id, 'Cerrado').subscribe(
           (response) => {
             console.log('evento editado con éxito');
             this.showSuccessMessage();
           },
           (error) => {
-            console.error('Error al editar evento:', error);
+            console.error('Error al editar incidente:', error);
             this.apiResponse[index].status = element.status;
           }
         );
@@ -165,19 +163,19 @@ export class IncidentesComponent implements AfterViewInit {
     this.router.navigate(['/agregar-incidente']);
   }
 
-  Openpopup(evento: event) {
+  Openpopup(incidente: incident) {
     const dialogRef = this.dialog.open(DetallesIncidenteComponent, {
-      data: { evento: evento }, 
+      data: { incidente: incidente }, 
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('Popup cerrado');
     });
   }
-  editpopup(evento: event) {
-    console.log('Datos del evento:', evento);
+  editpopup(incidente: incident) {
+    console.log('Datos del evento:', incidente);
     const dialogRef = this.dialog.open(EditarIncidenteComponent, {
-      data: { evento: evento }, 
+      data: { incidente: incidente }, 
     });
 
     dialogRef.afterClosed().subscribe((result) => {

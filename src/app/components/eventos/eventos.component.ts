@@ -41,7 +41,6 @@ export class EventosComponent implements AfterViewInit {
     'nameevent',
     'place',
     'dateevent',
-    'typeevent',
     'status',
     'action',
   ];
@@ -55,6 +54,7 @@ export class EventosComponent implements AfterViewInit {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.loadEventName();
     });
 
     this.dataSource.paginator = this.paginator;
@@ -62,6 +62,7 @@ export class EventosComponent implements AfterViewInit {
     this.aspiranteEditService.onAspiranteEdit().subscribe(() => {
       this.refreshTableData();
     });
+    
   }
 
   refreshTableData() {
@@ -84,10 +85,21 @@ export class EventosComponent implements AfterViewInit {
     this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
   }
   
-
-  getOfferTitle(eventId: number): string {
-    return this.teventsMap.get(eventId) || ''; // Return offer title from map
+  loadEventName() {
+    this.apiResponse.forEach((evento: event) => {
+      this.teventService
+        .getevent(evento.typeeventid)
+        .subscribe((tevent: typeevent) => {
+          this.teventsMap.set(evento.typeeventid, tevent.nameevent);
+        });
+    });
   }
+  
+
+  getEventName(eventId: number): string {
+    return this.teventsMap.get(eventId) || ''; 
+  }
+ 
   onChange($event: any) {
     if ($event.value === '') {
       // Si se selecciona "Todos", mostrar todos los datos
@@ -111,9 +123,9 @@ export class EventosComponent implements AfterViewInit {
       (item: event) => item === element
     );
     if (index !== -1) {
-      this.apiResponse[index].status = 'Rechazado';
+      this.apiResponse[index].status = 'Cancelado';
       if (element.id !== undefined) {
-        this.eventoService.editevent(element.id, 'Rechazado').subscribe(
+        this.eventoService.editevent(element.id, 'Cancelado').subscribe(
           (response) => {
             console.log('evento editado con éxito');
             this.showSuccessMessage();
