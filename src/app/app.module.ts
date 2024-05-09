@@ -53,6 +53,10 @@ import { DetallesIncidenteComponent } from './components/detalles-incidente/deta
 import { EditarIncidenteComponent } from './components/editar-incidente/editar-incidente.component';
 import { IncidentesComponent } from './components/incidentes/incidentes.component';
 import { BiComponent } from './components/bi/bi.component';
+import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
+import { AgregarCapacitacionComponent } from './components/agregar-capacitacion/agregar-capacitacion.component';
+import { DetallesCapacitacionComponent } from './components/detalles-capacitacion/detalles-capacitacion.component';
+import { EditarCapacitacionComponent } from './components/editar-capacitacion/editar-capacitacion.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +103,11 @@ import { BiComponent } from './components/bi/bi.component';
     DetallesIncidenteComponent,
     EditarIncidenteComponent,
     IncidentesComponent,
-    BiComponent
+    BiComponent,
+    CapacitacionesComponent,
+    AgregarCapacitacionComponent,
+    DetallesCapacitacionComponent,
+    EditarCapacitacionComponent
   ],
   imports: [
     BrowserModule,
