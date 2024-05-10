@@ -40,11 +40,6 @@
     /* Aplica negrita solo a los encabezados de la tabla */
 }
 
-/* Aplicar negrita al título de la página */
-h2 {
-    font-weight: bold;
-    /* Negrita para el título */
-}
 
 .form-group label,
 .form-control {
