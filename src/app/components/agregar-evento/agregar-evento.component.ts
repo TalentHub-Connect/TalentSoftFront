@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EventosService } from 'src/app/shared/model/service/eventos.service';
-import { candidate } from 'src/app/shared/model/Entities/candidate';
-import { TipoeventoService } from 'src/app/shared/model/service/tipoevento.service';
 import { typeevent } from 'src/app/shared/model/Entities/typeevent';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CurriculumDialogService } from 'src/app/shared/model/service/curriculum-dialog.service';
 import { event } from 'src/app/shared/model/Entities/event';
+
 @Component({
   selector: 'app-agregar-evento',
   templateUrl: './agregar-evento.component.html',
-  styleUrl: './agregar-evento.component.css'
+  styleUrls: ['./agregar-evento.component.css']
 })
 export class AgregarEventoComponent {
   estados = ['Abierto'];
@@ -19,7 +17,6 @@ export class AgregarEventoComponent {
   constructor(
     private builder: FormBuilder,
     private eventoService: EventosService,
-    private tEventoService: TipoeventoService,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -54,7 +51,7 @@ export class AgregarEventoComponent {
       const eventoData: event = {
         place: this.customerform.value.place || '',
         description: this.customerform.value.description|| '',
-        dateevent: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
+        dateEvent: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
         typeeventid: eventId || 0,
         status: this.customerform.value.status || '',
       };
@@ -76,17 +73,20 @@ export class AgregarEventoComponent {
 
   clearform() {
     this.customerform.reset();
+  
+    // Eliminar las clases de estilo de campos inválidos
+    Object.keys(this.customerform.controls).forEach(key => {
+      const control = this.customerform.get(key);
+      if (control) { // Verificar si el control no es nulo
+        control.markAsUntouched(); // Marcar como no tocado
+        control.markAsPristine(); // Marcar como no modificado
+      }
+    });
   }
+  
 
   loadEventos(): void {
-    this.tEventoService.gettevents().subscribe(
-      (typeevent: typeevent[]) => {
-        this.teventos = typeevent;
-      },
-      error => {
-        console.error('Error al cargar los eventos:', error);
-      }
-    );
+    // Tu código de carga de eventos
   }
 
   showSuccessMessage() {

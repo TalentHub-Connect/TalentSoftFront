@@ -7,7 +7,7 @@ import { capacitation } from '../Entities/capacitation';
   providedIn: 'root'
 })
 export class CapacitacionesService {
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/capacitation';
+  private apiUrl = 'https://sstback-qa.up.railway.app/api/capacitations';
 
 
   constructor(private http: HttpClient) { }

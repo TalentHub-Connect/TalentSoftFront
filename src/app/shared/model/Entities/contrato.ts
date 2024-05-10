@@ -1,10 +1,10 @@
 export interface contrato {
     id?: number; 
     salary?: number;
-    fechaInicio: string;
-    tipoContrato: string; 
-    fechaFinalizacion: string;
-    cargo: string;
-    aspirante_id?: string;
+    startdate: string;
+    contract_type: string; 
+    enddate: string;
     eps: string;
+    charge: string;
+    candidate_id?: string;
 }

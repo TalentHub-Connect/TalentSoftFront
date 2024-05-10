@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class TipoeventoService {
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/event';
+  private apiUrl = 'https://sstback-qa.up.railway.app/api/type/events';
 
 
   constructor(private http: HttpClient) { }

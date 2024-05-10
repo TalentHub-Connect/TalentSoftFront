@@ -53,8 +53,8 @@ export class AgregarCapacitacionComponent {
       const capacitacionData: capacitation = {
         place: this.capacitacionform.value.place || '',
         description: this.capacitacionform.value.description|| '',
-        capacitationdate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
-        typecapacitationid: capacitationId || 0,
+        capacitationDate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
+        typeCapacitationId: capacitationId || 0,
         status: this.capacitacionform.value.status || '',
       };
       this.capacitacionService.agregarcapacitation(capacitacionData).subscribe(

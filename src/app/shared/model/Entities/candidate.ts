@@ -2,8 +2,8 @@ export interface candidate {
     id?: number; 
     name: string;
     surname: string;
-    phoneNumber: string;
-    status: string;
+    phonenumber: string;
+    candidatestatusid: string;
     offer_id: number;
-    currriculumId?: number;
+    cv_id?: number;
 }

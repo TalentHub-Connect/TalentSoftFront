@@ -43,7 +43,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by nameempleado">
           Nombre capacitación
         </th>
-        <td mat-cell *matCellDef="let element"> {{ getCapacitationName(element.typecapacitationid) }} </td>
+        <td mat-cell *matCellDef="let element"> {{ getCapacitationName(element.typeCapacitationId) }} </td>
       </ng-container>
   
       <ng-container matColumnDef="place">
@@ -57,7 +57,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
           Fecha de la capacitación
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.capacitationdate}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.capacitationDate}} </td>
       </ng-container>
   
       <ng-container matColumnDef="status">

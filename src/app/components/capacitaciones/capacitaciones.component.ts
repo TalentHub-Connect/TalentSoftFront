@@ -85,9 +85,9 @@ export class CapacitacionesComponent {
   loadCapacitationName() {
     this.apiResponse.forEach((capacitacion: capacitation) => {
       this.tcapacitationService
-        .getcapacitation(capacitacion.typecapacitationid)
+        .getcapacitation(capacitacion.typeCapacitationId)
         .subscribe((tcapacitation: typecapacitation) => {
-          this.tcapacitationsMap.set(capacitacion.typecapacitationid, tcapacitation.description);
+          this.tcapacitationsMap.set(capacitacion.typeCapacitationId, tcapacitation.description);
         });
     });
   }

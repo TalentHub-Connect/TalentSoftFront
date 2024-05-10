@@ -7,7 +7,7 @@ import { incident } from '../Entities/incident';
   providedIn: 'root'
 })
 export class IncidentesService {
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/incident';
+  private apiUrl = 'https://sstback-qa.up.railway.app/api/incidents';
 
 
   constructor(private http: HttpClient) { }

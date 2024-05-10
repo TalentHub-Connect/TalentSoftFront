@@ -51,8 +51,8 @@ export class ContratoComponent {
         (curriculumId: number) => {
 
           // Actualiza el aspirante con el ID del currículum asignado por el servidor
-          this.aspirante.currriculumId = curriculumId;
-          console.log('VIDAHP',this.aspirante.currriculumId);
+          this.aspirante.cv_id = curriculumId;
+          console.log('VIDAHP',this.aspirante.cv_id);
           // Guarda el aspirante actualizado en el backend
           this.candidateService.agregarCandidate(this.aspirante).subscribe(
             () => {

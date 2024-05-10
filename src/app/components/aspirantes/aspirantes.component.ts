@@ -126,7 +126,7 @@ export class AspirantesComponent implements AfterViewInit {
           },
           (error) => {
             console.error('Error al editar aspirante:', error);
-            this.apiResponse[index].status = element.status;
+            this.apiResponse[index].status = element.candidatestatusid;
           }
         );
       } else {

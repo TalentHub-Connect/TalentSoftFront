@@ -7,7 +7,7 @@ import { event } from '../Entities/event';
   providedIn: 'root'
 })
 export class EventosService {
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/event';
+  private apiUrl = 'https://sstback-qa.up.railway.app/api/events';
 
 
   constructor(private http: HttpClient) { }

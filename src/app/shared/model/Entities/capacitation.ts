@@ -1,8 +1,8 @@
 export interface capacitation {
     id?: number; 
     description: string;
-    capacitationdate: string;
+    capacitationDate: string;
     place: string;
     status: string;
-    typecapacitationid:number;
+    typeCapacitationId:number;
 }

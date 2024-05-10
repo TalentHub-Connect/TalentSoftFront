@@ -52,9 +52,9 @@ export class AgregarAspirantesComponent {
       const aspiranteData: candidate = {
         name: this.customerform.value.name || '',
         surname: this.customerform.value.surname || '',
-        phoneNumber: this.customerform.value.phoneNumber || '',
+        phonenumber: this.customerform.value.phoneNumber || '',
         offer_id: offerId || 0,
-        status: this.customerform.value.status || '',
+        candidatestatusid: this.customerform.value.status || '',
       };
       console.log('Datos del aspirante:', aspiranteData); // Para verificar que los datos sean correctos
       this.curriculumDialogService.openCurriculumDialog(aspiranteData);
