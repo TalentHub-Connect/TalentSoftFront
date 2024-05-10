@@ -3,7 +3,7 @@ export interface offer {
     tittleOffer: string;
     description: string;
     experience: string;
-    publishDate: string;
+    publishdate: string;
     requirements: string;
     status: string;
 }

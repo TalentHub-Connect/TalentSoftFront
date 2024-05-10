@@ -3,9 +3,8 @@
 <div mat-dialog-content *ngIf="data && data.aspirante">
   <p><strong>Cédula:</strong> {{ data.aspirante.name }}</p>
   <p><strong>Nombre:</strong> {{ data.aspirante.surname }}</p>
-  <p><strong>Apellido:</strong> {{ data.aspirante.phoneNumber }}</p>
+  <p><strong>Apellido:</strong> {{ data.aspirante.phonenumber }}</p>
   <p><strong>Oferta:</strong> {{ data.aspirante.offer_id }}</p>
-  <p><strong>Estado:</strong> {{ data.aspirante.status }}</p>
 </div>
 <div mat-dialog-actions>
   <button (click)="closePopup()" color="warn">Close</button>

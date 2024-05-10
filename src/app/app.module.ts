@@ -42,6 +42,22 @@ import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.
 import { DateFormatPipe } from 'src/app/date-format.pipe';
 import { ConvocatoriaComponent } from './components/convocatoria/convocatoria.component';
 import { AspirantesComponent } from './components/aspirantes/aspirantes.component';
+import { CurriculumComponent } from './components/curriculum/curriculum.component';
+import { contrato } from './shared/model/Entities/contrato';
+import { ContratoComponent } from './components/contrato/contrato.component';
+import { EventosComponent } from './components/eventos/eventos.component';
+import { EditarEventoComponent } from './components/editar-evento/editar-evento.component';
+import { DetallesEventoComponent } from './components/detalles-evento/detalles-evento.component';
+import { AgregarEventoComponent } from './components/agregar-evento/agregar-evento.component';
+import { AgregarIncidenteComponent } from './components/agregar-incidente/agregar-incidente.component';
+import { DetallesIncidenteComponent } from './components/detalles-incidente/detalles-incidente.component';
+import { EditarIncidenteComponent } from './components/editar-incidente/editar-incidente.component';
+import { IncidentesComponent } from './components/incidentes/incidentes.component';
+import { BiComponent } from './components/bi/bi.component';
+import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
+import { AgregarCapacitacionComponent } from './components/agregar-capacitacion/agregar-capacitacion.component';
+import { DetallesCapacitacionComponent } from './components/detalles-capacitacion/detalles-capacitacion.component';
+import { EditarCapacitacionComponent } from './components/editar-capacitacion/editar-capacitacion.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +93,22 @@ import { AspirantesComponent } from './components/aspirantes/aspirantes.componen
     EditarPerfilComponent,
     ConvocatoriaComponent,
     DateFormatPipe,
-    AspirantesComponent
+    AspirantesComponent,
+    CurriculumComponent,
+    ContratoComponent,
+    EventosComponent,
+    EditarEventoComponent,
+    DetallesEventoComponent,
+    AgregarEventoComponent,
+    AgregarIncidenteComponent,
+    DetallesIncidenteComponent,
+    EditarIncidenteComponent,
+    IncidentesComponent,
+    BiComponent,
+    CapacitacionesComponent,
+    AgregarCapacitacionComponent,
+    DetallesCapacitacionComponent,
+    EditarCapacitacionComponent
   ],
   imports: [
     BrowserModule,

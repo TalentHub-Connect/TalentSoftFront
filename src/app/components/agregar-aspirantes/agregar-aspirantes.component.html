@@ -3,13 +3,10 @@
     <form [formGroup]="customerform" (ngSubmit)="SaveCustomer()">
         <mat-card>
             <mat-card-content>
-                <mat-form-field class="mat-50">
-                    <mat-label>Cédula</mat-label>
-                    <input formControlName="identification" matInput>
-                </mat-form-field>
+            
                 <mat-form-field class="mat-50">
                     <mat-label>Nombre</mat-label>
-                    <input formControlName="firstname" matInput>
+                    <input formControlName="name" matInput>
                 </mat-form-field>
                 <mat-form-field class="mat-50">
                     <mat-label>Apellido</mat-label>
@@ -18,16 +15,15 @@
     
                 <mat-form-field class="mat-50">
                     <mat-label>Convocatoria</mat-label>
-                    <!-- <input matInput> -->
                     <mat-select formControlName="offer">
                         <mat-option [value]="item.id" *ngFor="let item of ofertas">{{item.tittleOffer}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
                 <mat-form-field class="mat-50">
                     <mat-label>Status</mat-label>
-                    <!-- <input matInput> -->
                     <mat-select formControlName="status">
-                        <mat-option [value]="item" *ngFor="let item of estados">{{item}}</mat-option>
+                        <mat-option [value]="item.id" *ngFor="let item of status">{{item.description}}</mat-option>
                     </mat-select>
                 </mat-form-field>
         

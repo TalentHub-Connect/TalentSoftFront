@@ -1,0 +1,51 @@
+<div>
+    <h1>CREAR CAPACITACIÓN</h1>
+    <form [formGroup]="capacitacionform" (ngSubmit)="SaveCapacitacion()">
+        <mat-card>
+            <mat-card-content>
+            
+                <mat-form-field class="mat-50">
+                    <mat-label>Tipo de capacitacion</mat-label>
+                    <mat-select formControlName="capacitacion">
+                        <mat-option [value]="item.id" *ngFor="let item of tcapacitaciones">{{item.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="mat-50">
+                    <mat-label>Lugar</mat-label>
+                    <input matInput formControlName="place">
+                </mat-form-field>
+    
+                <mat-form-field class="mat-50">
+                    <mat-label>Fecha de publicación</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dateevent">
+                    <mat-datepicker-toggle matIconSuffix  [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="mat-50">
+                    <mat-label>Status</mat-label>
+                    <!-- <input matInput> -->
+                    <mat-select formControlName="status">
+                        <mat-option [value]="item" *ngFor="let item of estados">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput placeholder="Ex. La descripción es.."></textarea>
+                </mat-form-field>
+                
+        
+        
+            </mat-card-content>
+            <mat-card-footer>
+            <div style="margin:2%;text-align: right;">
+                <button mat-raised-button type="submit" color="primary"><mat-icon>save</mat-icon>Save</button>
+                <button mat-raised-button color="warn" (click)="clearform()"><mat-icon>clear</mat-icon>Clear</button>
+            </div>
+            </mat-card-footer>
+        </mat-card>
+        
+        </form>
+</div>

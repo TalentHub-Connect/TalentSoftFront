@@ -1,12 +1,10 @@
 export interface contrato {
     id?: number; 
     salary?: number;
-    fechaInicio: Date;
-    tipoContrato: string;  //Debería ser un enum
-    fechaFinalizacion: Date;
-    cargo: string;
-    aspirante_id: string;
+    startdate: string;
+    contract_type: string; 
+    enddate: string;
     eps: string;
-    nameEmergencyContacts: string;
-    emergencyContact: string;
+    charge: string;
+    candidate_id?: number;
 }

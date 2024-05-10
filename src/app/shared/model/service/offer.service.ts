@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class offerService {
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/offer';
+  private apiUrl = 'https://66328febc51e14d69564cf84.mockapi.io/create-aspirantes/offer';
   constructor(private http: HttpClient) { }
 
   getoffers(): Observable<offer[]> {

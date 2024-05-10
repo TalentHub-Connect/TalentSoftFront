@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   createUser(user: User, role: string, token: string): Observable<User> {
-    const url = `${environment.authURL}/${role}/talentsoft`;
+    const url = `${environment.authURL}/talentsoft/${role}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

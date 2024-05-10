@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Empleado } from '../Entities/empleado';
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoService {
+  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/event';
   private empleados: Empleado[] = [
     new Empleado(1, 'Juan Pérez', 'Notificación', 'Reducción de personal', 25, 25000, '', [], 'Ana Sánchez'),
     new Empleado(2, 'Ana Gómez', 'Documentación', 'Desempeño insuficiente', 50, 50000, '', [], 'Luis Rodríguez'),
@@ -12,7 +15,7 @@ export class EmpleadoService {
     new Empleado(4, 'Sofía Castillo', 'Finalizado', 'Mutuo acuerdo', 100, 100000, '', [], 'Juan Martín')
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getEmpleados(): Empleado[] {
     return this.empleados;
@@ -146,5 +149,12 @@ export class EmpleadoService {
       return `Liquidación calculada para ${empleado.nombre}: $${liquidacion}`;
     }
     return 'Error: Empleado no encontrado';
+  }
+  getempleado(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<any>(url);
+  }
+  getempleados(): Observable<Empleado[]> {
+    return this.http.get<Empleado[]>(this.apiUrl);
   }
 }

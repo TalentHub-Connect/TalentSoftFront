@@ -48,7 +48,7 @@ export class AgregarConvocatoriaComponent {
         tittleOffer: this.convocatoriaform.value.tittleOffer || '', 
         description: this.convocatoriaform.value.description || '',
         experience: this.convocatoriaform.value.experience || '',
-        publishDate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
+        publishdate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
         requirements: this.convocatoriaform.value.requirements || '',
         status: this.convocatoriaform.value.status || '',
       };

@@ -1,13 +1,12 @@
 export interface curriculum {
     id?: number; 
     address: string;
-    personalObjective: string;
-    workExperience: string;
-    educationalHistory: string;
+    personalobjective: string;
+    workexperience: string;
+    educationalhistory: string;
     language: string;
     certification: string;
-    personalReference:string;
+    personalreference:string;
     university: string;
-    carrer: string;
-    candidate_id:number;
+    career: string;
 }
