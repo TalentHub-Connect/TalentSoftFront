@@ -40,13 +40,12 @@ export class EditarCapacitacionComponent implements OnInit {
   editCapacitacion() {
     console.log('Datos2 de la caacitación:', this.inputdata);
     if (this.inputdata) {
-      console.log('id:', this.inputdata);
       const id = this.inputdata.capacitacion.id;
 
 
       const newStatus = this.editForm.get('status')?.value || this.currentCapacitacion.status;
       const newDescription = this.editForm.get('description')?.value || this.currentCapacitacion.description;
-      console.log('id:', newStatus);
+
 
       this.service.editcapacitation1(id, newStatus, newDescription).subscribe(
         () => {

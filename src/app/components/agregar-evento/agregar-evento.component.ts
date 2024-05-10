@@ -4,6 +4,7 @@ import { EventosService } from 'src/app/shared/model/service/eventos.service';
 import { typeevent } from 'src/app/shared/model/Entities/typeevent';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { event } from 'src/app/shared/model/Entities/event';
+import { TipoeventoService } from 'src/app/shared/model/service/tipoevento.service';
 
 @Component({
   selector: 'app-agregar-evento',
@@ -18,6 +19,7 @@ export class AgregarEventoComponent {
     private builder: FormBuilder,
     private eventoService: EventosService,
     private snackBar: MatSnackBar,
+    private teventoService: TipoeventoService
   ) { }
 
 
@@ -85,7 +87,14 @@ export class AgregarEventoComponent {
   
 
   loadEventos(): void {
-    // Tu código de carga de eventos
+    this.teventoService.gettevents().subscribe(
+      (teventos: typeevent[]) => {
+        this.teventos = teventos;
+      },
+      error => {
+        console.error('Error al cargar los eventos:', error);
+      }
+    );
   }
 
   showSuccessMessage() {

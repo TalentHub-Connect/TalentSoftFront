@@ -41,13 +41,11 @@ export class EditarEventoComponent implements OnInit {
   editEvento() {
     console.log('Datos2 del evento:', this.inputdata);
     if (this.inputdata) {
-      console.log('id:', this.inputdata);
       const id = this.inputdata.evento.id;
 
 
       const newStatus = this.editForm.get('status')?.value || this.currentEvento.status;
       const newDescription = this.editForm.get('description')?.value || this.currentEvento.description;
-      console.log('id:', newStatus);
 
       this.service.editevent1(id, newStatus, newDescription).subscribe(
         () => {

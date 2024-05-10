@@ -102,12 +102,10 @@ export class EventosComponent implements AfterViewInit {
  
   onChange($event: any) {
     if ($event.value === '') {
-      // Si se selecciona "Todos", mostrar todos los datos
       this.dataSource = new MatTableDataSource(this.apiResponse);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } else {
-      // Filtrar según la selección
       let filteredData = _.filter(this.apiResponse, (item) => {
         return item.status === $event.value;
       });
