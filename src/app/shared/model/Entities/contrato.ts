@@ -6,5 +6,5 @@ export interface contrato {
     enddate: string;
     eps: string;
     charge: string;
-    candidate_id?: string;
+    candidate_id?: number;
 }

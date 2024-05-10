@@ -75,6 +75,14 @@ export class AgregarCapacitacionComponent {
 
   clearform() {
     this.capacitacionform.reset();
+
+    Object.keys(this.capacitacionform.controls).forEach(key => {
+      const control = this.capacitacionform.get(key);
+      if (control) { // Verificar si el control no es nulo
+        control.markAsUntouched(); // Marcar como no tocado
+        control.markAsPristine(); // Marcar como no modificado
+      }
+    });
   }
 
   loadCapacitaciones(): void {

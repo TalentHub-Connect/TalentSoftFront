@@ -3,7 +3,7 @@ export interface candidate {
     name: string;
     surname: string;
     phonenumber: string;
-    candidatestatusid: string;
+    candidatestatusid: number;
     offer_id: number;
     cv_id?: number;
 }

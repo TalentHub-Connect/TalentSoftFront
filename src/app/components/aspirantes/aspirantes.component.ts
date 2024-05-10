@@ -14,6 +14,8 @@ import { EditarAspiranteComponent } from '../editar-aspirante/editar-aspirante.c
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
 import { offerService } from 'src/app/shared/model/service/offer.service';
 import { offer } from 'src/app/shared/model/Entities/offer';
+import {candidateStatus} from 'src/app/shared/model/Entities/candidatestatus';
+import { CandidatestatusService } from 'src/app/shared/model/service/candidatestatus.service';
 
 @Component({
   selector: 'app-aspirantes',
@@ -23,6 +25,7 @@ import { offer } from 'src/app/shared/model/Entities/offer';
 export class AspirantesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
+  nStatusMap: Map<number, string> = new Map<number, string>();
   offersMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
   constructor(
@@ -32,7 +35,8 @@ export class AspirantesComponent implements AfterViewInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private aspiranteEditService: ComunicacionAspService,
-    private offerService: offerService
+    private offerService: offerService,
+    private serviceStatus:CandidatestatusService
   ) {}
   displayedColumns: string[] = [
     'name',
@@ -94,6 +98,19 @@ export class AspirantesComponent implements AfterViewInit {
   getOfferTitle(offerId: number): string {
     return this.offersMap.get(offerId) || ''; // Return offer title from map
   }
+
+  loadStatusTitles() {
+    this.apiResponse.forEach((candidate: candidate) => {
+      this.serviceStatus
+        .getstatus(candidate.offer_id)
+        .subscribe((statusid: candidateStatus) => {
+          this.offersMap.set(candidate.candidatestatusid, statusid.description);
+        });
+    });
+  }
+  getStatusName(statusId: number): string {
+    return this.nStatusMap.get(statusId) || ''; 
+  }
   onChange($event: any) {
     if ($event.value === '') {
       // Si se selecciona "Todos", mostrar todos los datos
@@ -145,6 +162,7 @@ export class AspirantesComponent implements AfterViewInit {
     });
   }
 
+  
   routAgregar() {
     this.router.navigate(['/agregar-aspirante']);
   }

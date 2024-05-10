@@ -73,8 +73,7 @@ export class AgregarEventoComponent {
 
   clearform() {
     this.customerform.reset();
-  
-    // Eliminar las clases de estilo de campos inválidos
+
     Object.keys(this.customerform.controls).forEach(key => {
       const control = this.customerform.get(key);
       if (control) { // Verificar si el control no es nulo

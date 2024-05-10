@@ -22,9 +22,8 @@
 
                 <mat-form-field class="mat-50">
                     <mat-label>Status</mat-label>
-                    <!-- <input matInput> -->
                     <mat-select formControlName="status">
-                        <mat-option [value]="item" *ngFor="let item of estados">{{item}}</mat-option>
+                        <mat-option [value]="item.id" *ngFor="let item of status">{{item.description}}</mat-option>
                     </mat-select>
                 </mat-form-field>
         
