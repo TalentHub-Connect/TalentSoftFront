@@ -17,6 +17,9 @@ export class ProgresoSalidaComponent implements OnInit {
   filtroCausal: string = '';
   causales: string[] = []; // Lista de causales disponibles
 
+  currentPage = 1; 
+  itemsPerPage: number = 5;
+
   constructor(private empleadoService: EmpleadoService, private causalService: CausalService) { }
 
   ngOnInit(): void {
@@ -61,6 +64,30 @@ export class ProgresoSalidaComponent implements OnInit {
     if (confirm('¿Estás seguro de querer eliminar este proceso de salida?')) {
       this.empleadoService.deleteEmpleadoById(id);
       this.applyFilters();  // Refrescar la lista filtrada después de la eliminación
+    }
+  }
+
+  onChangeItemsPerPage(): void {
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.filteredEmpleados = this.filteredEmpleados.slice(startIndex, endIndex);
+  }
+
+  onPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  // Lógica para cambiar a la página siguiente
+  onNextPage() {
+    const totalPages = Math.ceil(this.filteredEmpleados.length / this.itemsPerPage);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
     }
   }
 }

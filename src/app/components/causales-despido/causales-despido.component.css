@@ -69,3 +69,16 @@ h2 {
     border-color: #346C73;
     /* Borde al pasar el mouse */
 }
+
+.btn-custom-pagination {
+    background-color: #346C73;
+    border-color: #346C73;
+    color: #ffffff;
+    /* Color del texto */
+}
+
+.btn-custom-pagination:hover {
+    background-color: #235955;
+    /* Cambia el color de fondo al pasar el ratón */
+    border-color: #235955;
+}

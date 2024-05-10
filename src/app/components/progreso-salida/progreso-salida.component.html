@@ -7,8 +7,7 @@
                 <h2 class="text-left mb-4">Progreso de salida de empleados</h2>
             </div>
             <div class="col-auto">
-                <!-- Botón para registrar nuevo empleado -->
-                <button type="button" routerLink="/registrar-despido" class="btn btn-custom ">Iniciar proceso</button>
+                <button type="button" routerLink="/registrar-despido" class="btn btn-custom">Iniciar proceso</button>
             </div>
         </div>
         <!-- Filtros -->
@@ -48,6 +47,7 @@
             </div>
         </div>
 
+
         <!-- Tabla de empleados con pipeline visual -->
         <div class="row">
             <div class="col-lg-12">
@@ -63,7 +63,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let empleado of filteredEmpleados; let i = index">
+                        <tr
+                            *ngFor="let empleado of filteredEmpleados.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
                             <td>{{ i + 1 }}</td>
                             <td>{{ empleado.nombre }}</td>
                             <td>{{ empleado.status }}</td>
@@ -90,6 +91,32 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- Controles de paginación y selector de elementos por página -->
+                <div class="pagination-container d-flex justify-content-end align-items-center">
+                    <!-- Selector de elementos por página -->
+                    <div class="items-per-page mr-3 d-inline-flex align-items-center">
+                        <div class="d-inline-flex mr-2">Elementos por página:</div>
+                        <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage"
+                            (change)="onChangeItemsPerPage()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+
+                    <!-- Botones de paginación -->
+                    <div class="pagination-buttons">
+                        <button class="btn btn-custom-pagination mr-1" [disabled]="currentPage === 1"
+                            (click)="onPreviousPage()">Anterior</button>
+                        <span class="current-page">Página {{ currentPage }}</span>
+                        <button class="btn btn-custom-pagination ml-1"
+                            [disabled]="currentPage * itemsPerPage >= filteredEmpleados.length"
+                            (click)="onNextPage()">Siguiente</button>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

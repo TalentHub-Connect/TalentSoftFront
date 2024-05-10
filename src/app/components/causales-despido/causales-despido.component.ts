@@ -14,6 +14,9 @@ export class CausalesDespidoComponent implements OnInit {
   filtroCreador: string = '';
   causalesFiltradas: Causal[] = [];
 
+  currentPage = 1;
+  itemsPerPage: number = 5;
+
   constructor(private causalService: CausalService, private router: Router) { }
 
   ngOnInit() {
@@ -41,5 +44,29 @@ export class CausalesDespidoComponent implements OnInit {
 
   editarCausal(id: number) {
     this.router.navigate(['editar-causal', id]);
+  }
+
+  onChangeItemsPerPage(): void {
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.causalesFiltradas = this.causalesFiltradas.slice(startIndex, endIndex);
+  }
+
+  onPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  // Lógica para cambiar a la página siguiente
+  onNextPage() {
+    const totalPages = Math.ceil(this.causalesFiltradas.length / this.itemsPerPage);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+    }
   }
 }
