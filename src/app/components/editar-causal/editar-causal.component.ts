@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Causal } from 'src/app/shared/model/Entities/causal';
-import { CausalService } from 'src/app/shared/model/service/causal.service';
+import { Reason } from 'src/app/shared/model/Entities/reason';
+import { ReasonService } from 'src/app/shared/model/service/reason.service';
 import { AuthService } from 'src/app/shared/model/service/auth.service'; // Importa el servicio de autenticación
 
 @Component({
@@ -10,34 +10,36 @@ import { AuthService } from 'src/app/shared/model/service/auth.service'; // Impo
   styleUrls: ['./editar-causal.component.css']
 })
 export class EditarCausalComponent implements OnInit {
-  causal: Causal = new Causal(0, '', '', ''); // Inicializar con valores vacíos
+  causal: Reason = new Reason(0, '', '', ''); // Inicializar con valores vacíos
   usuarioActual: string = 'Admin'; // Inicializar con el usuario actual
 
-  constructor(private route: ActivatedRoute, private router: Router, private causalService: CausalService, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private causalService: ReasonService, private authService: AuthService) { }
 
   ngOnInit(): void {
     //this.usuarioActual = this.authService.getUsuarioActual(); // Obtener el usuario actual
 
     const idCausal = Number(this.route.snapshot.paramMap.get('id'));
-    const causal = this.causalService.obtenerCausalPorId(idCausal);
-    if (causal) {
-      this.causal = causal;
-    } else {
-      // Manejo si no se encuentra la causal
-      console.error(`No se encontró ninguna causal con el ID ${idCausal}`);
-      // Redireccionar a una página de error o a la lista de causales
-      this.router.navigate(['/lista-causales']);
-    }
+    this.causalService.obtenerReasonPorId(idCausal).subscribe({
+      next: (data) => {
+        this.causal = data;
+      },
+      error: (err) => {
+        console.error(`No se encontró ninguna causal con el ID ${idCausal}`);
+        this.router.navigate(['/lista-causales']); // Asegúrate de tener esta ruta configurada
+      }
+    });
   }
 
-  guardarCambios() {
-    // Actualizar el campo 'creador' con el usuario actual
-    this.causal.creador = this.usuarioActual;
-    // Llamar al método de editar causal del servicio
-    if (this.causal) {
-      this.causalService.editarCausal(this.causal);
-      // Redireccionar a la página de lista de causales después de guardar los cambios
-      this.router.navigate(['/causales-despido']);
-    }
+  guardarCambios(): void {
+    this.causal.createForUser = this.usuarioActual; // Actualiza el creador con el usuario actual
+    this.causalService.editarReason(this.causal).subscribe({
+      next: (data) => {
+        console.log('Causal actualizada correctamente:', data);
+        this.router.navigate(['/causales-despido']); // Asegúrate de tener esta ruta configurada
+      },
+      error: (err) => {
+        console.error('Error al actualizar la causal:', err);
+      }
+    });
   }
 }

@@ -43,9 +43,9 @@
                     <tbody>
                         <tr *ngFor="let causal of causalesFiltradas; let i = index">
                             <td>{{ i + 1 }}</td>
-                            <td>{{ causal.causal }}</td>
-                            <td>{{ causal.descripcion }}</td>
-                            <td>{{ causal.creador }}</td>
+                            <td>{{ causal.name }}</td>
+                            <td>{{ causal.description }}</td>
+                            <td>{{ causal.createForUser }}</td>
                             <td>
                                 <button class="btn btn-custom-search btn-sm mr-2" (click)="editarCausal(causal.id)"><i
                                         class="fas fa-search"></i></button>

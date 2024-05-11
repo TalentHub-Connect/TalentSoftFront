@@ -1,8 +1,9 @@
 // registrar-causal.component.ts
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Causal } from 'src/app/shared/model/Entities/causal';
-import { CausalService } from 'src/app/shared/model/service/causal.service';  // Asumiendo que la ruta es correcta
+import { Reason } from 'src/app/shared/model/Entities/reason';
+import { ReasonService } from 'src/app/shared/model/service/reason.service';  // Asumiendo que la ruta es correcta
 
 @Component({
   selector: 'app-registrar-causal',
@@ -10,25 +11,43 @@ import { CausalService } from 'src/app/shared/model/service/causal.service';  //
   styleUrls: ['./registrar-causal.component.css']
 })
 export class RegistrarCausalComponent {
-  nuevaCausal: Causal = {
-    id: 0,  // Inicializado con un valor temporal; asumimos que el id se genera automáticamente o se ajustará posteriormente
-    causal: '',
-    descripcion: '',
-    creador: 'Usuario actual'  // Suponiendo que el creador es el usuario actualmente autenticado
-  };
+  nuevaCausal: Reason = new Reason(0, '', '', 'Admin');
+  isLoading = false; // Control para mostrar un indicador de carga
 
-  constructor(private causalService: CausalService, private router: Router) { }
+  constructor(
+    private causalService: ReasonService,
+    private router: Router,
+    private snackBar: MatSnackBar  // Inyección de MatSnackBar para mostrar notificaciones
+  ) { }
 
   guardarCausal(): void {
-    if (this.nuevaCausal.causal && this.nuevaCausal.descripcion) {
-      this.causalService.agregarCausal({ ...this.nuevaCausal });  // Usa spread para evitar mutaciones directas si es necesario
-      this.router.navigate(['/causales-despido']);
+    const username = localStorage.getItem('username') || 'Usuario desconocido';
+    this.nuevaCausal.createForUser = username;
+
+    if (this.nuevaCausal.name && this.nuevaCausal.description) {
+      this.isLoading = true; // Activar el indicador de carga
+      this.causalService.agregarReason(this.nuevaCausal, this.nuevaCausal.createForUser).subscribe({
+        next: (result) => {
+          console.log('Causal agregada con éxito:', result);
+          this.snackBar.open('Causal agregada con éxito', 'Cerrar', { duration: 3000 });
+          this.router.navigate(['/causales-despido']);
+        },
+        error: (err) => {
+          console.error('Error al agregar la causal:', err);
+          this.snackBar.open('Error al registrar la causal', 'Cerrar', { duration: 3000 });
+        },
+        complete: () => {
+          this.isLoading = false; // Desactivar el indicador de carga
+        }
+      });
     } else {
-      alert('Por favor, complete todos los campos necesarios.');
+      this.snackBar.open('Por favor, complete todos los campos necesarios.', 'Cerrar', { duration: 3000 });
     }
   }
 
+
+
   descartar(): void {
-    this.router.navigate(['/causales-despido']);  // Navegar de vuelta a la lista de causales sin guardar cambios
+    this.router.navigate(['/causales-despido']);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from 'src/app/shared/model/service/empleado.service';
 import { Empleado } from 'src/app/shared/model/Entities/empleado';
-import { CausalService } from 'src/app/shared/model/service/causal.service';
+import { ReasonService } from 'src/app/shared/model/service/reason.service';
 
 @Component({
   selector: 'app-progreso-salida',
@@ -17,16 +17,25 @@ export class ProgresoSalidaComponent implements OnInit {
   filtroCausal: string = '';
   causales: string[] = []; // Lista de causales disponibles
 
-  currentPage = 1; 
+  currentPage = 1;
   itemsPerPage: number = 5;
 
-  constructor(private empleadoService: EmpleadoService, private causalService: CausalService) { }
+  constructor(private empleadoService: EmpleadoService, private causalService: ReasonService) { }
 
   ngOnInit(): void {
     this.empleados = this.empleadoService.getEmpleados();
     this.filteredEmpleados = this.empleados; // Inicialmente, todos los empleados son visibles
-    this.causales = this.causalService.obtenerCausales().map(causal => causal.causal);
+    this.cargarCausales();
     this.applyFilters();
+  }
+
+  cargarCausales() {
+    this.causalService.obtenerReasons().subscribe({
+      next: (data) => {
+        this.causales = data.map(causal => causal.name); // Utiliza 'name' de Causal
+      },
+      error: (err) => console.error('Error al cargar causales:', err)
+    });
   }
 
   applyFilters(): void {

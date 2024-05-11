@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Empleado } from 'src/app/shared/model/Entities/empleado';
-import { CausalService } from 'src/app/shared/model/service/causal.service';
+import { ReasonService } from 'src/app/shared/model/service/reason.service';
 import { EmpleadoService } from 'src/app/shared/model/service/empleado.service';
 import { Router } from '@angular/router';
+import { Reason } from 'src/app/shared/model/Entities/reason';
 
 @Component({
   selector: 'app-registrar-despido',
@@ -11,16 +12,25 @@ import { Router } from '@angular/router';
 })
 export class RegistrarDespidoComponent implements OnInit {
   empleados: Empleado[] = [];
-  causales: string[] = [];
+  causales: Reason[] = [];
   selectedEmpleado!: Empleado;
   selectedCausal!: string;
 
 
-  constructor(private empleadoService: EmpleadoService, private causalService: CausalService, private router: Router) { }
+  constructor(private empleadoService: EmpleadoService, private reasonService: ReasonService, private router: Router) { }
 
   ngOnInit(): void {
     this.empleados = this.empleadoService.getEmpleados(); // Asegúrate de tener un método que obtenga solo los empleados activos
-    this.causales = this.causalService.obtenerCausales().map(causal => causal.causal);
+    this.cargarCausales();
+  }
+
+  cargarCausales() {
+    this.reasonService.obtenerReasons().subscribe({
+      next: (reasons) => {
+        this.causales = reasons;  // Almacenamos directamente el array de Reason
+      },
+      error: (err) => console.error('Error al cargar causales:', err)
+    });
   }
 
   onSubmit(): void {

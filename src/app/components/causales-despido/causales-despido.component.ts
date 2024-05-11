@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Causal } from 'src/app/shared/model/Entities/causal';
+import { Reason } from 'src/app/shared/model/Entities/reason';
 import { Router } from '@angular/router';
-import { CausalService } from 'src/app/shared/model/service/causal.service';
+import { ReasonService } from 'src/app/shared/model/service/reason.service';
 
 @Component({
   selector: 'app-causales-despido',
@@ -9,36 +9,51 @@ import { CausalService } from 'src/app/shared/model/service/causal.service';
   styleUrls: ['./causales-despido.component.css']
 })
 export class CausalesDespidoComponent implements OnInit {
-  causales: Causal[] = [];
+  causales: Reason[] = [];
   filtroNombre: string = '';
   filtroCreador: string = '';
-  causalesFiltradas: Causal[] = [];
+  causalesFiltradas: Reason[] = [];
 
   currentPage = 1;
   itemsPerPage: number = 5;
 
-  constructor(private causalService: CausalService, private router: Router) { }
+  constructor(private causalService: ReasonService, private router: Router) { }
 
   ngOnInit() {
     this.cargarCausales();
   }
 
   cargarCausales() {
-    this.causales = this.causalService.obtenerCausales();
-    this.filtrarCausales();
+    this.causalService.obtenerReasons().subscribe({
+      next: (data) => {
+        console.log('Causales cargadas:', data); // Verifica qué datos estás recibiendo exactamente
+        this.causales = data;
+        this.filtrarCausales();
+      },
+      error: (error) => {
+        console.error('Error al cargar causales:', error);
+      }
+    });
   }
 
+
+
   filtrarCausales() {
-    this.causalesFiltradas = this.causales.filter(causal =>
-      causal.causal.toLowerCase().includes(this.filtroNombre.toLowerCase()) &&
-      (causal.creador ? causal.creador.toLowerCase().includes(this.filtroCreador.toLowerCase()) : true)
-    );
+    if (this.causales && this.causales.length > 0) {
+      this.causalesFiltradas = this.causales.filter(causal => {
+        const nameMatch = causal.name ? causal.name.toLowerCase().includes(this.filtroNombre.toLowerCase()) : false;
+        const creatorMatch = causal.createForUser ? causal.createForUser.toLowerCase().includes(this.filtroCreador.toLowerCase()) : true;
+        return nameMatch && creatorMatch;
+      });
+    }
   }
+
 
   eliminarCausal(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar esta causal?')) {
-      this.causalService.eliminarCausal(id);
-      this.cargarCausales();
+      this.causalService.eliminarReason(id).subscribe(() => {
+        this.cargarCausales();
+      });
     }
   }
 
