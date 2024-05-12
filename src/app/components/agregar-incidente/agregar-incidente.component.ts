@@ -5,8 +5,8 @@ import { TipoincidenteService } from 'src/app/shared/model/service/tipoincidente
 import { typeincident } from 'src/app/shared/model/Entities/typeincident';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { incident } from 'src/app/shared/model/Entities/incident';
-import { Empleado } from 'src/app/shared/model/Entities/empleado';
-import { EmpleadoService } from 'src/app/shared/model/service/empleado.service';
+import { empleado } from 'src/app/shared/model/Entities/empleadoP';
+import { EmpleadoPService } from 'src/app/shared/model/service/empleado-p.service';
 
 @Component({
   selector: 'app-agregar-incidente',
@@ -16,13 +16,13 @@ import { EmpleadoService } from 'src/app/shared/model/service/empleado.service';
 export class AgregarIncidenteComponent {
   estados = ['Abierto'];
   typeincident: typeincident[] = [];
-  empleados: Empleado[] = [];
+  empleados: empleado[] = [];
 
   constructor(
     private builder: FormBuilder,
     private incidenteService: IncidentesService ,
     private tIncidenteService: TipoincidenteService,
-    private empleadosService: EmpleadoService,
+    private empleadosService: EmpleadoPService,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -32,6 +32,7 @@ export class AgregarIncidenteComponent {
       incidentdate: null,
       description: 'aaaaaaa@gmail.com',
       empleado: '',
+      place: '',
       incidente: '',
       status: 'Inicial',
     });
@@ -43,6 +44,7 @@ export class AgregarIncidenteComponent {
     incidentdate: [new Date().toLocaleDateString('es-CO'), Validators.required],
     incidente: ['', Validators.required],
     empleado: ['', Validators.required],
+    place: ['', Validators.required],
     status: ['', Validators.required],
   });
   
@@ -60,10 +62,12 @@ export class AgregarIncidenteComponent {
       const incidentData: incident = {
         description: this.incidenteform.value.description|| '',
         incidentdate: currentDate.toJSON().slice(0, 10), 
+        status: this.incidenteform.value.status || '',
+        place: this.incidenteform.value.place || '',
         typeincidentid: incidentId || 0,
         employeeid: employeeId || 0,
-        status: this.incidenteform.value.status || '',
       };
+      console.log('Valor de offer después de convertir a número:',  incidentData);
       this.incidenteService.agregarincident(incidentData).subscribe(
         response => {
           console.log('Incidente agregado correctamente:', response);
@@ -96,7 +100,7 @@ export class AgregarIncidenteComponent {
   }
   loadEmpleados(): void {
     this.empleadosService.getempleados().subscribe(
-      (empleado: Empleado[]) => {
+      (empleado: empleado[]) => {
         this.empleados = empleado;
       },
       error => {

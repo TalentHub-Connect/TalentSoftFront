@@ -12,9 +12,10 @@ import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacio
 import { TipoincidenteService } from 'src/app/shared/model/service/tipoincidente.service';
 import { typeincident } from 'src/app/shared/model/Entities/typeincident';
 import { incident } from 'src/app/shared/model/Entities/incident';
-import { Empleado } from 'src/app/shared/model/Entities/empleado';
+import { empleado } from 'src/app/shared/model/Entities/empleadoP';
 import { EditarIncidenteComponent } from '../editar-incidente/editar-incidente.component';
 import { DetallesIncidenteComponent } from '../detalles-incidente/detalles-incidente.component';
+import { EmpleadoPService } from 'src/app/shared/model/service/empleado-p.service';
 
 @Component({
   selector: 'app-incidentes',
@@ -25,6 +26,7 @@ export class IncidentesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
   tincidentsMap: Map<number, string> = new Map<number, string>();
+  employeesMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
   constructor(
     private router: Router,
@@ -33,7 +35,8 @@ export class IncidentesComponent implements AfterViewInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private aspiranteEditService: ComunicacionAspService,
-    private tincidentService: TipoincidenteService
+    private tincidentService: TipoincidenteService,
+    private empleadoService: EmpleadoPService
   ) {}
   displayedColumns: string[] = [
     'nameempleado',
@@ -84,10 +87,10 @@ export class IncidentesComponent implements AfterViewInit {
   }
   loadEmployeeNames() {
     this.apiResponse.forEach((incidente: incident) => {
-      this.tincidentService
-        .getincident(incidente.employeeid)
-        .subscribe((empleado: Empleado) => {
-          this.tincidentsMap.set(incidente.employeeid, empleado.nombre);
+      this.empleadoService
+        .getempleado(incidente.employeeid)
+        .subscribe((empleado: empleado) => {
+          this.employeesMap.set(incidente.employeeid, empleado.name);
         });
     });
   }
@@ -97,12 +100,12 @@ export class IncidentesComponent implements AfterViewInit {
       this.tincidentService
         .getincident(incidente.typeincidentid)
         .subscribe((tincident: typeincident) => {
-          this.tincidentsMap.set(incidente.typeincidentid, tincident.nameincident);
+          this.tincidentsMap.set(incidente.typeincidentid, tincident.nameIncident);
         });
     });
   }
   getEmployeeName(employeeId: number): string {
-    return this.tincidentsMap.get(employeeId) || ''; // Return offer title from map
+    return this.employeesMap.get(employeeId) || ''; // Return offer title from map
   }
 
   getIncidentName(incidentId: number): string {
