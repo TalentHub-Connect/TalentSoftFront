@@ -91,6 +91,30 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- Controles de paginación y selector de elementos por página -->
+                <div class="pagination-container d-flex justify-content-end align-items-center">
+                    <!-- Selector de elementos por página -->
+                    <div class="items-per-page mr-3 d-inline-flex align-items-center">
+                        <div class="d-inline-flex mr-2">Elementos por página:</div>
+                        <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage"
+                            (change)="onChangeItemsPerPage()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+
+                    <!-- Botones de paginación -->
+                    <div class="pagination-buttons">
+                        <button class="btn btn-custom-pagination mr-1" [disabled]="currentPage === 1"
+                            (click)="onPreviousPage()">Anterior</button>
+                        <span class="current-page">Página {{ currentPage }}</span>
+                        <button class="btn btn-custom-pagination ml-1"
+                            [disabled]="currentPage * itemsPerPage >= empleados.length"
+                            (click)="onNextPage()">Siguiente</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

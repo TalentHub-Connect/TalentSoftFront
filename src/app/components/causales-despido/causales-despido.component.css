@@ -40,11 +40,6 @@
     /* Aplica negrita solo a los encabezados de la tabla */
 }
 
-/* Aplicar negrita al título de la página */
-h2 {
-    font-weight: bold;
-    /* Negrita para el título */
-}
 
 .form-group label,
 .form-control {
@@ -68,4 +63,17 @@ h2 {
     /* Color al pasar el mouse */
     border-color: #346C73;
     /* Borde al pasar el mouse */
+}
+
+.btn-custom-pagination {
+    background-color: #346C73;
+    border-color: #346C73;
+    color: #ffffff;
+    /* Color del texto */
+}
+
+.btn-custom-pagination:hover {
+    background-color: #235955;
+    /* Cambia el color de fondo al pasar el ratón */
+    border-color: #235955;
 }

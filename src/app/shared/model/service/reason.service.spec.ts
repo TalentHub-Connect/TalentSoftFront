@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CausalService } from './causal.service';
+import { ReasonService } from './reason.service';
 
-describe('CausalService', () => {
-  let service: CausalService;
+describe('ReasonService', () => {
+  let service: ReasonService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CausalService);
+    service = TestBed.inject(ReasonService);
   });
 
   it('should be created', () => {

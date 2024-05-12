@@ -4,16 +4,16 @@
         <form (ngSubmit)="guardarCambios()" #causalForm="ngForm">
             <div class="form-group">
                 <label for="causal">Causal:</label>
-                <input type="text" class="form-control" id="causal" name="causal" [(ngModel)]="causal.causal" required>
+                <input type="text" class="form-control" id="causal" name="causal" [(ngModel)]="causal.name" required>
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripción:</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="causal.descripcion"
+                <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="causal.description"
                     required></textarea>
             </div>
             <div class="form-group">
                 <label for="creador">Creador:</label>
-                <input type="text" class="form-control" id="creador" name="creador" [(ngModel)]="causal.creador"
+                <input type="text" class="form-control" id="creador" name="creador" [(ngModel)]="causal.createForUser"
                     disabled>
             </div>
             <div class="form-group mt-3"> <!-- Agregar un margen superior de 3 unidades -->

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from 'src/app/shared/model/service/empleado.service';
 import { Empleado } from 'src/app/shared/model/Entities/empleado';
-import { CausalService } from 'src/app/shared/model/service/causal.service';
+import { ReasonService } from 'src/app/shared/model/service/reason.service';
 
 @Component({
   selector: 'app-progreso-salida',
@@ -17,13 +17,25 @@ export class ProgresoSalidaComponent implements OnInit {
   filtroCausal: string = '';
   causales: string[] = []; // Lista de causales disponibles
 
-  constructor(private empleadoService: EmpleadoService, private causalService: CausalService) { }
+  currentPage = 1;
+  itemsPerPage: number = 5;
+
+  constructor(private empleadoService: EmpleadoService, private causalService: ReasonService) { }
 
   ngOnInit(): void {
     this.empleados = this.empleadoService.getEmpleados();
     this.filteredEmpleados = this.empleados; // Inicialmente, todos los empleados son visibles
-    this.causales = this.causalService.obtenerCausales().map(causal => causal.causal);
+    this.cargarCausales();
     this.applyFilters();
+  }
+
+  cargarCausales() {
+    this.causalService.obtenerReasons().subscribe({
+      next: (data) => {
+        this.causales = data.map(causal => causal.name); // Utiliza 'name' de Causal
+      },
+      error: (err) => console.error('Error al cargar causales:', err)
+    });
   }
 
   applyFilters(): void {
@@ -61,6 +73,30 @@ export class ProgresoSalidaComponent implements OnInit {
     if (confirm('¿Estás seguro de querer eliminar este proceso de salida?')) {
       this.empleadoService.deleteEmpleadoById(id);
       this.applyFilters();  // Refrescar la lista filtrada después de la eliminación
+    }
+  }
+
+  onChangeItemsPerPage(): void {
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.filteredEmpleados = this.filteredEmpleados.slice(startIndex, endIndex);
+  }
+
+  onPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  // Lógica para cambiar a la página siguiente
+  onNextPage() {
+    const totalPages = Math.ceil(this.filteredEmpleados.length / this.itemsPerPage);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
     }
   }
 }
