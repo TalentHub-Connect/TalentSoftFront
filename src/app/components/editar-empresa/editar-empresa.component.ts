@@ -11,12 +11,20 @@ import { CompanyService } from 'src/app/shared/model/service/company.service';
 export class EditarEmpresaComponent implements OnInit {
   editForm!: FormGroup;
   isLoading = false;
-  companyId = 7;
   originalCompanyData: company | null = null;
+  companyId: number | null = null;
 
   constructor(private fb: FormBuilder, private companyService: CompanyService) { }
 
   ngOnInit() {
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      this.companyId = +companyIdString; // Convertir la cadena a número
+      this.loadData();
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
+
     this.editForm = this.fb.group({
       namecompany: ['', [Validators.required, Validators.minLength(3)]],
       nit: ['', Validators.required],
@@ -35,26 +43,28 @@ export class EditarEmpresaComponent implements OnInit {
   }
 
   loadData() {
-    this.companyService.getCompanyById(this.companyId).subscribe(
-      (company: company) => {
-        // Guardar los datos originales de la compañía
-        this.originalCompanyData = company;
-        // Llenar el formulario con los datos de la compañía
-        this.editForm.patchValue(company);
-      },
-      error => {
-        console.error('Error al cargar la información de la empresa:', error);
-      }
-    );
+    if (this.companyId) {
+      this.companyService.getCompanyById(this.companyId).subscribe(
+        (company: company) => {
+          this.originalCompanyData = company;
+          this.editForm.patchValue(company);
+        },
+        error => {
+          console.error('Error al cargar la información de la empresa:', error);
+        }
+      );
+    } else {
+      console.error('ID de compañía no válido');
+    }
   }
 
   onSubmit() {
-    if (this.editForm.valid && this.originalCompanyData) {
+    if (this.editForm.valid && this.originalCompanyData && this.companyId !== null) {
       this.isLoading = true;
       // Combinar los valores del formulario con los valores originales de la compañía
       const updatedCompany: company = { ...this.originalCompanyData, ...this.editForm.value };
       // Enviar los datos actualizados al servicio
-      this.companyService.updateCompany(this.companyId, updatedCompany).subscribe(
+      this.companyService.updateCompany(this.companyId!, updatedCompany).subscribe(
         () => {
           this.isLoading = false;
           alert('¡Datos actualizados exitosamente!');
@@ -65,7 +75,8 @@ export class EditarEmpresaComponent implements OnInit {
         }
       );
     } else {
-      console.error('El formulario no es válido');
+      console.error('El formulario no es válido o el ID de la compañía es nulo');
     }
   }
+
 }
