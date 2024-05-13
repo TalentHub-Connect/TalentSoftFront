@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../shared/model/service/auth.service';
 import { UtilService } from '../../shared/model/service/util.service';
+import { CompanyService } from 'src/app/shared/model/service/company.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private companyService: CompanyService,
   ) { }
 
   username: string = '';
@@ -51,8 +53,19 @@ export class LoginComponent {
       console.log("Entra1...");
       this.authService.login(this.username, this.password).subscribe(
         (data: any) => {
-          console.log("Respuesta del servidor:", data); // Agregar esta línea para imprimir la respuesta del servidor
+          console.log("Respuesta del servidor:", data); 
+          this.companyService.getIdCompany(data.email).subscribe(
+            (companyData: any) => {
+              const id = companyData.id;
+              localStorage.setItem('companyid', id.toString());
+
+            }
+          );
+
+
           const rol = localStorage.getItem('role');
+          
+          
           if (rol === 'ADMIN, default-roles-talentsoft') {
             this.router.navigate(['/home']);
           } if (rol !== 'ADMIN, default-roles-talentsoft') {
