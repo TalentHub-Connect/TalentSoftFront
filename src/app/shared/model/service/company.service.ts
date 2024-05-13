@@ -9,14 +9,15 @@ import { company } from '../Entities/company';
 })
 export class CompanyService {
 
-  private apiUrl = 'https://companyback-qa.up.railway.app/api/talentsoft/company';
+  private apiUrl1 = 'https://companyback-qa.up.railway.app/api/talentsoft/company';
+  private apiUrl = `${environment.CompanyURL}/company`;
 
   constructor(private http: HttpClient) { }
 
-  getIdCompany(email: string){
-    const url = `${this.apiUrl}/${email}`; 
-    return this.http.get<any>(url); 
-  }  
+  getIdCompany(email: string) {
+    const url = `${this.apiUrl1}/${email}`;
+    return this.http.get<any>(url);
+  }
 
   getAllCompanies(): Observable<company[]> {
     return this.http.get<company[]>(`${this.apiUrl}/getCompanies`);
