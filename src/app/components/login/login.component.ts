@@ -57,14 +57,17 @@ export class LoginComponent {
           this.companyService.getIdCompany(data.email).subscribe(
             (companyData: any) => {
               const id = companyData.id;
+              console.log('ID de la compañía:', id);
               localStorage.setItem('companyid', id.toString());
+              console.log(localStorage.getItem('companyid'));
 
             }
           );
 
 
           const rol = localStorage.getItem('role');
-          
+          const id =localStorage.getItem('companyid')
+          console.log(id);
           
           if (rol === 'ADMIN, default-roles-talentsoft') {
             this.router.navigate(['/home']);

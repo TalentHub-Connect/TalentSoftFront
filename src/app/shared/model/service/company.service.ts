@@ -14,9 +14,10 @@ export class CompanyService {
   constructor(private http: HttpClient) { }
 
   getIdCompany(email: string){
-    const url = `${this.apiUrl}/${email}`; // Construye la URL con el email proporcionado
-    return this.http.get<number>(url); // Realiza la solicitud HTTP GET y devuelve el observable
+    const url = `${this.apiUrl}/${email}`; 
+    return this.http.get<any>(url); 
   }  
+
   getAllCompanies(): Observable<company[]> {
     return this.http.get<company[]>(`${this.apiUrl}/getCompanies`);
   }
