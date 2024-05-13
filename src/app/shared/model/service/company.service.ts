@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; 
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { company } from '../Entities/company';
 
 @Injectable({
   providedIn: 'root'
@@ -14,22 +17,6 @@ export class CompanyService {
     const url = `${this.apiUrl}/${email}`; // Construye la URL con el email proporcionado
     return this.http.get<number>(url); // Realiza la solicitud HTTP GET y devuelve el observable
   }  
-}
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { company } from '../Entities/company';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class CompanyService {
-
-  private apiUrl = `${environment.CompanyURL}/company`;
-
-  constructor(private http: HttpClient) { }
-
   getAllCompanies(): Observable<company[]> {
     return this.http.get<company[]>(`${this.apiUrl}/getCompanies`);
   }
@@ -47,3 +34,6 @@ export class CompanyService {
   }
 
 }
+
+
+
