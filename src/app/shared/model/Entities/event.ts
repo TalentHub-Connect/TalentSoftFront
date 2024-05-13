@@ -5,4 +5,5 @@ export interface event {
     place: string;
     status: string;
     typeeventid:number;
+    companyid:number;
 }

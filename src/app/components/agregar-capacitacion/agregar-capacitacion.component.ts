@@ -12,6 +12,8 @@ import { capacitation } from 'src/app/shared/model/Entities/capacitation';
   styleUrl: './agregar-capacitacion.component.css'
 })
 export class AgregarCapacitacionComponent {
+  companyId: number | null = null;
+  companyIdString: string | null = null;
   estados = ['Abierto'];
   tcapacitaciones: typecapacitation [] = [];
 
@@ -31,7 +33,14 @@ export class AgregarCapacitacionComponent {
       dateevent: null,
       status: 'Inicial',
     });
+    
     this.loadCapacitaciones();
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString; // Convertir la cadena a número
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
   }
   capacitacionform = this.builder.group({
     place: ['', Validators.required],
@@ -56,6 +65,7 @@ export class AgregarCapacitacionComponent {
         capacitationDate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
         typeCapacitationId: capacitationId || 0,
         status: this.capacitacionform.value.status || '',
+        companyid: this.companyId ? this.companyId : 0,
       };
       this.capacitacionService.agregarcapacitation(capacitacionData).subscribe(
         response => {

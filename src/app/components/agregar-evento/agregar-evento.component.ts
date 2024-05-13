@@ -12,8 +12,11 @@ import { TipoeventoService } from 'src/app/shared/model/service/tipoevento.servi
   styleUrls: ['./agregar-evento.component.css']
 })
 export class AgregarEventoComponent {
+  companyId: number | null = null;
+  companyIdString: string | null = null;
   estados = ['Abierto'];
   teventos: typeevent[] = [];
+  
 
   constructor(
     private builder: FormBuilder,
@@ -32,6 +35,12 @@ export class AgregarEventoComponent {
       status: 'Inicial',
     });
     this.loadEventos();
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString; // Convertir la cadena a número
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
   }
   customerform = this.builder.group({
     place: ['', Validators.required],
@@ -40,7 +49,7 @@ export class AgregarEventoComponent {
     evento: ['', Validators.required],
     status: ['', Validators.required],
   });
-  
+
   SaveCustomer() {
     console.log('Evento', this.customerform);
     if (this.customerform.valid) {
@@ -52,10 +61,11 @@ export class AgregarEventoComponent {
 
       const eventoData: event = {
         place: this.customerform.value.place || '',
-        description: this.customerform.value.description|| '',
+        description: this.customerform.value.description || '',
         dateEvent: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
         typeeventid: eventId || 0,
         status: this.customerform.value.status || '',
+        companyid: this.companyId ? this.companyId : 0
       };
       this.eventoService.agregarevent(eventoData).subscribe(
         response => {
@@ -84,7 +94,7 @@ export class AgregarEventoComponent {
       }
     });
   }
-  
+
 
   loadEventos(): void {
     this.teventoService.gettevents().subscribe(

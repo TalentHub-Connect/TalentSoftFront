@@ -53,13 +53,10 @@ export class LoginComponent {
       console.log("Entra1...");
       this.authService.login(this.username, this.password).subscribe(
         (data: any) => {
-          console.log("Respuesta del servidor:", data); 
           this.companyService.getIdCompany(data.email).subscribe(
             (companyData: any) => {
               const id = companyData.id;
-              console.log('ID de la compañía:', id);
               localStorage.setItem('companyid', id.toString());
-              console.log(localStorage.getItem('companyid'));
 
             }
           );
@@ -67,7 +64,6 @@ export class LoginComponent {
 
           const rol = localStorage.getItem('role');
           const id =localStorage.getItem('companyid')
-          console.log(id);
           
           if (rol === 'ADMIN, default-roles-talentsoft') {
             this.router.navigate(['/home']);

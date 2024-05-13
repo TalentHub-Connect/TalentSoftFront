@@ -24,6 +24,8 @@ import { EmpleadoPService } from 'src/app/shared/model/service/empleado-p.servic
 })
 export class IncidentesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
+  companyIdString: string | null = null;
+  companyId: number | null = null;
   apiResponse: any = [];
   tincidentsMap: Map<number, string> = new Map<number, string>();
   employeesMap: Map<number, string> = new Map<number, string>();
@@ -50,7 +52,13 @@ export class IncidentesComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.incidentService.getincidents().subscribe((response: any) => {
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString;
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
+    this.incidentService.getincidentsbyCompany(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -67,7 +75,7 @@ export class IncidentesComponent implements AfterViewInit {
   }
 
   refreshTableData() {
-    this.incidentService.getincidents().subscribe((response: any) => {
+    this.incidentService.getincidentsbyCompany(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;

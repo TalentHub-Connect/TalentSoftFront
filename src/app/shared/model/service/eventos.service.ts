@@ -12,6 +12,10 @@ export class EventosService {
 
   constructor(private http: HttpClient) { }
 
+  geteventsbyCompany(companyid:number): Observable<event[]> {
+    const url = `${this.apiUrl}/company/${companyid}`;
+    return this.http.get<event[]>(url);
+  }
 
   getevents(): Observable<event[]> {
     return this.http.get<event[]>(this.apiUrl);

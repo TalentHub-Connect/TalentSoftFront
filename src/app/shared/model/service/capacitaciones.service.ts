@@ -12,7 +12,10 @@ export class CapacitacionesService {
 
   constructor(private http: HttpClient) { }
 
-
+  getcapacitationsbyCompany(companyid:number): Observable<capacitation[]> {
+    const url = `${this.apiUrl}/company/${companyid}`;
+    return this.http.get<capacitation[]>(url);
+  }
   getcapacitations(): Observable<capacitation[]> {
     return this.http.get<capacitation[]>(this.apiUrl);
   }

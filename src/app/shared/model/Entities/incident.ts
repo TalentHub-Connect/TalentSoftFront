@@ -6,4 +6,5 @@ export interface incident {
     place: string;
     typeincidentid:number;
     employeeid:number;
+    companyid:number;
 }

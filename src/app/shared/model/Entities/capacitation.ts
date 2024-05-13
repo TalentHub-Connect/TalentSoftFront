@@ -5,4 +5,5 @@ export interface capacitation {
     place: string;
     status: string;
     typeCapacitationId:number;
+    companyid:number;
 }

@@ -22,6 +22,8 @@ import { EditarCapacitacionComponent } from '../editar-capacitacion/editar-capac
 })
 export class CapacitacionesComponent {
   nombreFilterValue: string = '';
+  companyIdString: string | null = null;
+  companyId: number | null = null;
   apiResponse: any = [];
   tcapacitationsMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
@@ -46,7 +48,13 @@ export class CapacitacionesComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.capacitacionService.getcapacitations().subscribe((response: any) => {
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString;
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
+    this.capacitacionService.getcapacitationsbyCompany(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -63,7 +71,7 @@ export class CapacitacionesComponent {
   }
 
   refreshTableData() {
-    this.capacitacionService.getcapacitations().subscribe((response: any) => {
+    this.capacitacionService.getcapacitationsbyCompany(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;

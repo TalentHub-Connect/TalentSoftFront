@@ -14,6 +14,8 @@ import { EmpleadoPService } from 'src/app/shared/model/service/empleado-p.servic
   styleUrl: './agregar-incidente.component.css'
 })
 export class AgregarIncidenteComponent {
+  companyId: number | null = null;
+  companyIdString: string | null = null;
   estados = ['Abierto'];
   typeincident: typeincident[] = [];
   empleados: empleado[] = [];
@@ -38,6 +40,12 @@ export class AgregarIncidenteComponent {
     });
     this.loadIncidentes();
     this.loadEmpleados();
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString; // Convertir la cadena a número
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
   }
   incidenteform = this.builder.group({
     description: ['', Validators.required],
@@ -66,6 +74,7 @@ export class AgregarIncidenteComponent {
         place: this.incidenteform.value.place || '',
         typeincidentid: incidentId || 0,
         employeeid: employeeId || 0,
+        companyid: this.companyId ? this.companyId : 0
       };
       console.log('Valor de offer después de convertir a número:',  incidentData);
       this.incidenteService.agregarincident(incidentData).subscribe(

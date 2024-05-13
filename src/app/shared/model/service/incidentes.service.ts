@@ -11,7 +11,11 @@ export class IncidentesService {
 
 
   constructor(private http: HttpClient) { }
-
+  
+  getincidentsbyCompany(companyid:number): Observable<incident[]> {
+    const url = `${this.apiUrl}/company/${companyid}`;
+    return this.http.get<incident[]>(url);
+  }
 
   getincidents(): Observable<incident[]> {
     return this.http.get<incident[]>(this.apiUrl);
