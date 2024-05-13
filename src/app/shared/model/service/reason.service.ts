@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ReasonService {
-  private apiUrl = `${environment.QaURL}/reasons`;
+  private apiUrl = `${environment.DespidosURL}/reasons`;
 
   constructor(private http: HttpClient) { }
 
