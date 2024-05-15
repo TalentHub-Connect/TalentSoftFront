@@ -7,40 +7,100 @@ import { SidebarService } from 'src/app/shared/model/service/sidebar.service';
   styleUrls: ['./slidebar.component.css']
 })
 export class SlidebarComponent implements OnInit {
-  nombreEmpresa: string= '';
-  modulos: { icono: string, nombre: string }[] = [];
+  nombreEmpresa: string = '';
+  modulos: { id: number, description: string, rolId: number, status: string }[] = [];
+  roles: string[] = [];
+
+  showAdminCard: boolean = false;
+  showRecruitmentCard: boolean = false;
+  showDismissalCard: boolean = false;
+  showNominaCard: boolean = false;
+  showSSTCard: boolean = false;
+  showBICard: boolean = false;
+
   constructor(private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
-    console.log(localStorage.getItem('role'));
-    const hamBurger = document.querySelector(".toggle-btn") as HTMLElement;
+    // Obtener el nombre del rol del almacenamiento local
+    const roleStr = localStorage.getItem('role');
+    console.log('Role string from localStorage:', roleStr);
 
+    if (roleStr) {
+      this.roles = roleStr.split(', '); // Asume que los roles están separados por comas y espacios
+      console.log('Role names:', this.roles);
+    } else {
+      console.error('Role ID not found in localStorage');
+    }
+
+    // Agregar el event listener para el botón de hamburguesa
+    const hamBurger = document.querySelector(".toggle-btn") as HTMLElement;
     hamBurger.addEventListener("click", () => {
       const sidebar = document.querySelector("#sidebar") as HTMLElement;
-      
       sidebar.classList.toggle("expand");
     });
-    
 
-    // Obtener los módulos
-    this.sidebarService.obtenerModulos().subscribe(
-      (modulos: any[]) => {
-        this.modulos = modulos;
-      },
-      (error) => {
-        console.error('Error al obtener los módulos:', error);
-      }
-    );
+    // Obtener los módulos basados en los roles
+    this.roles.forEach(role => {
+      const roleId = this.getRoleId(role);
+      this.sidebarService.obtenerModulos(roleId).subscribe(
+        (modulos: any[]) => {
+          console.log(`Modulos recibidos del API para el rol ${role}:`, modulos);
+
+          // Filtrar los módulos basados en el rol y el estado
+          const filteredModulos = modulos.filter(modulo => 
+            modulo.rolId === roleId && 
+            modulo.status === 'ACTIVO' && 
+            !this.modulos.some(existingModulo => existingModulo.id === modulo.id)
+          );
+
+          this.modulos = [...this.modulos, ...filteredModulos];
+          console.log('Modulos filtrados:', this.modulos);
+
+          this.setCardVisibility();
+        },
+        (error) => {
+          console.error('Error al obtener los módulos:', error);
+        }
+      );
+    });
   }
+
+  getRoleId(roleName: string): number {
+    const roleMap: { [key: string]: number } = {
+      'ADMIN': 1,
+      'RECLUTAMIENTO': 2,
+      'DESPIDO': 3,
+      'NOMINA': 4,
+      'SST': 5,
+      'BI': 6,
+      'MARKETING': 7,
+      'VENTAS': 8,
+      'NOMINA_ELECTRONICA': 9,
+      'CUENTAS': 10,
+      'SOPORTE': 11
+    };
+    return roleMap[roleName] || 0;
+  }
+
+  setCardVisibility(): void {
+    console.log('Setting card visibility based on modulos:', this.modulos);
+
+    this.showAdminCard = this.modulos.some(modulo => modulo.description === 'Administrador');
+    this.showRecruitmentCard = this.modulos.some(modulo => modulo.description === 'Reclutamiento');
+    this.showDismissalCard = this.modulos.some(modulo => modulo.description === 'Despido');
+    this.showNominaCard = this.modulos.some(modulo => modulo.description === 'Nómina');
+    this.showSSTCard = this.modulos.some(modulo => modulo.description === 'SST');
+    this.showBICard = this.modulos.some(modulo => modulo.description === 'BI');
+
+    console.log('Card visibility - Admin:', this.showAdminCard);
+    console.log('Card visibility - Recruitment:', this.showRecruitmentCard);
+    console.log('Card visibility - Dismissal:', this.showDismissalCard);
+    console.log('Card visibility - Nomina:', this.showNominaCard);
+    console.log('Card visibility - SST:', this.showSSTCard);
+    console.log('Card visibility - BI:', this.showBICard);
+  }
+
   logout(): void {
-    localStorage.clear()
+    localStorage.clear();
   }
-  role=localStorage.getItem('role');
-
-  showRecruitmentCard: boolean = this.role!.includes('RECLUTAMIENTO')|| this.role!.includes('ADMIN') ;
-  showDismissalCard: boolean = this.role!.includes('DESPIDO')|| this.role!.includes('ADMIN') ;
-  showSSTCard: boolean = this.role!.includes('SST') || this.role!.includes('ADMIN') ;
-  showBICard: boolean = this.role!.includes('BI')|| this.role!.includes('ADMIN') ;
-  showNominaCard: boolean = this.role!.includes('NOMINA')|| this.role!.includes('ADMIN') ;
-  showAdminCard:boolean = this.role!.includes('ADMIN')|| this.role!.includes('ADMIN') ;
 }

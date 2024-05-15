@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sidebar</title>
-
 </head>
 
 <body>
@@ -29,7 +28,7 @@
                             <a [routerLink]="'/editar-empresa'" class="sidebar-link">Gestionar Empresa</a>
                         </li>
                         <li class="sidebar-item">
-                            <a [routerLink]="'/payment-info'"  class="sidebar-link">Gestionar Suscripción</a>
+                            <a [routerLink]="'/payment-info'" class="sidebar-link">Gestionar Suscripción</a>
                         </li>
                         <li class="sidebar-item">
                             <a [routerLink]="'/users'" class="sidebar-link">Gestionar Usuarios</a>
@@ -108,12 +107,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item-automa" *ngFor="let modulo of modulos">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi bi-gear" style="font-size: 1.5rem; color: #292C32;"></i>
-                        <span>{{ modulo.nombre }}</span>
-                    </a>
-                </li>
+                <!-- Eliminar elementos no deseados -->
+                <!-- Eliminar duplicados -->
             </ul>
             <div class="sidebar-footer">
                 <a [routerLink]="'/editar-perfil'" class="sidebar-link">
