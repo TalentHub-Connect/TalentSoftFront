@@ -21,7 +21,6 @@ export class SlidebarComponent implements OnInit {
   constructor(private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
-    // Obtener el nombre del rol del almacenamiento local
     const roleStr = localStorage.getItem('role');
     console.log('Role string from localStorage:', roleStr);
 
@@ -32,14 +31,12 @@ export class SlidebarComponent implements OnInit {
       console.error('Role ID not found in localStorage');
     }
 
-    // Agregar el event listener para el botón de hamburguesa
     const hamBurger = document.querySelector(".toggle-btn") as HTMLElement;
     hamBurger.addEventListener("click", () => {
       const sidebar = document.querySelector("#sidebar") as HTMLElement;
       sidebar.classList.toggle("expand");
     });
 
-    // Obtener los módulos basados en los roles
     const uniqueModules = new Set(); // Usar un Set para asegurar la unicidad
     let pendingRequests = this.roles.length; // Contador para solicitudes pendientes
 
@@ -50,7 +47,6 @@ export class SlidebarComponent implements OnInit {
           (modulos: any[]) => {
             console.log(`Modulos recibidos del API para el rol ${role}:`, modulos);
 
-            // Filtrar los módulos basados en el rol y el estado
             const filteredModulos = modulos.filter(modulo => 
               modulo.rolId === roleId && 
               modulo.status === 'ACTIVO' && 
@@ -61,7 +57,6 @@ export class SlidebarComponent implements OnInit {
             this.modulos = [...this.modulos, ...filteredModulos];
             console.log('Modulos filtrados:', this.modulos);
 
-            // Decrementar el contador de solicitudes pendientes y llamar setCardVisibility una vez
             pendingRequests--;
             if (pendingRequests === 0) {
               this.setCardVisibility();
@@ -99,10 +94,10 @@ export class SlidebarComponent implements OnInit {
   setCardVisibility(): void {
     console.log('Setting card visibility based on modulos:', this.modulos);
 
-    this.showAdminCard = this.modulos.some(modulo => modulo.description === 'Administrador');
-    this.showRecruitmentCard = this.modulos.some(modulo => modulo.description === 'Reclutamiento');
-    this.showDismissalCard = this.modulos.some(modulo => modulo.description === 'Despido');
-    this.showNominaCard = this.modulos.some(modulo => modulo.description === 'Nómina');
+    this.showAdminCard = this.modulos.some(modulo => modulo.description === 'ADMIN');
+    this.showRecruitmentCard = this.modulos.some(modulo => modulo.description === 'RECLUTAMIENTO');
+    this.showDismissalCard = this.modulos.some(modulo => modulo.description === 'DESPIDO');
+    this.showNominaCard = this.modulos.some(modulo => modulo.description === 'NOMINA');
     this.showSSTCard = this.modulos.some(modulo => modulo.description === 'SST');
     this.showBICard = this.modulos.some(modulo => modulo.description === 'BI');
 
