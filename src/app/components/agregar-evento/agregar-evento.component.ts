@@ -5,6 +5,7 @@ import { typeevent } from 'src/app/shared/model/Entities/typeevent';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { event } from 'src/app/shared/model/Entities/event';
 import { TipoeventoService } from 'src/app/shared/model/service/tipoevento.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-evento',
@@ -22,7 +23,8 @@ export class AgregarEventoComponent {
     private builder: FormBuilder,
     private eventoService: EventosService,
     private snackBar: MatSnackBar,
-    private teventoService: TipoeventoService
+    private teventoService: TipoeventoService,
+    private router: Router,
   ) { }
 
 
@@ -82,7 +84,9 @@ export class AgregarEventoComponent {
     }
   }
 
-
+  onDiscard(): void {
+    this.router.navigate(['/eventos']);
+  }
   clearform() {
     this.customerform.reset();
 

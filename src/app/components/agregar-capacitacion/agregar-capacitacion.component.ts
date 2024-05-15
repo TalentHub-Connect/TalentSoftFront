@@ -5,6 +5,7 @@ import { TipocapacitacionService } from 'src/app/shared/model/service/tipocapaci
 import { typecapacitation } from 'src/app/shared/model/Entities/typecapacitation';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { capacitation } from 'src/app/shared/model/Entities/capacitation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-capacitacion',
@@ -22,6 +23,7 @@ export class AgregarCapacitacionComponent {
     private capacitacionService: CapacitacionesService,
     private tCapacitacionService: TipocapacitacionService,
     private snackBar: MatSnackBar,
+    private router: Router,
   ) { }
 
 
@@ -82,6 +84,9 @@ export class AgregarCapacitacionComponent {
     }
   }
 
+  onDiscard(): void {
+    this.router.navigate(['/capacitaciones']);
+  }
 
   clearform() {
     this.capacitacionform.reset();

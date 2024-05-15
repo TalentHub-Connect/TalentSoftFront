@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { incident } from 'src/app/shared/model/Entities/incident';
 import { empleado } from 'src/app/shared/model/Entities/empleadoP';
 import { EmpleadoPService } from 'src/app/shared/model/service/empleado-p.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-incidente',
@@ -26,6 +27,7 @@ export class AgregarIncidenteComponent {
     private tIncidenteService: TipoincidenteService,
     private empleadosService: EmpleadoPService,
     private snackBar: MatSnackBar,
+    private router: Router,
   ) { }
 
 
@@ -92,7 +94,9 @@ export class AgregarIncidenteComponent {
     }
   }
 
-
+  onDiscard(): void {
+    this.router.navigate(['/eventos']);
+  }
   clearform() {
     this.incidenteform.reset();
   }
