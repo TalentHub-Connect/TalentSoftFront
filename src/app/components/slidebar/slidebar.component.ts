@@ -40,44 +40,58 @@ export class SlidebarComponent implements OnInit {
     });
 
     // Obtener los módulos basados en los roles
+    const uniqueModules = new Set(); // Usar un Set para asegurar la unicidad
+    let pendingRequests = this.roles.length; // Contador para solicitudes pendientes
+
     this.roles.forEach(role => {
       const roleId = this.getRoleId(role);
-      this.sidebarService.obtenerModulos(roleId).subscribe(
-        (modulos: any[]) => {
-          console.log(`Modulos recibidos del API para el rol ${role}:`, modulos);
+      if (roleId !== 0) { // Asegurarse de que el roleId es válido
+        this.sidebarService.obtenerModulos(roleId).subscribe(
+          (modulos: any[]) => {
+            console.log(`Modulos recibidos del API para el rol ${role}:`, modulos);
 
-          // Filtrar los módulos basados en el rol y el estado
-          const filteredModulos = modulos.filter(modulo => 
-            modulo.rolId === roleId && 
-            modulo.status === 'ACTIVO' && 
-            !this.modulos.some(existingModulo => existingModulo.id === modulo.id)
-          );
+            // Filtrar los módulos basados en el rol y el estado
+            const filteredModulos = modulos.filter(modulo => 
+              modulo.rolId === roleId && 
+              modulo.status === 'ACTIVO' && 
+              !uniqueModules.has(modulo.id)
+            );
 
-          this.modulos = [...this.modulos, ...filteredModulos];
-          console.log('Modulos filtrados:', this.modulos);
+            filteredModulos.forEach(modulo => uniqueModules.add(modulo.id));
+            this.modulos = [...this.modulos, ...filteredModulos];
+            console.log('Modulos filtrados:', this.modulos);
 
+            // Decrementar el contador de solicitudes pendientes y llamar setCardVisibility una vez
+            pendingRequests--;
+            if (pendingRequests === 0) {
+              this.setCardVisibility();
+            }
+          },
+          (error) => {
+            console.error('Error al obtener los módulos:', error);
+            pendingRequests--;
+            if (pendingRequests === 0) {
+              this.setCardVisibility();
+            }
+          }
+        );
+      } else {
+        pendingRequests--;
+        if (pendingRequests === 0) {
           this.setCardVisibility();
-        },
-        (error) => {
-          console.error('Error al obtener los módulos:', error);
         }
-      );
+      }
     });
   }
 
   getRoleId(roleName: string): number {
     const roleMap: { [key: string]: number } = {
       'ADMIN': 1,
-      'RECLUTAMIENTO': 2,
       'DESPIDO': 3,
+      'RECLUTAMIENTO': 3,
       'NOMINA': 4,
       'SST': 5,
-      'BI': 6,
-      'MARKETING': 7,
-      'VENTAS': 8,
-      'NOMINA_ELECTRONICA': 9,
-      'CUENTAS': 10,
-      'SOPORTE': 11
+      'BI': 6
     };
     return roleMap[roleName] || 0;
   }
