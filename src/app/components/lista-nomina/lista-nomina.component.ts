@@ -1,25 +1,38 @@
-import { Component } from '@angular/core';
-import { Empleado } from 'src/app/shared/model/Entities/empleado';
-import { EmpleadoService } from 'src/app/shared/model/service/empleado.service';
+import { Component, OnInit } from '@angular/core';
+import { EmpleadoN } from 'src/app/shared/model/Entities/empleadoN';
+import { EmpleadoNService } from 'src/app/shared/model/service/empleado-n.service';
 
 @Component({
   selector: 'app-lista-nomina',
   templateUrl: './lista-nomina.component.html',
   styleUrls: ['./lista-nomina.component.css']
 })
-export class ListaNominaComponent {
-  empleados: Empleado[] = [];
+export class ListaNominaComponent implements OnInit {
+  empleados: EmpleadoN[] = [];
   totalLiquidacion: number = 0;
   mesActual!: string;
 
   currentPage = 1;
   itemsPerPage: number = 5;
-  constructor(private empleadoService: EmpleadoService) { }
+  companyId!: number;
+
+  constructor(private empleadoNService: EmpleadoNService) { }
 
   ngOnInit() {
-    this.empleados = this.empleadoService.getEmpleados();
-    this.calcularTotalLiquidacion();
-    this.obtenerMesActual();
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      this.companyId = +companyIdString; // Convertir a número
+      this.cargarEmpleados();
+      this.obtenerMesActual();
+    }
+  }
+
+  cargarEmpleados() {
+    this.empleadoNService.getEmpleadosNByCompanyId(this.companyId).subscribe(empleados => {
+      this.empleados = empleados;
+      this.calcularTotalLiquidacion();
+      this.updatePagination();
+    });
   }
 
   calcularTotalLiquidacion() {
@@ -31,9 +44,9 @@ export class ListaNominaComponent {
   }
 
   eliminarEmpleado(id: number) {
-    this.empleadoService.deleteEmpleadoById(id);
-    this.empleados = this.empleadoService.getEmpleados(); // Actualizar lista
-    this.calcularTotalLiquidacion(); // Recalcular el total
+    this.empleadoNService.deleteEmpleadoById(id).subscribe(() => {
+      this.cargarEmpleados(); // Actualizar lista después de eliminar
+    });
   }
 
   obtenerMesActual() {
@@ -55,15 +68,15 @@ export class ListaNominaComponent {
   onPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.updatePagination();
     }
   }
 
-  // Lógica para cambiar a la página siguiente
   onNextPage() {
     const totalPages = Math.ceil(this.empleados.length / this.itemsPerPage);
     if (this.currentPage < totalPages) {
       this.currentPage++;
+      this.updatePagination();
     }
   }
-
 }

@@ -24,30 +24,34 @@ export class CausalesDespidoComponent implements OnInit {
   }
 
   cargarCausales() {
-    this.causalService.obtenerReasons().subscribe({
-      next: (data) => {
-        console.log('Causales cargadas:', data); // Verifica qué datos estás recibiendo exactamente
-        this.causales = data;
-        this.filtrarCausales();
-      },
-      error: (error) => {
-        console.error('Error al cargar causales:', error);
-      }
-    });
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      const companyId = parseInt(companyIdString, 10);
+      this.causalService.obtenerReasons(companyId).subscribe({
+        next: (data) => {
+          console.log('Causales cargadas:', data); // Verifica qué datos estás recibiendo exactamente
+          this.causales = data;
+          this.filtrarCausales();
+        },
+        error: (error) => {
+          console.error('Error al cargar causales:', error);
+        }
+      });
+    } else {
+      console.error('Company ID not found in localStorage');
+    }
   }
-
-
 
   filtrarCausales() {
     if (this.causales && this.causales.length > 0) {
       this.causalesFiltradas = this.causales.filter(causal => {
-        const nameMatch = causal.name ? causal.name.toLowerCase().includes(this.filtroNombre.toLowerCase()) : false;
+        const nameMatch = causal.name ? causal.name.toLowerCase().includes(this.filtroNombre.toLowerCase()) : true;
         const creatorMatch = causal.createForUser ? causal.createForUser.toLowerCase().includes(this.filtroCreador.toLowerCase()) : true;
         return nameMatch && creatorMatch;
       });
+      this.updatePagination();
     }
   }
-
 
   eliminarCausal(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar esta causal?')) {
@@ -68,20 +72,21 @@ export class CausalesDespidoComponent implements OnInit {
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.causalesFiltradas = this.causalesFiltradas.slice(startIndex, endIndex);
+    this.causalesFiltradas = this.causales.slice(startIndex, endIndex);
   }
 
   onPreviousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.updatePagination();
     }
   }
 
-  // Lógica para cambiar a la página siguiente
   onNextPage() {
-    const totalPages = Math.ceil(this.causalesFiltradas.length / this.itemsPerPage);
+    const totalPages = Math.ceil(this.causales.length / this.itemsPerPage);
     if (this.currentPage < totalPages) {
       this.currentPage++;
+      this.updatePagination();
     }
   }
 }

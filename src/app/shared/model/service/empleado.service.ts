@@ -1,13 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Empleado } from '../Entities/empleado';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoService {
-  
+
+  private apiUrl = `${environment.NominaURL}/employee`;
+
+  getEmpleadosN(): Observable<Empleado[]> {
+    return this.http.get<Empleado[]>(`${this.apiUrl}/getEmployees`);
+  }
+
+  getEmpleadoNById(id: number): Observable<Empleado> {
+    return this.http.get<Empleado>(`${this.apiUrl}/${id}`);
+  }
+
+  deleteEmpleadoNById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/deleteEmployee/${id}`);
+  }
+
   private empleados: Empleado[] = [
     new Empleado(1, 'Juan Pérez', 'Notificación', 'Reducción de personal', 25, 25000, '', [], 'Ana Sánchez'),
     new Empleado(2, 'Ana Gómez', 'Documentación', 'Desempeño insuficiente', 50, 50000, '', [], 'Luis Rodríguez'),
@@ -150,5 +165,5 @@ export class EmpleadoService {
     }
     return 'Error: Empleado no encontrado';
   }
- 
+
 }
