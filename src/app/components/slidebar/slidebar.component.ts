@@ -87,7 +87,7 @@ export class SlidebarComponent implements OnInit {
   getRoleId(roleName: string): number {
     const roleMap: { [key: string]: number } = {
       'ADMIN': 1,
-      'DESPIDO': 3,
+      'DESPIDO': 2,
       'RECLUTAMIENTO': 3,
       'NOMINA': 4,
       'SST': 5,
