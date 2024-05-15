@@ -30,12 +30,18 @@ export class ProgresoSalidaComponent implements OnInit {
   }
 
   cargarCausales() {
-    this.causalService.obtenerReasons().subscribe({
-      next: (data) => {
-        this.causales = data.map(causal => causal.name); // Utiliza 'name' de Causal
-      },
-      error: (err) => console.error('Error al cargar causales:', err)
-    });
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      const companyId = parseInt(companyIdString, 10);
+      this.causalService.obtenerReasons(companyId).subscribe({
+        next: (data) => {
+          this.causales = data.map(causal => causal.name); // Utiliza 'name' de Causal
+        },
+        error: (err) => console.error('Error al cargar causales:', err)
+      });
+    } else {
+      console.error('Company ID not found in localStorage');
+    }
   }
 
   applyFilters(): void {
