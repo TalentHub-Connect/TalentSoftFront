@@ -108,7 +108,7 @@ export class AgregarIncidenteComponent {
     );
   }
   loadEmpleados(): void {
-    this.empleadosService.getempleados().subscribe(
+    this.empleadosService.getempleados(this.companyId ? this.companyId : 0).subscribe(
       (empleado: empleado[]) => {
         this.empleados = empleado;
       },

@@ -6,6 +6,10 @@ import { BehaviorSubject } from 'rxjs';
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
 import { ContratoComponent } from '../contrato/contrato.component';
 import { MatDialog } from '@angular/material/dialog';
+import { candidate } from 'src/app/shared/model/Entities/candidate';
+import {candidateStatus} from 'src/app/shared/model/Entities/candidatestatus';
+import { CandidatestatusService } from 'src/app/shared/model/service/candidatestatus.service';
+
 
 @Component({
   selector: 'app-editar-aspirante',
@@ -15,24 +19,24 @@ import { MatDialog } from '@angular/material/dialog';
 export class EditarAspiranteComponent implements OnInit {
   estados = ['Inicial', 'Entrevistas', 'Pruebas técnicas', 'Pruebas psicotécnicas', 'Pruebas médicas', 'Contratado', 'Rechazado'];
   inputdata: any;
+  nStatusMap: Map<number, string> = new Map<number, string>();
+  apiResponse: any = [];
   private tablaDataSubject = new BehaviorSubject<any[]>([]);
   currentAspirante: any;
   editForm!: FormGroup;
   closemessage = 'closed using directive'
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ref: MatDialogRef<EditarAspiranteComponent>, private formBuilder: FormBuilder,
-    private service: CandidateService, private aspiranteEditService: ComunicacionAspService, private dialog: MatDialog) {
+    private service: CandidateService, private aspiranteEditService: ComunicacionAspService, private dialog: MatDialog,private serviceStatus:CandidatestatusService) {
 
   }
   ngOnInit(): void {
     this.inputdata = this.data;
     console.log('Datos del aspirante:', this.inputdata);
     this.editForm = this.formBuilder.group({
-      email: [''],
-      university: [''],
+      phonenumber:0,
       status: [''],
     });
     this.currentAspirante = { ...this.inputdata.aspirante };
-
   }
 
 
@@ -49,18 +53,16 @@ export class EditarAspiranteComponent implements OnInit {
 
 
       const newStatus = this.editForm.get('status')?.value || this.currentAspirante.status;
-      const newEmail = this.editForm.get('email')?.value || this.currentAspirante.email;
-      const newUniversity = this.editForm.get('university')?.value || this.currentAspirante.university;
+      const newphonenumber = this.editForm.get('phonenumber')?.value || this.currentAspirante.phonenumber;
       console.log('id:', newStatus);
 
-      this.service.editCandidate1(id, newStatus, newEmail, newUniversity).subscribe(
+      this.service.editCandidate1(id, newStatus, newphonenumber).subscribe(
         () => {
           console.log('Aspirante editado exitosamente');
           this.ref.close('Aspirante editado exitosamente');
 
           this.aspiranteEditService.notifyAspiranteEdit();
 
-          // Si el nuevo estado es "Contratado", abre el diálogo de contrato
           if (newStatus === 'Contratado') {
             this.openContratoDialog();
           }
@@ -75,7 +77,7 @@ export class EditarAspiranteComponent implements OnInit {
 
     }
   }
-
+  
   // Función para abrir el diálogo de contrato
   openContratoDialog(): void {
     this.dialog.open(ContratoComponent, {

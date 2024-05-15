@@ -18,12 +18,12 @@ export class CandidateService {
     return this.http.get<candidate[]>(url);
   }
   editCandidate(id: number, status: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/deleteCandidate/${id}`;
     return this.http.put(url, { status });
   }
-  editCandidate1(id: number, status: string, email: string, university: string): Observable<any> {
+  editCandidate1(id: number, status: string, phoneNumber: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.put(url, { status, email, university});
+    return this.http.put(url, { status, phoneNumber});
   }
   agregarCandidate(candidate: candidate): Observable<any> {
     const url = `${this.apiUrl}/createCandidate`;
