@@ -84,7 +84,7 @@ export class SlidebarComponent implements OnInit {
       'ADMIN': 1,
       'DESPIDO': 2,
       'RECLUTAMIENTO': 3,
-      'NOMINA': 4,
+      'NOMINA_ELECTRONICA': 4,
       'SST': 5,
       'BI': 6
     };
@@ -97,7 +97,7 @@ export class SlidebarComponent implements OnInit {
     this.showAdminCard = this.modulos.some(modulo => modulo.description === 'ADMIN');
     this.showRecruitmentCard = this.modulos.some(modulo => modulo.description === 'RECLUTAMIENTO');
     this.showDismissalCard = this.modulos.some(modulo => modulo.description === 'DESPIDO');
-    this.showNominaCard = this.modulos.some(modulo => modulo.description === 'NOMINA');
+    this.showNominaCard = this.modulos.some(modulo => modulo.description === 'NOMINA_ELECTRONICA');
     this.showSSTCard = this.modulos.some(modulo => modulo.description === 'SST');
     this.showBICard = this.modulos.some(modulo => modulo.description === 'BI');
 
