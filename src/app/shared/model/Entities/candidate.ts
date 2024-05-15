@@ -2,8 +2,9 @@ export interface candidate {
     id?: number; 
     name: string;
     surname: string;
-    phonenumber: string;
+    phonenumber: number;
     candidatestatusid: number;
-    offer_id: number;
-    cv_id?: number;
+    offerId: number;
+    cvId?: number;
+    companyid: number;
 }

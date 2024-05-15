@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class CurriculumService {
 
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/curriculum';
+  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/curriculum';
   constructor(private http: HttpClient) { }
 
   getCurriculums(): Observable<curriculum[]> {
@@ -21,10 +21,12 @@ export class CurriculumService {
   }
   
   agregarCurriculum(curriculum: curriculum): Observable<number> {
-    return this.http.post<any>(`${this.apiUrl}`, curriculum).pipe(
-      map((response: curriculum) => {
-        if (response && response.id) {
-          return response.id;
+    const url = `${this.apiUrl}/createCurriculum`;
+    return this.http.post<any>(`${url}`, curriculum).pipe(
+      map((response: number) => {
+        if (response) {
+          console.log(response);
+          return response;
         } else {
           throw new Error('El ID del currículum no está presente en la respuesta del servidor');
         }

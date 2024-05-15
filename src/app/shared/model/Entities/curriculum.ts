@@ -1,8 +1,8 @@
 export interface curriculum {
     id?: number; 
     address: string;
-    personalobjective: string;
-    workexperience: string;
+    personalobjetive: string;
+    workexperience: number;
     educationalhistory: string;
     language: string;
     certification: string;

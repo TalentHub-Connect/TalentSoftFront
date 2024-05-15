@@ -1,10 +1,11 @@
 export interface contrato {
     id?: number; 
-    salary?: number;
+    description: string;
+    salary: number;
+    charge: string;
     startdate: string;
-    contract_type: string; 
     enddate: string;
     eps: string;
-    charge: string;
-    candidate_id?: number;
+    contractType: string; 
+    candidateId?: number;
 }

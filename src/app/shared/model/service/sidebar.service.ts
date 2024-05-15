@@ -16,7 +16,7 @@ export class SidebarService {
 
   // Módulos nuevos
   obtenerModulos(): Observable<any[]> {
-    return this.http.get<any[]>('URL_DEL_BACKEND/modulos');
+    return this.http.get<any[]>('https://modulocuentasservicios-qa.up.railway.app/services');
   }
   
 }

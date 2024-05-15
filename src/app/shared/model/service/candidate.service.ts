@@ -7,26 +7,27 @@ import { candidate } from '../Entities/candidate';
   providedIn: 'root',
 })
 export class CandidateService {
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/candidate';
+  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/candidate';
 
 
   constructor(private http: HttpClient) { }
 
 
-
-  getCandidates(): Observable<candidate[]> {
-    return this.http.get<candidate[]>(this.apiUrl);
+  getCandidates(companyid:number): Observable<candidate[]> {
+    const url = `${this.apiUrl}/getCandidates/${companyid}`;
+    return this.http.get<candidate[]>(url);
   }
   editCandidate(id: number, status: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, { status });
   }
-  editCandidate1(id: number, status: string, email: string, university: string, nameEmergencyContact: string, emergencyContact: string): Observable<any> {
+  editCandidate1(id: number, status: string, email: string, university: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.put(url, { status, email, university, nameEmergencyContact, emergencyContact });
+    return this.http.put(url, { status, email, university});
   }
   agregarCandidate(candidate: candidate): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, candidate);
+    const url = `${this.apiUrl}/createCandidate`;
+    return this.http.post<any>(`${url}`, candidate);
   }
   getCandidate(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;

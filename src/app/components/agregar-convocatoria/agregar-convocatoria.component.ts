@@ -12,46 +12,53 @@ import { DateFormatPipe } from 'src/app/date-format.pipe';
 })
 export class AgregarConvocatoriaComponent {
   estados = ['Abierta', 'Progreso', 'Cerrada'];
-  
+  companyId: number | null = null;
+  companyIdString: string | null = null;
 
 
   constructor(private builder: FormBuilder, private convocatoriaService: offerService,
     private snackBar: MatSnackBar, private datePipe: DateFormatPipe) {}
 
   ngOnInit(): void {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString('es-CO');
     this.convocatoriaform.setValue({
-      tittleOffer: '', 
+      tittleoffer: '', 
       description: 'MeVale mondaaaaa',
-      experience: 'Monda',
-      publishDate: null,
-      requirements: 'sistemas',
+      experience: 0,
+      publishdate: null,
+      requeriments: 'sistemas',
       status: 'Abierta',
     });
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString; // Convertir la cadena a número
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
   }
     convocatoriaform = this.builder.group({
-    tittleOffer: this.builder.control('', Validators.required),
+    tittleoffer: this.builder.control('', Validators.required),
     description: this.builder.control('', Validators.required),
-    experience: this.builder.control('', Validators.required),
-    publishDate: [new Date().toLocaleDateString('es-CO'), Validators.required],
-    requirements: this.builder.control('', Validators.required),
+    experience: this.builder.control(0, Validators.required),
+    publishdate: [new Date().toLocaleDateString('es-CO'), Validators.required],
+    requeriments: this.builder.control('', Validators.required),
     status: this.builder.control('', Validators.required),
   });
 
   SaveConvocatoria() {
     console.log('Convocatoria', this.convocatoriaform);
     if (this.convocatoriaform.valid) {
-      const publishDateValue = this.convocatoriaform.value.publishDate;
+      const publishDateValue = this.convocatoriaform.value.publishdate;
       const currentDate = publishDateValue ? new Date(publishDateValue) : new Date();
       const convocatoriaData: offer = {
-        tittleOffer: this.convocatoriaform.value.tittleOffer || '', 
+        tittleoffer: this.convocatoriaform.value.tittleoffer || '', 
         description: this.convocatoriaform.value.description || '',
-        experience: this.convocatoriaform.value.experience || '',
+        experience: this.convocatoriaform.value.experience || 0,
         publishdate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
-        requirements: this.convocatoriaform.value.requirements || '',
+        requeriments: this.convocatoriaform.value.requeriments|| '',
         status: this.convocatoriaform.value.status || '',
+        companyid: this.companyId ? this.companyId : 0,
       };
+      console.log(convocatoriaData);
       this.convocatoriaService.agregaroffer(convocatoriaData).subscribe(
         response => {
           console.log('Convocatoria agregado correctamente:', response);

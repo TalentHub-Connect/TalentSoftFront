@@ -25,11 +25,10 @@ export class EditarConvocatoriaComponent {
     this.inputdata = this.data;
     console.log('Datos de la convocatoria:', this.inputdata);
     this.editForm = this.formBuilder.group({
-      tittleOffer: [''], 
+      tittleoffer: [''], 
       description: [''],
       status: [''],
-      requirements: [''],
-      experience: ['']
+      requeriments: ['']
     });
     this.currentConvocatoria = { ...this.inputdata.convocatoria }; 
     
@@ -49,9 +48,9 @@ export class EditarConvocatoriaComponent {
 
       
       const newStatus = this.editForm.get('status')?.value || this.currentConvocatoria.status;
-      const newtittleOffer = this.editForm.get('tittleOffer')?.value || this.currentConvocatoria.tittleOffer;
+      const newtittleOffer = this.editForm.get('tittleoffer')?.value || this.currentConvocatoria.tittleoffer;
       const newDespcription = this.editForm.get('description')?.value || this.currentConvocatoria.description;
-      const newRequirements = this.editForm.get('requirements')?.value || this.currentConvocatoria.requirements;
+      const newRequirements = this.editForm.get('requeriments')?.value || this.currentConvocatoria.requeriments;
       console.log('id:', newStatus);
     
       this.service.editoffer1(id, newStatus, newtittleOffer, newDespcription, newRequirements).subscribe(

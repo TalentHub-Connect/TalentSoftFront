@@ -9,7 +9,7 @@ import { company } from '../Entities/company';
 })
 export class CompanyService {
 
-  private apiUrl1 = 'https://companyback-qa.up.railway.app/api/talentsoft/company';
+  private apiUrl1 = 'https://canelaaccounmanagermicroservice-qa.up.railway.app/api/talentsoft/company';
   private apiUrl = `${environment.CompanyURL}/company`;
 
   constructor(private http: HttpClient) { }

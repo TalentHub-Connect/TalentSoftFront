@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './editar-aspirante.component.css'
 })
 export class EditarAspiranteComponent implements OnInit {
-  estados = ['Inicial', 'Entrevistas', 'Pruebas técnicas', 'Pruebas psicotécnicas', 'Pruebas médicas', 'Contratado'];
+  estados = ['Inicial', 'Entrevistas', 'Pruebas técnicas', 'Pruebas psicotécnicas', 'Pruebas médicas', 'Contratado', 'Rechazado'];
   inputdata: any;
   private tablaDataSubject = new BehaviorSubject<any[]>([]);
   currentAspirante: any;
@@ -30,8 +30,6 @@ export class EditarAspiranteComponent implements OnInit {
       email: [''],
       university: [''],
       status: [''],
-      nameEmergencyContact: [''],
-      emergencyContact: ['']
     });
     this.currentAspirante = { ...this.inputdata.aspirante };
 
@@ -53,11 +51,9 @@ export class EditarAspiranteComponent implements OnInit {
       const newStatus = this.editForm.get('status')?.value || this.currentAspirante.status;
       const newEmail = this.editForm.get('email')?.value || this.currentAspirante.email;
       const newUniversity = this.editForm.get('university')?.value || this.currentAspirante.university;
-      const newnameEmergencyContact = this.editForm.get('nameEmergencyContact')?.value || this.currentAspirante.nameEmergencyContact;
-      const newemergencyContact = this.editForm.get('emergencyContact')?.value || this.currentAspirante.emergencyContact;
       console.log('id:', newStatus);
 
-      this.service.editCandidate1(id, newStatus, newEmail, newUniversity, newnameEmergencyContact, newemergencyContact).subscribe(
+      this.service.editCandidate1(id, newStatus, newEmail, newUniversity).subscribe(
         () => {
           console.log('Aspirante editado exitosamente');
           this.ref.close('Aspirante editado exitosamente');

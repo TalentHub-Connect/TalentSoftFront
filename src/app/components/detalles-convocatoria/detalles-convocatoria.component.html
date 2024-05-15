@@ -1,12 +1,12 @@
 <h1 mat-dialog-title class="text-center">Detalles del Aspirante</h1>
 <img src="./assets/aspirante.png" class="text-center">
 <div mat-dialog-content *ngIf="data && data.convocatoria">
-  <p><strong>Título:</strong> {{ data.convocatoria.tittleOffer }}</p>
+  <p><strong>Título:</strong> {{ data.convocatoria.tittleoffer }}</p>
   <p><strong>Estado:</strong> {{ data.convocatoria.status }}</p>
   <p><strong>Fecha de publicación:</strong> {{ data.convocatoria.publishdate }}</p>
   <p><strong>Experiencia:</strong> {{ data.convocatoria.experience }}</p>
   <p><strong>Descripción:</strong> {{ data.convocatoria.description }}</p>
-  <p><strong>Requisitos:</strong> {{ data.convocatoria.requirements}}</p>
+  <p><strong>Requisitos:</strong> {{ data.convocatoria.requeriments}}</p>
 </div>
 <div mat-dialog-actions class="ml-3">
   <button (click)="closePopup()" color="warn">Close</button>

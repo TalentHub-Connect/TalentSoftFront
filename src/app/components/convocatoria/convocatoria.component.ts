@@ -21,6 +21,8 @@ import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacio
 export class ConvocatoriaComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
+  companyIdString: string | null = null;
+  companyId: number | null = null;
   statusFilterValue: string = ''; // Agrega una variable para almacenar el valor del filtro de status
   constructor(
     private router: Router,
@@ -42,7 +44,13 @@ export class ConvocatoriaComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.convocatoriaService.getoffers().subscribe((response: any) => {
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString;
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
+    this.convocatoriaService.getoffers(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -57,7 +65,7 @@ export class ConvocatoriaComponent implements AfterViewInit {
   }
 
   refreshTableData() {
-    this.convocatoriaService.getoffers().subscribe((response: any) => {
+    this.convocatoriaService.getoffers( this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;

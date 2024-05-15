@@ -18,6 +18,8 @@ export class AgregarAspirantesComponent {
   estados = ['Inicial'];
   ofertas: offer[] = [];
   status: candidateStatus[] = [];
+  companyId: number | null = null;
+  companyIdString: string | null = null;
 
   constructor(
     private builder: FormBuilder,
@@ -33,17 +35,24 @@ export class AgregarAspirantesComponent {
     this.customerform.setValue({
       name: 'MeVale',
       surname: 'Monda',
-      phoneNumber: 'aaaaaaa@gmail.com',
+      phoneNumber: 31,
       offer: '',
       status: 'Inicial',
     });
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString; // Convertir la cadena a número
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
     this.loadOfertas();
     this.loadStatus();
+    
   }
   customerform = this.builder.group({
     name: ['', Validators.required],
     surname: ['', Validators.required],
-    phoneNumber: ['', Validators.required],
+    phoneNumber: [0, Validators.required],
     offer: ['', Validators.required],
     status: ['', Validators.required],
   });
@@ -58,11 +67,12 @@ export class AgregarAspirantesComponent {
       const aspiranteData: candidate = {
         name: this.customerform.value.name || '',
         surname: this.customerform.value.surname || '',
-        phonenumber: this.customerform.value.phoneNumber || '',
-        offer_id: offerId || 0,
+        phonenumber: this.customerform.value.phoneNumber || 0,
+        offerId: offerId || 0,
         candidatestatusid: statusId || 0,
+        companyid: this.companyId ? this.companyId : 0,
       };
-      console.log('Datos del aspirante:', aspiranteData); // Para verificar que los datos sean correctos
+      console.log('Datos del aspiranteAgregarAspirante:', aspiranteData); // Para verificar que los datos sean correctos
       this.curriculumDialogService.openCurriculumDialog(aspiranteData);
     }
   }
@@ -82,7 +92,7 @@ export class AgregarAspirantesComponent {
   }
 
   loadOfertas(): void {
-    this.convocatoriaService.getoffers().subscribe(
+    this.convocatoriaService.getoffers(this.companyId ? this.companyId : 0).subscribe(
       (convocatorias: offer[]) => {
         this.ofertas = convocatorias;
       },

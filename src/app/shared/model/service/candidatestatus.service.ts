@@ -7,13 +7,14 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class CandidatestatusService {
-  private apiUrl = 'https://sstback-qa.up.railway.app/api/type/capacitations';
+  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/candidatestatus';
 
 
   constructor(private http: HttpClient) { }
 
   gettstatus(): Observable<candidateStatus []> {
-    return this.http.get<candidateStatus []>(this.apiUrl);
+    const url = `${this.apiUrl}/getCandidatestatus`;
+    return this.http.get<candidateStatus []>(url);
   }
   getstatus(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;

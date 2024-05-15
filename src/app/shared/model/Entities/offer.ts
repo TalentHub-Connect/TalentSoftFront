@@ -1,9 +1,10 @@
 export interface offer {
     id?: number; 
-    tittleOffer: string;
+    tittleoffer: string;
     description: string;
-    experience: string;
+    experience: number;
     publishdate: string;
-    requirements: string;
+    requeriments: string;
     status: string;
+    companyid: number;
 }

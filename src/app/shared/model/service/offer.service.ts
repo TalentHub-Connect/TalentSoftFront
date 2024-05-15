@@ -7,22 +7,25 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class offerService {
-  private apiUrl = 'https://66328febc51e14d69564cf84.mockapi.io/create-aspirantes/offer';
+  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/offer';
   constructor(private http: HttpClient) { }
 
-  getoffers(): Observable<offer[]> {
-    return this.http.get<offer[]>(this.apiUrl);
+  getoffers(companyid:number): Observable<offer[]> {
+    const url = `${this.apiUrl}/getOffers/${companyid}`;
+    return this.http.get<offer[]>(url);
   }
+  
   editoffer(id: number, status: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/deleteOffer/${id}`;
     return this.http.put(url, { status });
   }
-  editoffer1(id: number, status: string, tittleOffer: string, description: string, requirements: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put(url, { status, tittleOffer, description, requirements });
+  editoffer1(id: number, status: string, tittleoffer: string, description: string, requeriments: string): Observable<any> {
+    const url = `${this.apiUrl}/updateOffer/${id}`;
+    return this.http.put(url, { status, tittleoffer, description, requeriments });
   }
   agregaroffer(offer: offer): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, offer);
+    const url = `${this.apiUrl}/createOffer`;
+    return this.http.post<any>(`${url}`, offer);
   }
   getoffer(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;

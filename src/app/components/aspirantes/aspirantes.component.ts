@@ -25,6 +25,8 @@ import { CandidatestatusService } from 'src/app/shared/model/service/candidatest
 export class AspirantesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
   apiResponse: any = [];
+  companyIdString: string | null = null;
+  companyId: number | null = null;
   nStatusMap: Map<number, string> = new Map<number, string>();
   offersMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
@@ -41,7 +43,7 @@ export class AspirantesComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'name',
     'surname',
-    'phoneNumber',
+    'phonenumber',
     'offer',
     'status',
     'action',
@@ -51,12 +53,19 @@ export class AspirantesComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.aspiranteService.getCandidates().subscribe((response: any) => {
+    this.companyIdString = localStorage.getItem('companyid');
+    if (this.companyIdString) {
+      this.companyId = +this.companyIdString;
+    } else {
+      console.error('No se encontró el ID de la compañía en el almacenamiento local');
+    }
+    this.aspiranteService.getCandidates(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loadOfferTitles();
+      this.loadStatusTitles();
     });
 
     this.dataSource.paginator = this.paginator;
@@ -67,7 +76,7 @@ export class AspirantesComponent implements AfterViewInit {
   }
 
   refreshTableData() {
-    this.aspiranteService.getCandidates().subscribe((response: any) => {
+    this.aspiranteService.getCandidates(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
@@ -88,9 +97,9 @@ export class AspirantesComponent implements AfterViewInit {
   loadOfferTitles() {
     this.apiResponse.forEach((candidate: candidate) => {
       this.offerService
-        .getoffer(candidate.offer_id)
+        .getoffer(candidate.offerId)
         .subscribe((offer: offer) => {
-          this.offersMap.set(candidate.offer_id, offer.tittleOffer);
+          this.offersMap.set(candidate.offerId, offer.tittleoffer);
         });
     });
   }
@@ -102,9 +111,9 @@ export class AspirantesComponent implements AfterViewInit {
   loadStatusTitles() {
     this.apiResponse.forEach((candidate: candidate) => {
       this.serviceStatus
-        .getstatus(candidate.offer_id)
+        .getstatus(candidate.candidatestatusid)
         .subscribe((statusid: candidateStatus) => {
-          this.offersMap.set(candidate.candidatestatusid, statusid.description);
+          this.nStatusMap.set(candidate.candidatestatusid, statusid.description);
         });
     });
   }

@@ -38,12 +38,12 @@ export class CurriculumComponent {
   initForm(): void {
     this.curriculumForm = this.fb.group({
       address: ['', Validators.required],
-      personalObjective: ['', Validators.required],
-      workExperience: ['', Validators.required],
-      educationalHistory: ['', Validators.required],
+      personalobjetive: ['', Validators.required],
+      workexperience: [0, Validators.required],
+      educationalhistory: ['', Validators.required],
       language: ['', Validators.required],
       certification: ['', Validators.required],
-      personalReference: ['', Validators.required],
+      personalreference: ['', Validators.required],
       university: ['', Validators.required],
       career: ['', Validators.required]
     });
@@ -56,14 +56,14 @@ export class CurriculumComponent {
   onSubmit(): void {
     if (this.curriculumForm.valid) {
       const curriculumData = this.curriculumForm.value;
+      console.log('curriculum', curriculumData);
 
       // Guarda el currículum en el backend
       this.curriculumService.agregarCurriculum(curriculumData).subscribe(
         (curriculumId: number) => {
-
-          // Actualiza el aspirante con el ID del currículum asignado por el servidor
-          this.aspirante.cv_id = curriculumId;
-          console.log('VIDAHP',this.aspirante.cv_id);
+          
+          this.aspirante.cvId = curriculumId;
+          console.log('VIDAHP',this.aspirante.cvId);
           // Guarda el aspirante actualizado en el backend
           this.candidateService.agregarCandidate(this.aspirante).subscribe(
             () => {
@@ -79,7 +79,7 @@ export class CurriculumComponent {
           );
         },
         error => {
-          console.error('Error al guardar el currículum:', error);
+          console.error('No es valido el forms:', error);
           // Si hay un error, muestra un mensaje de error
           this.showErrorMessage();
         }
