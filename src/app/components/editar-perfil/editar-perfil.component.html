@@ -1,0 +1,54 @@
+<body class="background-container">
+    <div class="container mt-4">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="form-group">
+                <label for="firstName">Nombre</label>
+                <input type="text" id="firstName" formControlName="firstName" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('firstName')?.touched && editForm.get('firstName')?.invalid}">
+                <div *ngIf="editForm.get('firstName')?.invalid && editForm.get('firstName')?.touched"
+                    class="invalid-feedback">
+                    El nombre es obligatorio.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Apellido</label>
+                <input type="text" id="lastName" formControlName="lastName" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('lastName')?.touched && editForm.get('lastName')?.invalid}">
+                <div *ngIf="editForm.get('lastName')?.invalid && editForm.get('lastName')?.touched"
+                    class="invalid-feedback">
+                    El apellido es obligatorio.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo</label>
+                <input type="email" id="email" formControlName="email" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('email')?.touched && editForm.get('email')?.invalid}">
+                <div *ngIf="editForm.get('email')?.invalid && editForm.get('email')?.touched" class="invalid-feedback">
+                    Debe ser un correo válido.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Nombre de Usuario</label>
+                <input type="text" id="username" formControlName="username" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Rol</label>
+                <input type="text" id="role" formControlName="role" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="emergencyContactName">Nombre de Contacto de Emergencia</label>
+                <input type="text" id="emergencyContactName" formControlName="emergencyContactName"
+                    class="form-control">
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</body>

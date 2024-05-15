@@ -7,7 +7,7 @@
   <title>Cupón</title>
 </head>
 
-<body ng-app="cuponApp" ng-controller="cuponController">
+<body ng-app="cuponApp" ng-controller="cuponController" class="py-5">
   <div class="row" id="login">
     <div class="container">
       <div class="row">
@@ -18,9 +18,9 @@
               <div class="mb-3">
                 <input type="text" class="form-control" id="exampleInputPassword1" [(ngModel)]="codigo" name="codigo">
                 <label for="exampleInputPassword1" class="form-label">Ingresa tu cupón</label>
-                <div *ngIf="showError" class="error-message">Campo requerido</div>
+                <div *ngIf="showError" class="error-message ">Campo requerido</div>
               </div>
-              <button type="submit" class="btn btn-primary">Canjear Cupón</button>
+              <button type="submit" class="btn btn-primary ">Canjear Cupón</button>
             </form>
           </div>
         </div>

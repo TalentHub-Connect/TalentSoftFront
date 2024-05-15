@@ -1,0 +1,56 @@
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn {
+    background-color: #33A69A;
+    border-color: #33A69A;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color: darken(#33A69A, 10%);
+    border-color: darken(#33A69A, 10%);
+}
+
+.form-buttons {
+    margin-top: 20px;
+    /* Ajusta según necesidad para posicionar los botones más abajo */
+    display: flex;
+    justify-content: flex-start;
+    /* Ajusta esto si quieres cambiar la alineación */
+}
+
+.invalid-feedback {
+    display: block;
+    /* Hace que siempre esté presente, ajusta según tu preferencia */
+}
+
+.background-container {
+    background-color: #E3E3E3;
+    /* Color de fondo */
+    padding: 20px;
+    /* Espaciado interno */
+    border: 2px solid #E3E3E3;
+    /* Borde */
+    border-radius: 10px;
+    /* Permitir desplazamiento horizontal */
+}
+
+.btn-custom {
+    background-color: #33A69A;
+    /* Cambia este valor al color deseado */
+    border-color: #33A69A;
+    /* Cambia este valor al color deseado */
+    color: #fff;
+    /* Color de texto */
+}
+
+.btn-custom:hover {
+    background-color: #346C73;
+    /* Cambia este valor al color deseado para el hover */
+    border-color: #346C73;
+    /* Cambia este valor al color deseado para el hover */
+}

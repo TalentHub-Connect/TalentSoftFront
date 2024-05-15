@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError } from 'rxjs';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { AuthService } from '../../service/auth.service';
+import { AuthService } from '../model/service/auth.service';
 import { AuthGuard } from '../auth/auth.guard';
 import Swal from 'sweetalert2';
 import { throwError } from 'rxjs';

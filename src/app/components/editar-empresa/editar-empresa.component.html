@@ -1,0 +1,99 @@
+<body class="background-container">
+    <div class="container mt-4">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="form-group">
+                <label for="companyName">Nombre de la Empresa</label>
+                <input type="text" id="companyName" formControlName="namecompany" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('namecompany')?.touched && editForm.get('namecompany')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('namecompany')?.touched">
+                    <div *ngIf="editForm.get('namecompany')?.errors?.['required']">El nombre de la empresa es
+                        obligatorio.
+                    </div>
+                    <div *ngIf="editForm.get('namecompany')?.errors?.['minlength']">El nombre de la empresa debe tener
+                        al
+                        menos 3
+                        caracteres.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nit">NIT</label>
+                <input type="text" id="nit" formControlName="nit" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('nit')?.touched && editForm.get('nit')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('nit')?.touched">
+                    <div *ngIf="editForm.get('nit')?.errors?.['required']">El NIT de la empresa es obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="representative">Representante Legal</label>
+                <input type="text" id="representative" formControlName="namelegalrepresentative" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="idLegalRepresentative">ID del Representante Legal</label>
+                <input type="number" id="idLegalRepresentative" formControlName="idlegalrepresentative"
+                    class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" formControlName="email" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('email')?.touched && editForm.get('email')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('email')?.touched">
+                    <div *ngIf="editForm.get('email')?.errors?.['required']">El correo electrónico es obligatorio.
+                    </div>
+                    <div *ngIf="editForm.get('email')?.errors?.['email']">Introduce un correo electrónico válido.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Teléfono</label>
+                <input type="tel" id="phone" formControlName="phonecompany" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('phonecompany')?.touched && editForm.get('phonecompany')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('phonecompany')?.touched">
+                    <div *ngIf="editForm.get('phonecompany')?.errors?.['required']">El teléfono es obligatorio.
+                    </div>
+                    <div *ngIf="editForm.get('phonecompany')?.errors?.['pattern']">Introduce un número de teléfono
+                        válido.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="numWorkers">Número de Trabajadores</label>
+                <input type="number" id="numWorkers" formControlName="numworkers" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('numworkers')?.touched && editForm.get('numworkers')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('numworkers')?.touched">
+                    <div *ngIf="editForm.get('numworkers')?.errors?.['required']">El número de trabajadores es
+                        obligatorio.</div>
+                    <div *ngIf="editForm.get('numworkers')?.errors?.['min']">El número de trabajadores debe ser mayor
+                        que 0.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Dirección</label>
+                <input type="text" id="address" formControlName="address" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('address')?.touched && editForm.get('address')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('address')?.touched">
+                    <div *ngIf="editForm.get('address')?.errors?.['required']">La dirección es obligatoria.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="linkDate">Fecha de Enlace</label>
+                <input type="text" id="linkDate" formControlName="linkdate" class="form-control"
+                    [ngClass]="{'is-invalid': editForm.get('linkdate')?.touched && editForm.get('linkdate')?.invalid}">
+                <div class="invalid-feedback" *ngIf="editForm.get('linkdate')?.touched">
+                    <!-- Mensajes de validación aquí -->
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn" [disabled]="isLoading">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</body>

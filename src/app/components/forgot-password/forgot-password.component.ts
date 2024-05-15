@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
-import { AuthService  } from 'src/app/service/auth.service';
+import { AuthService  } from 'src/app/shared/model/service/auth.service';
 
 @Component({
   selector: 'app-forgot-password',

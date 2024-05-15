@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<body class="background-container">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-left mb-4">Progreso de salida de empleados</h2>
+            </div>
+            <div class="col-auto">
+                <button type="button" routerLink="/registrar-despido" class="btn btn-custom">Iniciar proceso</button>
+            </div>
+        </div>
+        <!-- Filtros -->
+        <div class="row mb-3">
+            <!-- Filtro por nombre -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="nombre">Filtrar por Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" [(ngModel)]="filtroNombre"
+                        (ngModelChange)="onFiltroNombreChange($event)">
+                </div>
+            </div>
+            <!-- Filtro por etapa -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Etapa">Filtrar por Etapa:</label>
+                    <select class="form-control" id="Etapa" [(ngModel)]="filtroEtapa"
+                        (ngModelChange)="onFiltroEtapaChange($event)">
+                        <option value="">Todas las etapas</option>
+                        <option value="Notificación">Notificación</option>
+                        <option value="Documentación">Documentación</option>
+                        <option value="Liquidación">Liquidación</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Filtro por causal -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="departamento">Filtrar por Causal:</label>
+                    <select class="form-control" id="departamento" [(ngModel)]="filtroCausal"
+                        (ngModelChange)="onFiltroCausalChange($event)">
+                        <option value="">Todas las causales</option>
+                        <option *ngFor="let causal of causales" [value]="causal">{{ causal }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Tabla de empleados con pipeline visual -->
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Etapa</th>
+                            <th>Causal</th>
+                            <th>Progreso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let empleado of filteredEmpleados.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ empleado.nombre }}</td>
+                            <td>{{ empleado.status }}</td>
+                            <td>{{ empleado.causal }}</td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar"
+                                        [ngStyle]="{'width': getProgressWidth(empleado.status)}"
+                                        [ngClass]="getProgressColor(empleado.status)" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        {{ getProgressValue(empleado.status) }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-custom-search btn-sm"
+                                    [routerLink]="['/progreso-detalles', empleado.id]">
+                                    <i class="fas fa-search lupa-icon"></i> <!-- Icono de lupa -->
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="onDeleteEmpleado(empleado.id)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Controles de paginación y selector de elementos por página -->
+                <div class="pagination-container d-flex justify-content-end align-items-center">
+                    <!-- Selector de elementos por página -->
+                    <div class="items-per-page mr-3 d-inline-flex align-items-center">
+                        <div class="d-inline-flex mr-2">Elementos por página:</div>
+                        <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage"
+                            (change)="onChangeItemsPerPage()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+
+                    <!-- Botones de paginación -->
+                    <div class="pagination-buttons">
+                        <button class="btn btn-custom-pagination mr-1" [disabled]="currentPage === 1"
+                            (click)="onPreviousPage()">Anterior</button>
+                        <span class="current-page">Página {{ currentPage }}</span>
+                        <button class="btn btn-custom-pagination ml-1"
+                            [disabled]="currentPage * itemsPerPage >= filteredEmpleados.length"
+                            (click)="onNextPage()">Siguiente</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>

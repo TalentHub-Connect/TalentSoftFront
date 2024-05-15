@@ -1,0 +1,23 @@
+<body class="background-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Registrar Causal de Despido</h2>
+            <form (ngSubmit)="guardarCausal()">
+                <div class="form-group">
+                    <label for="causal">Causal:</label>
+                    <input type="text" class="form-control" id="causal" [(ngModel)]="nuevaCausal.name" name="causal"
+                        required placeholder="Ingrese la causal">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea class="form-control" id="descripcion" [(ngModel)]="nuevaCausal.description"
+                        name="descripcion" required placeholder="Describa la causal"></textarea>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" (click)="descartar()">Descartar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Causal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

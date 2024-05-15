@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlanServiceService } from 'src/app/service/plan-service.service';
+import { PlanServiceService } from 'src/app/shared/model/service/plan-service.service';
 
 @Component({
   selector: 'app-cambiar-plan',

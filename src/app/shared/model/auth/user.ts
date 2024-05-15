@@ -6,6 +6,7 @@ export class User {
   public username: string = '';
   public password: string = '';
   public role: string = '';
+  public emergencyContactName?: string = '';
 
   constructor();
   constructor(firstName: string, lastName: string, email: string, role: string, id?: string, username?: string, password?: string);

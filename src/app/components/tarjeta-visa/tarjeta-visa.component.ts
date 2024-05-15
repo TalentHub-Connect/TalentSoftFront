@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ValidationService } from 'src/app/service/validation.service';
-import { SendBService } from 'src/app/service/send-b.service';
+import { ValidationService } from 'src/app/shared/model/service/validation.service';
+import { SendBService } from 'src/app/shared/model/service/send-b.service';
 import { Card } from '../../shared/model/Entities/card';
 import { Router } from '@angular/router';
-import { RegistrarTarjetaService } from 'src/app/shared/model/registraTarjeta.service';
+import { RegistrarTarjetaService } from 'src/app/shared/model/service/registraTarjeta.service';
 
 @Component({
   selector: 'app-tarjeta-visa',

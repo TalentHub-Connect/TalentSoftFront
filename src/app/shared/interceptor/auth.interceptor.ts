@@ -10,7 +10,7 @@ import {
   import { Observable, throwError } from 'rxjs';
   import { catchError } from 'rxjs/operators';
   import Swal from 'sweetalert2';
-  import { AuthService } from '../../service/auth.service';
+  import { AuthService } from '../model/service/auth.service';
   import { Router } from '@angular/router';
   import { AuthGuard } from '../../shared/auth/auth.guard';
   

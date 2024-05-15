@@ -1,0 +1,45 @@
+<div>
+    <h1>CREAR POSTULACIÓN</h1>
+    <form [formGroup]="customerform" (ngSubmit)="SaveCustomer()">
+        <mat-card>
+            <mat-card-content>
+            
+                <mat-form-field class="mat-50">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="name" matInput>
+                </mat-form-field>
+                <mat-form-field class="mat-50">
+                    <mat-label>Apellido</mat-label>
+                    <input matInput formControlName="surname">
+                </mat-form-field>
+    
+                <mat-form-field class="mat-50">
+                    <mat-label>Convocatoria</mat-label>
+                    <mat-select formControlName="offer">
+                        <mat-option [value]="item.id" *ngFor="let item of ofertas">{{item.tittleoffer}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mat-50">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option [value]="item.id" *ngFor="let item of status">{{item.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+        
+               
+                
+        
+        
+            </mat-card-content>
+            <mat-card-footer>
+            <div style="margin:2%;text-align: right;">
+                <button mat-raised-button color="primary" (click)="onDiscard()"><mat-icon>arrow_back</mat-icon>Devolver</button>
+                <button mat-raised-button type="submit" color="primary"><mat-icon>save</mat-icon>Guardar</button>
+                <button mat-raised-button color="warn" (click)="clearform()"><mat-icon>close</mat-icon>Limpiar</button>
+            </div>
+            </mat-card-footer>
+        </mat-card>
+        
+        </form>
+</div>

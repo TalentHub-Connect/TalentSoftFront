@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/shared/model/service/data.service';
 
 
 @Component({

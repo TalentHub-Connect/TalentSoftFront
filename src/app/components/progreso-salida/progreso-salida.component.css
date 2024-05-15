@@ -1,0 +1,102 @@
+.background-container {
+    background-color: #E3E3E3;
+    /* Color de fondo */
+    padding: 20px;
+    /* Espaciado interno */
+    border: 2px solid #E3E3E3;
+    /* Borde */
+    border-radius: 10px;
+    /* Permitir desplazamiento horizontal */
+}
+
+.btn-custom {
+    background-color: #33A69A;
+    /* Cambia este valor al color deseado */
+    border-color: #33A69A;
+    /* Cambia este valor al color deseado */
+    color: #fff;
+    /* Color de texto */
+}
+
+.btn-custom:hover {
+    background-color: #346C73;
+    /* Cambia este valor al color deseado para el hover */
+    border-color: #346C73;
+    /* Cambia este valor al color deseado para el hover */
+}
+
+/* empleados.component.css */
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.btn-sm {
+    margin-right: 5px;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+}
+
+.bg-notification {
+    background-color: #329AA6;
+    /* Reemplaza con el código de color deseado */
+}
+
+.bg-documentacion {
+    background-color: #33A69A;
+    /* Reemplaza con el código de color deseado */
+}
+
+.bg-liquidacion {
+    background-color: #346C73;
+    /* Reemplaza con el código de color deseado */
+}
+
+.bg-finalizado {
+    background-color: #2E5559;
+    /* Reemplaza con el código de color deseado */
+}
+
+
+.btn-custom-search {
+    background-color: #33A69A;
+    /* Color de fondo deseado */
+    border-color: #33A69A;
+    /* Borde del botón */
+    color: #fff;
+    /* Color del texto */
+}
+
+.btn-custom-search:hover {
+    background-color: #346C73;
+    /* Color al pasar el mouse */
+    border-color: #346C73;
+    /* Borde al pasar el mouse */
+}
+
+.search-button .lupa-icon {
+    margin-left: 5px;
+    /* Espacio entre el texto y el icono */
+    background-color: #33A69A;
+    /* Color de fondo deseado */
+    color: #fff;
+    /* Color del icono de lupa */
+}
+
+.btn-custom-pagination {
+    background-color: #346C73;
+    border-color: #346C73;
+    color: #ffffff;
+    /* Color del texto */
+}
+
+.btn-custom-pagination:hover {
+    background-color: #235955;
+    /* Cambia el color de fondo al pasar el ratón */
+    border-color: #235955;
+}

@@ -1,0 +1,79 @@
+/* Estilos para el contenedor de fondo y los botones, como ya están definidos */
+.background-container {
+    background-color: #E3E3E3;
+    /* Color de fondo */
+    padding: 20px;
+    /* Espaciado interno */
+    border: 2px solid #E3E3E3;
+    /* Borde */
+    border-radius: 10px;
+    /* Permitir desplazamiento horizontal */
+}
+
+.btn-custom {
+    background-color: #33A69A;
+    /* Color de fondo del botón */
+    border-color: #33A69A;
+    /* Borde del botón */
+    color: #fff;
+    /* Color de texto */
+}
+
+.btn-custom:hover {
+    background-color: #346C73;
+    /* Color de fondo del botón al pasar el mouse */
+    border-color: #346C73;
+    /* Borde del botón al pasar el mouse */
+}
+
+/* Estilos de la tabla para asegurar que no estén en negrita excepto los encabezados */
+.table th,
+.table td {
+    font-size: 0.85rem;
+    /* Tamaño de fuente más pequeño para la tabla */
+    font-weight: normal;
+    /* Asegura que los datos de la tabla no estén en negrita */
+}
+
+.table th {
+    font-weight: bold;
+    /* Aplica negrita solo a los encabezados de la tabla */
+}
+
+
+.form-group label,
+.form-control {
+    font-size: 0.9rem;
+    /* Tamaño de fuente predeterminado para etiquetas y controles */
+    font-weight: normal;
+    /* Asegura que los elementos del formulario no estén en negrita */
+}
+
+.btn-custom-search {
+    background-color: #33A69A;
+    /* Color deseado */
+    border-color: #33A69A;
+    /* Borde del botón */
+    color: #fff;
+    /* Color del texto */
+}
+
+.btn-custom-search:hover {
+    background-color: #346C73;
+    /* Color al pasar el mouse */
+    border-color: #346C73;
+    /* Borde al pasar el mouse */
+}
+
+.btn-custom-pagination {
+    background-color: #346C73;
+    border-color: #346C73;
+    color: #ffffff;
+    /* Color del texto */
+}
+
+.btn-custom-pagination:hover {
+    background-color: #235955;
+    /* Cambia el color de fondo al pasar el ratón */
+    border-color: #235955;
+}

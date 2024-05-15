@@ -1,0 +1,29 @@
+<body class="background-container">
+    <div class="container">
+        <h2>Iniciar proceso de despido</h2>
+        <form (ngSubmit)="onSubmit()">
+            <!-- Selector de Empleados -->
+            <div class="form-group">
+                <label for="empleado">Seleccionar Empleado:</label>
+                <select class="form-control" id="empleado" [(ngModel)]="selectedEmpleado" name="selectedEmpleado"
+                    required>
+                    <option *ngFor="let empleado of empleados" [ngValue]="empleado">{{ empleado.nombre }}</option>
+                </select>
+            </div>
+
+            <!-- Selector de Causal -->
+            <div class="form-group">
+                <label for="causal">Seleccionar Causal:</label>
+                <select class="form-control" id="causal" [(ngModel)]="selectedCausal" name="selectedCausal" required>
+                    <option *ngFor="let causal of causales" [ngValue]="causal">{{ causal }}</option>
+                </select>
+            </div>
+
+            <!-- Botón de Descartar -->
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary btn-descartar" (click)="onDiscard()">Descartar</button>
+                <button type="submit" class="btn btn-primary btn-registrar">Registrar Despido</button>
+            </div>
+        </form>
+    </div>
+</body>

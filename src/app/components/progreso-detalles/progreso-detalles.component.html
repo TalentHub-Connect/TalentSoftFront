@@ -1,0 +1,54 @@
+<body class="background-container">
+    <div class="card-deck">
+        <!-- Notificación -->
+        <div class="card mb-3" *ngIf="debeMostrarEtapa('Notificación')">
+            <div class="card-header">Notificación</div>
+            <div class="card-body">
+                <h5 class="card-title">Detalle de la Notificación</h5>
+                <textarea class="form-control mb-2" [(ngModel)]="empleado.razonDespido"
+                    placeholder="Ingrese la razón del despido"
+                    [disabled]="etapasCompletadas['Notificación']"></textarea>
+                <button class="btn btn-sm"
+                    [ngClass]="{'btn-success': etapasCompletadas['Notificación'], 'btn-danger': !etapasCompletadas['Notificación']}"
+                    (click)="toggleEtapa('Notificación')" style="width: auto;">
+                    {{ etapasCompletadas['Notificación'] ? 'Correo Enviado' : 'Enviar correo' }}
+                </button>
+                <div *ngIf="mensajeN" class="alert alert-info mt-2">{{ mensajeN }}</div>
+            </div>
+        </div>
+
+        <!-- Documentación -->
+        <div class="card mb-3" *ngIf="debeMostrarEtapa('Documentación')">
+            <div class="card-header">Documentación</div>
+            <div class="card-body">
+                <h5 class="card-title">Subir Documentos</h5>
+                <input type="file" class="form-control-file mb-2" (change)="subirDocumento($event)" multiple>
+                <ul class="list-group mb-2" style="max-height: 150px; overflow-y: auto;">
+                    <li class="list-group-item" *ngFor="let doc of empleado.documentos">{{ doc.nombre }}</li>
+                </ul>
+                <button class="btn btn-sm"
+                    [ngClass]="{'btn-success': etapasCompletadas['Documentación'], 'btn-danger': !etapasCompletadas['Documentación']}"
+                    (click)="toggleEtapa('Documentación')" style="width: auto;">
+                    {{ etapasCompletadas['Documentación'] ? 'Documentos subidos' : 'Documentos incompletos' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- Liquidación -->
+        <div class="card mb-3" *ngIf="debeMostrarEtapa('Liquidación')">
+            <div class="card-header">Liquidación</div>
+            <div class="card-body">
+                <h5 class="card-title">Detalle de la Liquidación</h5>
+                <button class="btn btn-sm"
+                    [ngClass]="{'btn-success': etapasCompletadas['Liquidación'], 'btn-danger': !etapasCompletadas['Liquidación']}"
+                    (click)="toggleEtapa('Liquidación')" style="width: auto;">
+                    {{ etapasCompletadas['Liquidación'] ? 'Liquidación Calculada' : 'Calcular Liquidación' }}
+                </button>
+                <div *ngIf="mensajeL" class="alert alert-info mt-2">{{ mensajeL }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="boton-guardar-container text-right mt-4">
+        <button class="btn btn-primary" (click)="guardarCambios()">Guardar Cambios</button>
+    </div>
+</body>

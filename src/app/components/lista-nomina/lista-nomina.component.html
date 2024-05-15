@@ -1,5 +1,21 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <body class="background-container">
     <div class="container mt-4">
+        <!-- Sección para mostrar el total de la liquidación -->
+        <div class="row">
+            <div class="col-5 mb-3">
+                <div class="alert alert-info d-flex align-items-center" role="alert">
+                    <div class="total-text">
+                        <strong>El total a pagar en el mes de {{ mesActual }} es de:</strong> ${{ totalLiquidacion }}
+                    </div>
+                    <div class="ml-auto"> <!-- Esta clase empuja el botón al extremo derecho -->
+                        <button class="btn btn-dispersar">Dispersar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col">
                 <h2 class="text-left mb-4">Lista de Empleados</h2>
@@ -15,11 +31,11 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="status">Filtrar por Status:</label>
+                    <label for="status">Filtrar por status de novedad:</label>
                     <select class="form-control" id="status">
                         <option value="">Todos</option>
-                        <option value="activo">Activo</option>
-                        <option value="inactivo">Inactivo</option>
+                        <option value="activo">Revisado</option>
+                        <option value="inactivo">No revisado</option>
                     </select>
                 </div>
             </div>
@@ -46,14 +62,59 @@
                             <th>Tipo de Contrato</th>
                             <th>Salario</th>
                             <th>Fecha de Inicio</th>
-                            <th>Status</th>
-                            <!-- Agregar más columnas si es necesario -->
+                            <th>Status novedad</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Filas de empleados se agregarán dinámicamente -->
+                        <tr *ngFor="let empleado of empleados; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ empleado.nombre }}</td>
+                            <td>{{ empleado.departamento }}</td>
+                            <td>{{ empleado.tipoContrato }}</td>
+                            <td>${{ empleado.salario }}</td>
+                            <td>{{ empleado.fechaInicio }}</td>
+                            <td>{{ empleado.novedad }}</td>
+                            <td>
+                                <!-- Botones de acciones -->
+                                <button class="btn btn-custom-search btn-sm" (click)="agregarNovedad(empleado.id)">
+                                    <i class="fas fa-plus-circle"></i> <!-- Icono de novedad -->
+                                </button>
+                                <button class="btn btn-custom-search btn-sm"
+                                    [routerLink]="['/ver-empleado', empleado.id]">
+                                    <i class="fas fa-search"></i> <!-- Icono de lupa -->
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="eliminarEmpleado(empleado.id)">
+                                    <i class="fas fa-trash"></i> <!-- Icono de caneca -->
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+                <!-- Controles de paginación y selector de elementos por página -->
+                <div class="pagination-container d-flex justify-content-end align-items-center">
+                    <!-- Selector de elementos por página -->
+                    <div class="items-per-page mr-3 d-inline-flex align-items-center">
+                        <div class="d-inline-flex mr-2">Elementos por página:</div>
+                        <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage"
+                            (change)="onChangeItemsPerPage()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+
+                    <!-- Botones de paginación -->
+                    <div class="pagination-buttons">
+                        <button class="btn btn-custom-pagination mr-1" [disabled]="currentPage === 1"
+                            (click)="onPreviousPage()">Anterior</button>
+                        <span class="current-page">Página {{ currentPage }}</span>
+                        <button class="btn btn-custom-pagination ml-1"
+                            [disabled]="currentPage * itemsPerPage >= empleados.length"
+                            (click)="onNextPage()">Siguiente</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

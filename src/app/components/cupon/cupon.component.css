@@ -1,11 +1,7 @@
 body {
     margin: 0;
     overflow-x: hidden;
-    background-image: url(src/assets/CUPON_FONDO.svg);
-    background-size: cover; 
-    background-position: center;
-    height: 100vh; 
-    width: 100%; 
+    background-color: transparent !important;
 }
 
 .col2{

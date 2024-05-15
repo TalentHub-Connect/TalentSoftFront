@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../../app/service/auth.service';
-import { UtilService } from '../../../app/service/util.service';
+import { AuthService } from '../../shared/model/service/auth.service';
+import { UtilService } from '../../shared/model/service/util.service';
+import { CompanyService } from 'src/app/shared/model/service/company.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private companyService: CompanyService,
   ) { }
 
   username: string = '';
@@ -51,12 +53,22 @@ export class LoginComponent {
       console.log("Entra1...");
       this.authService.login(this.username, this.password).subscribe(
         (data: any) => {
-          console.log("Respuesta del servidor:", data); // Agregar esta línea para imprimir la respuesta del servidor
+          this.companyService.getIdCompany(data.email).subscribe(
+            (companyData: any) => {
+              const id = companyData.id;
+              localStorage.setItem('companyid', id.toString());
+
+            }
+          );
+
+
           const rol = localStorage.getItem('role');
+          const id =localStorage.getItem('companyid')
+          
           if (rol === 'ADMIN, default-roles-talentsoft') {
             this.router.navigate(['/home']);
           } if (rol !== 'ADMIN, default-roles-talentsoft') {
-            this.router.navigate(['/modules']);
+            this.router.navigate(['/home']);
           }
         },
         (error: any) => {

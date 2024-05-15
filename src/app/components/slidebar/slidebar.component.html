@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+</head>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="bi bi-list" style="font-size: 2rem; color: #292C32;"></i>
+                </button>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item" *ngIf="showAdminCard">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#admin" aria-expanded="false" aria-controls="admin">
+                        <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>Administrador</span>
+                    </a>
+                    <ul id="admin" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/editar-empresa'" class="sidebar-link">Gestionar Empresa</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/payment-info'" class="sidebar-link">Gestionar Suscripción</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/users'" class="sidebar-link">Gestionar Usuarios</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item" *ngIf="showRecruitmentCard">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#hire" aria-expanded="false" aria-controls="hire">
+                        <i class="bi bi-clipboard2-heart" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>Reclutamiento</span>
+                    </a>
+                    <ul id="hire" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/convocatoria'" class="sidebar-link">Convocatorias</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/aspirante'" class="sidebar-link">Aspirantes</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item" *ngIf="showDismissalCard">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#fire" aria-expanded="false" aria-controls="fire">
+                        <i class="bi bi-clipboard2-x" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>Despido</span>
+                    </a>
+                    <ul id="fire" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/causales-despido'" class="sidebar-link">Causales de Despido</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/progreso-salida'" class="sidebar-link">Procesos de Salida</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item" *ngIf="showNominaCard">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#nomi" aria-expanded="false" aria-controls="nomi">
+                        <i class="bi bi-person-vcard" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>Nómina</span>
+                    </a>
+                    <ul id="nomi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/lista-nomina'" class="sidebar-link">Gestionar nómina</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item" *ngIf="showSSTCard">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#ssst" aria-expanded="false" aria-controls="ssst">
+                        <i class="bi bi-shield-check" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>SST</span>
+                    </a>
+                    <ul id="ssst" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/incidentes'" class="sidebar-link">Incidencias</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/capacitaciones'" class="sidebar-link">Capacitaciones</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/eventos'" class="sidebar-link">Eventos</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item" *ngIf="showBICard">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#busi" aria-expanded="false" aria-controls="busi">
+                        <i class="bi bi-bar-chart-line" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>BI</span>
+                    </a>
+                    <ul id="busi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a [routerLink]="'/bi'" class="sidebar-link">Informes</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a [routerLink]="'/editar-perfil'" class="sidebar-link">
+                    <i class="bi bi-person" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Perfil</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-box-arrow-left" style="font-size: 1.5rem; color: #292C32;" (click)="logout()"
+                        routerLink="/login"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main">
+            <div class="navbar">
+                <img src="assets/logo2.png" alt="Logo" class="logo-img">
+            </div>
+            <div class="contenido p-3">
+                <h1>
+                    <router-outlet></router-outlet>
+                </h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

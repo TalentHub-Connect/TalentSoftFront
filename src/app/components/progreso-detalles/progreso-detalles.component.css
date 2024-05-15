@@ -1,0 +1,85 @@
+.background-container {
+    background-color: #E3E3E3;
+    /* Color de fondo */
+    padding: 20px;
+    /* Espaciado interno */
+    border: 2px solid #E3E3E3;
+    /* Borde */
+    border-radius: 10px;
+    /* Permitir desplazamiento horizontal */
+}
+
+.container {
+    background-color: #f8f9fa;
+    /* Color de fondo claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para un efecto elevado */
+}
+
+/* Encabezados dentro del contenedor */
+.container h2 {
+    color: #292C32;
+}
+
+.empleado-detalle {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    /* Establece un tamaño de letra más pequeño */
+}
+
+.card-deck {
+    margin-top: 30px;
+}
+
+/* Estilos para las tarjetas */
+.card {
+    border: none;
+    /* Sin bordes para las tarjetas */
+    border-radius: 8px;
+    /* Bordes redondeados */
+}
+
+.card-header {
+    background-color: #346C73;
+    /* Color azul para las cabeceras de las tarjetas */
+    color: white;
+    border-radius: 8px 8px 0 0;
+    /* Redondeo solo en la parte superior */
+}
+
+.card-body {
+    padding: 20px;
+    background-color: white;
+    border-radius: 0 0 8px 8px;
+    /* Redondeo solo en la parte inferior */
+}
+
+/* Estilos para los botones */
+.btn {
+    width: 25%;
+    /* Hacer que los botones ocupen todo el ancho */
+}
+
+/* Estilos específicos para botones de guardar */
+.btn-primary {
+    background-color: #33A69A;
+    /* Verde, siguiendo la convención de 'Guardar' como acción positiva */
+    border-color: #33A69A;
+    margin-top: 20px;
+    width: auto
+}
+
+.boton-guardar-container {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinea los elementos al final del contenedor (derecha) */
+    padding: 20px 0;
+}
+
+/* Estilo para centrar el botón de guardar cambios */
+.text-center {
+    text-align: center;
+    margin-top: 20px;
+}
