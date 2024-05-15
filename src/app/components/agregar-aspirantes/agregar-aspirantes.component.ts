@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CurriculumDialogService } from 'src/app/shared/model/service/curriculum-dialog.service';
 import { CandidatestatusService } from 'src/app/shared/model/service/candidatestatus.service';
 import { candidateStatus } from 'src/app/shared/model/Entities/candidatestatus';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-aspirantes',
@@ -27,7 +28,8 @@ export class AgregarAspirantesComponent {
     private convocatoriaService: offerService,
     private snackBar: MatSnackBar,
     private curriculumDialogService: CurriculumDialogService,
-    private tstatus:CandidatestatusService
+    private tstatus:CandidatestatusService,
+    private router: Router,
   ) { }
 
 
@@ -86,7 +88,9 @@ export class AgregarAspirantesComponent {
     }
   }
 
-
+  onDiscard(): void {
+    this.router.navigate(['/aspirante']);
+  }
   clearform() {
     this.customerform.reset();
   }

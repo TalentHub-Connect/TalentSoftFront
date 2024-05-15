@@ -40,8 +40,6 @@ export class ContratoComponent {
 
 
 
-
-  // Función para enviar el contrato al backend y asociarle el aspirante
   onSubmit(): void {
     if (this.contratoForm.valid && this.aspirante && this.aspirante.id) {
       const contractData = {
