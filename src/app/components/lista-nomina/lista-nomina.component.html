@@ -77,7 +77,8 @@
                             <td>{{ empleado.status }}</td>
                             <td>
                                 <!-- Botones de acciones -->
-                                <button class="btn btn-custom-search btn-sm" (click)="agregarNovedad(empleado.id)">
+                                <button class="btn btn-custom-search btn-sm"
+                                    [routerLink]="['/agregar-novedad', empleado.id]">
                                     <i class="fas fa-plus-circle"></i> <!-- Icono de novedad -->
                                 </button>
                                 <button class="btn btn-custom-search btn-sm"

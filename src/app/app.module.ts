@@ -58,6 +58,8 @@ import { CapacitacionesComponent } from './components/capacitaciones/capacitacio
 import { AgregarCapacitacionComponent } from './components/agregar-capacitacion/agregar-capacitacion.component';
 import { DetallesCapacitacionComponent } from './components/detalles-capacitacion/detalles-capacitacion.component';
 import { EditarCapacitacionComponent } from './components/editar-capacitacion/editar-capacitacion.component';
+import { AgregarNovedadComponent } from './components/agregar-novedad/agregar-novedad.component';
+import { VerEmpleadoComponent } from './components/ver-empleado/ver-empleado.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +110,9 @@ import { EditarCapacitacionComponent } from './components/editar-capacitacion/ed
     CapacitacionesComponent,
     AgregarCapacitacionComponent,
     DetallesCapacitacionComponent,
-    EditarCapacitacionComponent
+    EditarCapacitacionComponent,
+    AgregarNovedadComponent,
+    VerEmpleadoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,44 @@
+<body class="background-container">
+    <div class="container mt-4">
+        <h2 class="text-left mb-4">Detalles del Empleado</h2>
+        <form #empleadoForm="ngForm">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="empleado.name" disabled>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="empleado.surname"
+                    disabled>
+            </div>
+            <div class="form-group">
+                <label for="departamento">Departamento:</label>
+                <input type="text" class="form-control" id="departamento" name="departamento"
+                    [(ngModel)]="empleado.department" disabled>
+            </div>
+            <div class="form-group">
+                <label for="tipoContrato">Tipo de Contrato:</label>
+                <input type="text" class="form-control" id="tipoContrato" name="tipoContrato"
+                    [(ngModel)]="empleado.contractType" disabled>
+            </div>
+            <div class="form-group">
+                <label for="salario">Salario:</label>
+                <input type="number" class="form-control" id="salario" name="salario" [(ngModel)]="empleado.salario"
+                    disabled>
+            </div>
+            <div class="form-group">
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio"
+                    [(ngModel)]="empleado.startdate" disabled>
+            </div>
+            <div class="form-group">
+                <label for="status">Status Novedad:</label>
+                <input type="text" class="form-control" id="status" name="status" [(ngModel)]="empleado.status"
+                    disabled>
+            </div>
+            <div class="form-group mt-3">
+                <button class="btn btn-primary" (click)="regresar()">Regresar</button>
+            </div>
+        </form>
+    </div>
+</body>
