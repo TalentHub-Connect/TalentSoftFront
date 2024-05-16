@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { EmpleadoN } from '../Entities/empleadoN';
+import { New } from '../Entities/new';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { EmpleadoN } from '../Entities/empleadoN';
 export class EmpleadoNService {
 
   private apiUrl = `${environment.NominaURL}/employee`;
+  private apiUrlNew = `${environment.NominaURL}/employee`;
 
   constructor(private http: HttpClient) { }
 
@@ -34,5 +36,9 @@ export class EmpleadoNService {
 
   deleteEmpleadoById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteEmployee/${id}`);
+  }
+
+  agregarNovedad(id: number, novedad: New): Observable<New> {
+    return this.http.post<New>(`${this.apiUrl}/createNews/${id}`, novedad);
   }
 }

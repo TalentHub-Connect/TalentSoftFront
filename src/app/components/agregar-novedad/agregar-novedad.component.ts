@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { New } from 'src/app/shared/model/Entities/new';
 import { EmpleadoNService } from 'src/app/shared/model/service/empleado-n.service';
 
 @Component({
@@ -9,10 +10,10 @@ import { EmpleadoNService } from 'src/app/shared/model/service/empleado-n.servic
 })
 export class AgregarNovedadComponent implements OnInit {
   empleadoId!: number;
-  novedad = {
-    nombre: '',
-    descripcion: '',
-    cantidad: 0
+  novedad: New = {
+    name: '',
+    description: '',
+    moneybenefit: 0
   };
 
   constructor(
@@ -26,11 +27,10 @@ export class AgregarNovedadComponent implements OnInit {
   }
 
   agregarNovedad(): void {
-    // Lógica para agregar la novedad (por ejemplo, enviar los datos al servidor)
-    console.log('Novedad agregada:', this.novedad);
-
-    // Redirigir de vuelta a la lista de empleados después de agregar la novedad
-    this.router.navigate(['/lista-nomina']);
+    this.empleadoNService.agregarNovedad(this.empleadoId, this.novedad).subscribe(() => {
+      console.log('Novedad agregada:', this.novedad);
+      this.router.navigate(['/lista-nomina']);
+    });
   }
 
   regresar(): void {
