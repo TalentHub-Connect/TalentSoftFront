@@ -11,7 +11,7 @@ import { ReasonService } from 'src/app/shared/model/service/reason.service';  //
   styleUrls: ['./registrar-causal.component.css']
 })
 export class RegistrarCausalComponent {
-  nuevaCausal: Reason = new Reason(0, '', '', 'Admin');
+  nuevaCausal: Reason = new Reason();
   isLoading = false; // Control para mostrar un indicador de carga
 
   constructor(
@@ -22,30 +22,36 @@ export class RegistrarCausalComponent {
 
   guardarCausal(): void {
     const username = localStorage.getItem('username') || 'Usuario desconocido';
-    this.nuevaCausal.createForUser = username;
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      const companyId = parseInt(companyIdString, 10);
+      this.nuevaCausal.createForUser = username;
+      this.nuevaCausal.companyId = companyId;
 
-    if (this.nuevaCausal.name && this.nuevaCausal.description) {
-      this.isLoading = true; // Activar el indicador de carga
-      this.causalService.agregarReason(this.nuevaCausal, this.nuevaCausal.createForUser).subscribe({
-        next: (result) => {
-          console.log('Causal agregada con éxito:', result);
-          this.snackBar.open('Causal agregada con éxito', 'Cerrar', { duration: 3000 });
-          this.router.navigate(['/causales-despido']);
-        },
-        error: (err) => {
-          console.error('Error al agregar la causal:', err);
-          this.snackBar.open('Error al registrar la causal', 'Cerrar', { duration: 3000 });
-        },
-        complete: () => {
-          this.isLoading = false; // Desactivar el indicador de carga
-        }
-      });
+      if (this.nuevaCausal.name && this.nuevaCausal.description) {
+        this.isLoading = true; // Activar el indicador de carga
+        this.causalService.agregarReason(this.nuevaCausal).subscribe({
+          next: (result) => {
+            console.log('Causal agregada con éxito:', result);
+            this.snackBar.open('Causal agregada con éxito', 'Cerrar', { duration: 3000 });
+            this.router.navigate(['/causales-despido']);
+          },
+          error: (err) => {
+            console.error('Error al agregar la causal:', err);
+            this.snackBar.open('Error al registrar la causal', 'Cerrar', { duration: 3000 });
+          },
+          complete: () => {
+            this.isLoading = false; // Desactivar el indicador de carga
+          }
+        });
+      } else {
+        this.snackBar.open('Por favor, complete todos los campos necesarios.', 'Cerrar', { duration: 3000 });
+      }
     } else {
-      this.snackBar.open('Por favor, complete todos los campos necesarios.', 'Cerrar', { duration: 3000 });
+      console.error('Company ID not found in localStorage');
+      this.snackBar.open('Error: Company ID not found', 'Cerrar', { duration: 3000 });
     }
   }
-
-
 
   descartar(): void {
     this.router.navigate(['/causales-despido']);
