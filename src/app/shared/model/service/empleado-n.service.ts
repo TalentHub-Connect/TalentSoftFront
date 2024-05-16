@@ -12,7 +12,7 @@ import { New } from '../Entities/new';
 export class EmpleadoNService {
 
   private apiUrl = `${environment.NominaURL}/employee`;
-  private apiUrlNew = `${environment.NominaURL}/employee`;
+  private apiUrlNew = `${environment.NominaURL}/news`;
 
   constructor(private http: HttpClient) { }
 
@@ -39,6 +39,6 @@ export class EmpleadoNService {
   }
 
   agregarNovedad(id: number, novedad: New): Observable<New> {
-    return this.http.post<New>(`${this.apiUrl}/createNews/${id}`, novedad);
+    return this.http.post<New>(`${this.apiUrlNew}/createNews/${id}`, novedad);
   }
 }
