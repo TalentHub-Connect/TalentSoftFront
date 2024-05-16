@@ -21,6 +21,7 @@ export class ContratoService {
   }
   
   agregarContrato(Contrato: contrato): Observable<number> {
+    const url = `${this.apiUrl}/createContract`;
     return this.http.post<any>(`${this.apiUrl}`, Contrato);
   }
   getContrato(id: number): Observable<any> {

@@ -22,7 +22,7 @@ export class CandidateService {
     return this.http.put(url, { status });
   }
   editCandidate1(id: number, status: string, phoneNumber: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/updateCandidate/${id}`;
     return this.http.put(url, { status, phoneNumber});
   }
   agregarCandidate(candidate: candidate): Observable<any> {

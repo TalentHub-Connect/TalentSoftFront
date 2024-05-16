@@ -33,7 +33,7 @@ export class EditarAspiranteComponent implements OnInit {
     this.inputdata = this.data;
     console.log('Datos del aspirante:', this.inputdata);
     this.editForm = this.formBuilder.group({
-      phonenumber:0,
+      phonenumber:[''],
       status: [''],
     });
     this.currentAspirante = { ...this.inputdata.aspirante };

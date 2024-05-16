@@ -111,9 +111,9 @@ export class AspirantesComponent implements AfterViewInit {
   loadStatusTitles() {
     this.apiResponse.forEach((candidate: candidate) => {
       this.serviceStatus
-        .getstatus(candidate.candidatestatusid)
+        .getstatus(candidate.candidateStatusId)
         .subscribe((statusid: candidateStatus) => {
-          this.nStatusMap.set(candidate.candidatestatusid, statusid.description);
+          this.nStatusMap.set(candidate.candidateStatusId, statusid.description);
         });
     });
   }
@@ -152,7 +152,7 @@ export class AspirantesComponent implements AfterViewInit {
           },
           (error) => {
             console.error('Error al editar aspirante:', error);
-            this.apiResponse[index].status = element.candidatestatusid;
+            this.apiResponse[index].status = element.candidateStatusId;
           }
         );
       } else {
