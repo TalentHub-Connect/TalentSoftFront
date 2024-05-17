@@ -47,7 +47,7 @@ export class EditarIncidenteComponent implements OnInit {
 
       const newStatus = this.editForm.get('status')?.value || this.currentIncidente.status;
       const newDescription = this.editForm.get('description')?.value || this.currentIncidente.description;
-      console.log('id:', newStatus);
+      
 
       this.service.editincident1(id, newStatus, newDescription).subscribe(
         () => {

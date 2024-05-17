@@ -20,22 +20,7 @@
   
     <div class="d-inline-block mr-3">
       <mat-form-field appearance="fill">
-        <mat-label>Filtrar por Convocatoria</mat-label>
-        <mat-select (selectionChange)="onChange($event)">
-          <mat-option value="">Todos</mat-option>
-          <mat-option value="Inicio Proceso">Inicio Proceso</mat-option>
-          <mat-option value="Entrevistas">Entrevistas</mat-option>
-          <mat-option value="Pruebas técnicas">Pruebas técnicas</mat-option>
-          <mat-option value="Pruebas psicotécnicas">Pruebas psicotécnicas</mat-option>
-          <mat-option value="Pruebas médicas">Pruebas médicas</mat-option>
-          <mat-option value="Contratado">Contratado</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  
-    <div class="d-inline-block mr-3">
-      <mat-form-field appearance="fill">
-        <mat-label>Filtrar por Estado</mat-label>
+        <mat-label>Filtrar por status</mat-label>
         <mat-select (selectionChange)="onChange($event)">
           <mat-option value="">Todos</mat-option>
           <mat-option value="Entrevistas">Entrevistas</mat-option>
@@ -47,6 +32,8 @@
         </mat-select>
       </mat-form-field>
     </div>
+  
+    
     
   </div>
   

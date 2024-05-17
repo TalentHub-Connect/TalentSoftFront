@@ -29,7 +29,6 @@ export class EditarEventoComponent implements OnInit {
       status: ['']
     });
     this.currentEvento= { ...this.inputdata.evento };
-
   }
 
 

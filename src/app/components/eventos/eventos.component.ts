@@ -15,9 +15,6 @@ import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacio
 import { TipoeventoService } from 'src/app/shared/model/service/tipoevento.service';
 import { typeevent } from 'src/app/shared/model/Entities/typeevent';
 
-
-
-
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
@@ -30,6 +27,7 @@ export class EventosComponent implements AfterViewInit {
   apiResponse: any = [];
   teventsMap: Map<number, string> = new Map<number, string>();
   statusFilterValue: string = '';
+
   constructor(
     private router: Router,
     private _liveAnnouncer: LiveAnnouncer,
@@ -39,6 +37,7 @@ export class EventosComponent implements AfterViewInit {
     private aspiranteEditService: ComunicacionAspService,
     private teventService: TipoeventoService
   ) {}
+
   displayedColumns: string[] = [
     'nameevent',
     'place',
@@ -63,6 +62,7 @@ export class EventosComponent implements AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loadEventName();
+      this.setupFilter();
     });
 
     this.dataSource.paginator = this.paginator;
@@ -70,7 +70,13 @@ export class EventosComponent implements AfterViewInit {
     this.aspiranteEditService.onAspiranteEdit().subscribe(() => {
       this.refreshTableData();
     });
-    
+  }
+
+  setupFilter() {
+    this.dataSource.filterPredicate = (data: event, filter: string) => {
+      const transformedFilter = filter.trim().toLowerCase();
+      return this.getEventName(data.typeeventid).toLowerCase().includes(transformedFilter);
+    };
   }
 
   refreshTableData() {
@@ -79,6 +85,7 @@ export class EventosComponent implements AfterViewInit {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.setupFilter();
     });
   }
 
@@ -89,10 +96,11 @@ export class EventosComponent implements AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
   applyFilter() {
     this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
   }
-  
+
   loadEventName() {
     this.apiResponse.forEach((evento: event) => {
       this.teventService
@@ -102,12 +110,11 @@ export class EventosComponent implements AfterViewInit {
         });
     });
   }
-  
 
   getEventName(eventId: number): string {
-    return this.teventsMap.get(eventId) || ''; 
+    return this.teventsMap.get(eventId) || '';
   }
- 
+
   onChange($event: any) {
     if ($event.value === '') {
       this.dataSource = new MatTableDataSource(this.apiResponse);
@@ -118,10 +125,14 @@ export class EventosComponent implements AfterViewInit {
         return item.status === $event.value;
       });
       this.dataSource = new MatTableDataSource(filteredData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
+
   filterData($event: any) {
-    this.dataSource.filter = $event.target.value;
+    this.nombreFilterValue = $event.target.value;
+    this.applyFilter();
   }
 
   edit(element: event) {
@@ -129,15 +140,16 @@ export class EventosComponent implements AfterViewInit {
       (item: event) => item === element
     );
     if (index !== -1) {
-      this.apiResponse[index].status = 'Cancelado';
+      this.apiResponse[index].status = 'Eliminado';
       if (element.id !== undefined) {
-        this.eventoService.editevent(element.id, 'Cancelado').subscribe(
+        this.eventoService.editevent(element.id, 'Eliminado').subscribe(
           (response) => {
-            console.log('evento editado con éxito');
+            console.log('evento Eliminado con éxito');
+            this.refreshTableData();
             this.showSuccessMessage();
           },
           (error) => {
-            console.error('Error al editar evento:', error);
+            console.error('Error al Eliminado evento:', error);
             this.apiResponse[index].status = element.status;
           }
         );
@@ -151,7 +163,14 @@ export class EventosComponent implements AfterViewInit {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se cambió a Rechazado con éxito', 'Cerrar', {
+    this.snackBar.open('El estado se eliminó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
+  }
+
+  showSuccessEditMessage() {
+    this.snackBar.open('Se editó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
@@ -170,6 +189,7 @@ export class EventosComponent implements AfterViewInit {
       console.log('Popup cerrado');
     });
   }
+
   editpopup(evento: event) {
     console.log('Datos del evento:', evento);
     const dialogRef = this.dialog.open(EditarEventoComponent, {
@@ -177,6 +197,7 @@ export class EventosComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.showSuccessEditMessage();
       console.log('Popup cerrado');
     });
   }

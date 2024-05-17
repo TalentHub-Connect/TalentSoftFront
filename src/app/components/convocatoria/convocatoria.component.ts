@@ -101,15 +101,16 @@ export class ConvocatoriaComponent implements AfterViewInit {
   edit(element: offer) {
     const index = this.apiResponse.findIndex((item: offer) => item === element);
     if (index !== -1) {
-      this.apiResponse[index].status = 'Cerrada';
+      this.apiResponse[index].status = 'Eliminado';
       if (element.id !== undefined) {
-        this.convocatoriaService.editoffer(element.id, 'Cerrada').subscribe(
+        this.convocatoriaService.editoffer(element.id, 'Eliminado').subscribe(
           (response) => {
-            console.log('Convocatoria editado con éxito');
+            console.log('Convocatoria eliminada con éxito');
+            this.refreshTableData();
             this.showSuccessMessage();
           },
           (error) => {
-            console.error('Error al editar convocatoria:', error);
+            console.error('Error al eliminar convocatoria:', error);
             this.apiResponse[index].status = element.status;
           }
         );
@@ -123,12 +124,17 @@ export class ConvocatoriaComponent implements AfterViewInit {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se cambió a Cerrado con éxito', 'Cerrar', {
+    this.snackBar.open('Se eliminó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
   }
-
+  showSuccessEditMessage() {
+    this.snackBar.open('Se editó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
+  }
   routAgregar() {
     this.router.navigate(['/agregar-convocatoria']);
   }
@@ -149,6 +155,7 @@ export class ConvocatoriaComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.showSuccessEditMessage();
       console.log('Popup cerrado');
     });
   }

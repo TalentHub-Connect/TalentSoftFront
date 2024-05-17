@@ -30,11 +30,11 @@ export class AgregarEventoComponent {
 
   ngOnInit(): void {
     this.customerform.setValue({
-      place: 'Monda',
-      description: 'aaaaaaa@gmail.com',
+      place: '',
+      description: '',
       evento: '',
       dateevent: null,
-      status: 'Inicial',
+      status: '',
     });
     this.loadEventos();
     this.companyIdString = localStorage.getItem('companyid');
