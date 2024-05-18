@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { candidate } from 'src/app/shared/model/Entities/candidate';
 import {candidateStatus} from 'src/app/shared/model/Entities/candidatestatus';
 import { CandidatestatusService } from 'src/app/shared/model/service/candidatestatus.service';
+import { CurriculumDialogService } from 'src/app/shared/model/service/curriculum-dialog.service';
 
 
 @Component({
@@ -26,7 +27,9 @@ export class EditarAspiranteComponent implements OnInit {
   editForm!: FormGroup;
   closemessage = 'closed using directive'
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ref: MatDialogRef<EditarAspiranteComponent>, private formBuilder: FormBuilder,
-    private service: CandidateService, private aspiranteEditService: ComunicacionAspService, private dialog: MatDialog,private serviceStatus:CandidatestatusService) {
+    private service: CandidateService, private aspiranteEditService: ComunicacionAspService, private dialog: MatDialog,private serviceStatus:CandidatestatusService,
+    private curriculumDialogService: CurriculumDialogService,
+  ) {
 
   }
   ngOnInit(): void {
@@ -46,7 +49,7 @@ export class EditarAspiranteComponent implements OnInit {
 
 
   editAspirante() {
-    console.log('Datos2 del aspirante:', this.inputdata);
+    
     if (this.inputdata) {
       console.log('id:', this.inputdata);
       const id = this.inputdata.aspirante.id;
@@ -54,7 +57,7 @@ export class EditarAspiranteComponent implements OnInit {
 
       const newStatus = this.editForm.get('status')?.value || this.currentAspirante.status;
       const newphonenumber = this.editForm.get('phonenumber')?.value || this.currentAspirante.phonenumber;
-      console.log('id:', newStatus);
+      console.log('idPrueba:', id);
 
       this.service.editCandidate1(id, newStatus, newphonenumber).subscribe(
         () => {
@@ -64,7 +67,8 @@ export class EditarAspiranteComponent implements OnInit {
           this.aspiranteEditService.notifyAspiranteEdit();
 
           if (newStatus === 'Contratado') {
-            this.openContratoDialog();
+            console.log('Datos2 del aspirante id:', id);
+            this.curriculumDialogService.openContratoDialog(id);
           }
 
         },

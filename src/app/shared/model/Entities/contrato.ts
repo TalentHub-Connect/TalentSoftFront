@@ -3,8 +3,8 @@ export interface contrato {
     description: string;
     salary: number;
     charge: string;
-    startdate: string;
-    enddate: string;
+    startDate: string;
+    endDate: string;
     eps: string;
     contractType: string; 
     candidateId?: number;

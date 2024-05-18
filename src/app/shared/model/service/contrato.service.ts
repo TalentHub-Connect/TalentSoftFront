@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class ContratoService {
 
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/Contrato';
+  private apiUrl = 'https://empresasnominamicroservice-qa.up.railway.app/contract';
   constructor(private http: HttpClient) { }
 
   getContratos(): Observable<contrato[]> {
@@ -22,7 +22,7 @@ export class ContratoService {
   
   agregarContrato(Contrato: contrato): Observable<number> {
     const url = `${this.apiUrl}/createContract`;
-    return this.http.post<any>(`${this.apiUrl}`, Contrato);
+    return this.http.post<any>(`${url}`, Contrato);
   }
   getContrato(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;

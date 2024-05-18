@@ -77,6 +77,7 @@ export class AgregarAspirantesComponent {
       console.log('Datos del aspiranteAgregarAspirante:', aspiranteData); // Para verificar que los datos sean correctos
       this.curriculumDialogService.openCurriculumDialog(aspiranteData);
     }
+    
   }
 
 
