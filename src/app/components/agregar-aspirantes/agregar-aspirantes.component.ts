@@ -61,9 +61,7 @@ export class AgregarAspirantesComponent {
   openCurriculumDialog(): void {
 
     if (this.customerform.valid) {
-      console.log('Valor de offer antes de convertir a número:', this.customerform.value.offer);
       const offerId = Number(this.customerform.value.offer);
-      console.log('Valor de offer después de convertir a número:', offerId);
       const statusId=Number(this.customerform.value.status);
 
       const aspiranteData: candidate = {
@@ -74,7 +72,6 @@ export class AgregarAspirantesComponent {
         candidateStatusId: statusId || 0,
         companyid: this.companyId ? this.companyId : 0,
       };
-      console.log('Datos del aspiranteAgregarAspirante:', aspiranteData); // Para verificar que los datos sean correctos
       this.curriculumDialogService.openCurriculumDialog(aspiranteData);
     }
     

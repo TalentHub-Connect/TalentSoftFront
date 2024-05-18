@@ -31,7 +31,6 @@ export class ContratoComponent {
     });
   }
   ngOnInit(): void {
-    console.log('Datos del candidatoCONTRATO:', this.idAspirante);
     this.initForm();
   }
 
@@ -55,7 +54,6 @@ export class ContratoComponent {
       const currentDate = startValue ? new Date(startValue) : new Date();
       const endDateValue = this.contratoForm.value.startdate;
       const endDate = endDateValue ? new Date(endDateValue) : new Date();
-      console.log('Datos del candidatoCONTRATO2:', this.idAspirante);
       const contratoData: contrato = {
         salary: this.contratoForm.value.salary || 0,
         description: this.contratoForm.value.description || '',
@@ -66,7 +64,6 @@ export class ContratoComponent {
         eps: this.contratoForm.value.eps || '',
         candidateId: this.idAspirante
       };
-      console.log('contrato', contratoData);
       this.contratoService.agregarContrato(contratoData).subscribe(
         response => {
           console.log('Contrato agregado correctamente:', response);

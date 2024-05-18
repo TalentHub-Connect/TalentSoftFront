@@ -60,7 +60,7 @@ import { DetallesCapacitacionComponent } from './components/detalles-capacitacio
 import { EditarCapacitacionComponent } from './components/editar-capacitacion/editar-capacitacion.component';
 import { AgregarNovedadComponent } from './components/agregar-novedad/agregar-novedad.component';
 import { VerEmpleadoComponent } from './components/ver-empleado/ver-empleado.component';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,6 +123,7 @@ import { VerEmpleadoComponent } from './components/ver-empleado/ver-empleado.com
     ReactiveFormsModule,
     MaterialModule,
     NgxPaginationModule,
+    MatExpansionModule
   ],
   providers: [
     provideAnimationsAsync(),

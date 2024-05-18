@@ -18,14 +18,6 @@ export class DetallesEventoComponent {
     @Inject(MAT_DIALOG_DATA) public data: { evento: event }, private ref:MatDialogRef<DetallesEventoComponent>) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam !== null) {
-      this.eventoId = +idParam;
-      console.log('ID del evento:', this.eventoId);
-      this.obtenerDetallesEvento(this.eventoId);
-    } else {
-      console.error('El ID del eventoId es null');
-    }
   }
 
   obtenerDetallesEvento(id: number): void {
@@ -33,7 +25,6 @@ export class DetallesEventoComponent {
       (evento: event) => {
         this.evento = evento;
         console.log('Detalles del evento:', this.evento);
-        // Aquí puedes manejar los detalles del Evento
       },
       error => {
         console.error('Error al obtener detalles del Evento:', error);

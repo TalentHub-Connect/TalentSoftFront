@@ -17,14 +17,7 @@ export class DetallesCapacitacionComponent {
     @Inject(MAT_DIALOG_DATA) public data: { capacitacion: capacitation }, private ref:MatDialogRef<DetallesCapacitacionComponent>) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam !== null) {
-      this. capacitacionId = +idParam;
-      console.log('ID de la capacitacion:', this. capacitacionId);
-      this.obtenerDetallesCapacitacion(this. capacitacionId);
-    } else {
-      console.error('El ID del  capacitacionId es null');
-    }
+    
   }
 
   obtenerDetallesCapacitacion(id: number): void {

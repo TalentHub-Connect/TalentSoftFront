@@ -23,12 +23,11 @@ export class EditarConvocatoriaComponent {
   }
   ngOnInit(): void {
     this.inputdata = this.data;
-    console.log('Datos de la convocatoria:', this.inputdata);
     this.editForm = this.formBuilder.group({
-      tittleoffer: [''], 
+      tittleOffer: [''], 
       description: [''],
       status: [''],
-      requeriments: ['']
+      requirements: ['']
     });
     this.currentConvocatoria = { ...this.inputdata.convocatoria }; 
     
@@ -40,18 +39,15 @@ export class EditarConvocatoriaComponent {
   }
 
 
-  editAspirante() {
-    console.log('Datos2 de la convocatoria:', this.inputdata);
+  editConvocatoria() {
     if (this.inputdata) {
-      console.log('id:', this.inputdata);
-      const id = this.inputdata.aspirante.id;
+      const id = this.inputdata.convocatoria.id;
 
       
       const newStatus = this.editForm.get('status')?.value || this.currentConvocatoria.status;
-      const newtittleOffer = this.editForm.get('tittleoffer')?.value || this.currentConvocatoria.tittleoffer;
+      const newtittleOffer = this.editForm.get('tittleOffer')?.value || this.currentConvocatoria.tittleoffer;
       const newDespcription = this.editForm.get('description')?.value || this.currentConvocatoria.description;
-      const newRequirements = this.editForm.get('requeriments')?.value || this.currentConvocatoria.requeriments;
-      console.log('id:', newStatus);
+      const newRequirements = this.editForm.get('requirements')?.value || this.currentConvocatoria.requeriments;
     
       this.service.editoffer1(id, newStatus, newtittleOffer, newDespcription, newRequirements).subscribe(
         () => {
@@ -62,7 +58,7 @@ export class EditarConvocatoriaComponent {
           
         },
         error => {
-          console.error('Error al editar aspirante:', error);
+          console.error('Error al editar convocatoria:', error);
         }
       );
     } else {

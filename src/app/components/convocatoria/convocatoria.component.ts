@@ -151,7 +151,7 @@ export class ConvocatoriaComponent implements AfterViewInit {
   editpopup(convocatoria: offer) {
     console.log('Datos de la convocatoria:', convocatoria);
     const dialogRef = this.dialog.open(EditarConvocatoriaComponent, {
-      data: { aspirante: convocatoria },
+      data: { convocatoria: convocatoria },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
