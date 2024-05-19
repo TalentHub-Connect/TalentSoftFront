@@ -152,9 +152,9 @@ export class AspirantesComponent implements AfterViewInit {
   edit(element: candidate) {
     const index = this.apiResponse.findIndex((item: candidate) => item === element);
     if (index !== -1) {
-      this.apiResponse[index].status = 'Rechazado';
+      this.apiResponse[index].status = 'Eliminado';
       if (element.id !== undefined) {
-        this.aspiranteService.editCandidate(element.id, 'Rechazado').subscribe(
+        this.aspiranteService.editCandidate(element.id, 'Eliminado').subscribe(
           (response) => {
             console.log('Aspirante eliminado con éxito');
             this.refreshTableData();
