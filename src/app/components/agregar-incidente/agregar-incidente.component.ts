@@ -36,7 +36,6 @@ export class AgregarIncidenteComponent {
       incidentdate: null,
       description: 'aaaaaaa@gmail.com',
       empleado: '',
-      place: '',
       incidente: '',
       status: 'Inicial',
     });
@@ -54,7 +53,6 @@ export class AgregarIncidenteComponent {
     incidentdate: [new Date().toLocaleDateString('es-CO'), Validators.required],
     incidente: ['', Validators.required],
     empleado: ['', Validators.required],
-    place: ['', Validators.required],
     status: ['', Validators.required],
   });
   
@@ -73,7 +71,6 @@ export class AgregarIncidenteComponent {
         description: this.incidenteform.value.description|| '',
         incidentdate: currentDate.toJSON().slice(0, 10), 
         status: this.incidenteform.value.status || '',
-        place: this.incidenteform.value.place || '',
         typeincidentid: incidentId || 0,
         employeeid: employeeId || 0,
         companyid: this.companyId ? this.companyId : 0
@@ -95,7 +92,7 @@ export class AgregarIncidenteComponent {
   }
 
   onDiscard(): void {
-    this.router.navigate(['/eventos']);
+    this.router.navigate(['/incidentes']);
   }
   clearform() {
     this.incidenteform.reset();

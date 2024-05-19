@@ -21,7 +21,7 @@ export class IncidentesService {
     return this.http.get<incident[]>(this.apiUrl);
   }
   editincident(id: number, status: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/status/${id}`;
     return this.http.put(url, { status });
   }
   editincident1(id: number, status: string, description: string): Observable<any> {
