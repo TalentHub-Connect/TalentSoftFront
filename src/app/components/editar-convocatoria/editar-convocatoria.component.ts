@@ -47,7 +47,7 @@ export class EditarConvocatoriaComponent {
       const newStatus = this.editForm.get('status')?.value || this.currentConvocatoria.status;
       const newtittleOffer = this.editForm.get('tittleOffer')?.value || this.currentConvocatoria.tittleoffer;
       const newDespcription = this.editForm.get('description')?.value || this.currentConvocatoria.description;
-      const newRequirements = this.editForm.get('requirements')?.value || this.currentConvocatoria.requeriments;
+      const newRequirements = this.editForm.get('requirements')?.value || this.currentConvocatoria.requirements;
     
       this.service.editoffer1(id, newStatus, newtittleOffer, newDespcription, newRequirements).subscribe(
         () => {

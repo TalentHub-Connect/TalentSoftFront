@@ -11,7 +11,17 @@ export class EmpleadoPService {
 
 
   constructor(private http: HttpClient) { }
-
+  crearEmpleado(name: string, surname: string, phoneNumber: string, companyId: number, contractId: number): Observable<any> {
+    const url = `${this.apiUrl}/createEmployee`;
+    const empleadoData = {
+      name,
+      surname,
+      phoneNumber,
+      companyId,
+      contractId
+    };
+    return this.http.post<any>(url, empleadoData);
+  }
   getempleados(companyid:number): Observable<empleado[]> {
     const url = `${this.apiUrl}/getEmployees`;
     return this.http.get<empleado[]>(url);

@@ -27,7 +27,7 @@ export class DetallesAspiranteComponent implements OnInit {
   }
 
   obtenerDetallesAspirante(id: number): void {
-    this.candidateService.getCandidate(id).subscribe(
+    this.candidateService.getCandidatebyId(id).subscribe(
       (aspirante: candidate) => {
         this.aspirante = aspirante;
         console.log('Detalles del aspirante:', this.aspirante);
