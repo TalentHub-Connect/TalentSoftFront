@@ -8,14 +8,13 @@ import { Reason } from 'src/app/shared/model/Entities/reason';
 @Component({
   selector: 'app-registrar-despido',
   templateUrl: './registrar-despido.component.html',
-  styleUrl: './registrar-despido.component.css'
+  styleUrls: ['./registrar-despido.component.css'] // Corregido styleUrl a styleUrls
 })
 export class RegistrarDespidoComponent implements OnInit {
   empleados: Empleado[] = [];
   causales: Reason[] = [];
   selectedEmpleado!: Empleado;
   selectedCausal!: string;
-
 
   constructor(private empleadoService: EmpleadoService, private reasonService: ReasonService, private router: Router) { }
 
@@ -25,12 +24,18 @@ export class RegistrarDespidoComponent implements OnInit {
   }
 
   cargarCausales() {
-    this.reasonService.obtenerReasons().subscribe({
-      next: (reasons) => {
-        this.causales = reasons;  // Almacenamos directamente el array de Reason
-      },
-      error: (err) => console.error('Error al cargar causales:', err)
-    });
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      const companyId = parseInt(companyIdString, 10);
+      this.reasonService.obtenerReasons(companyId).subscribe({
+        next: (reasons) => {
+          this.causales = reasons;  // Almacenamos directamente el array de Reason
+        },
+        error: (err) => console.error('Error al cargar causales:', err)
+      });
+    } else {
+      console.error('Company ID not found in localStorage');
+    }
   }
 
   onSubmit(): void {

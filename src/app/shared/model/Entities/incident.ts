@@ -3,7 +3,6 @@ export interface incident {
     description: string;
     incidentdate: string;
     status: string;
-    place: string;
     typeincidentid:number;
     employeeid:number;
     companyid:number;

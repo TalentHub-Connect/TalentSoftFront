@@ -1,14 +1,32 @@
 <h1 mat-dialog-title>Detalles del Aspirante</h1>
-<img src="./assets/aspirante.png" alt="">
-<div mat-dialog-content *ngIf="data && data.aspirante">
-  <p><strong>Cédula:</strong> {{ data.aspirante.name }}</p>
-  <p><strong>Nombre:</strong> {{ data.aspirante.surname }}</p>
-  <p><strong>Apellido:</strong> {{ data.aspirante.phonenumber }}</p>
-  <p><strong>Oferta:</strong> {{ data.aspirante.offerId }}</p>
+<img src="./assets/aspirante.png" alt="Aspirante" class="aspirante-image">
+<div mat-dialog-content *ngIf="aspirante" class="aspirante-details">
+  <p><strong>Nombre:</strong> {{ aspirante.name }}</p>
+  <p><strong>Apellido:</strong> {{ aspirante.surname }}</p>
+  <p><strong>Celular:</strong> {{ aspirante.phoneNumber }}</p>
 </div>
+
+<mat-accordion *ngIf="curriculum" class="curriculum-accordion">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Ver Curriculum
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="curriculum-content">
+      <p><strong>Dirección:</strong> {{ curriculum.address }}</p>
+      <p><strong>Objetivo Personal:</strong> {{ curriculum.personalobjetive }}</p>
+      <p><strong>Experiencia Laboral:</strong> {{ curriculum.workexperience }}</p>
+      <p><strong>Historial Educativo:</strong> {{ curriculum.educationalhistory }}</p>
+      <p><strong>Idioma:</strong> {{ curriculum.language }}</p>
+      <p><strong>Certificación:</strong> {{ curriculum.certification }}</p>
+      <p><strong>Referencia Personal:</strong> {{ curriculum.personalreference }}</p>
+      <p><strong>Universidad:</strong> {{ curriculum.university }}</p>
+      <p><strong>Carrera:</strong> {{ curriculum.career }}</p>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
 <div mat-dialog-actions>
   <button (click)="closePopup()" color="warn">Close</button>
 </div>
-
-
-  

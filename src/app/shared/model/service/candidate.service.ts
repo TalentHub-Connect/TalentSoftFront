@@ -14,7 +14,7 @@ export class CandidateService {
 
 
   getCandidates(companyid:number): Observable<candidate[]> {
-    const url = `${this.apiUrl}/getCandidates/${companyid}`;
+    const url = `${this.apiUrl}/getCandidates/company/${companyid}`;
     return this.http.get<candidate[]>(url);
   }
   editCandidate(id: number, status: string): Observable<any> {
@@ -22,14 +22,14 @@ export class CandidateService {
     return this.http.put(url, { status });
   }
   editCandidate1(id: number, status: string, phoneNumber: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.apiUrl}/updateCandidate/${id}`;
     return this.http.put(url, { status, phoneNumber});
   }
   agregarCandidate(candidate: candidate): Observable<any> {
     const url = `${this.apiUrl}/createCandidate`;
     return this.http.post<any>(`${url}`, candidate);
   }
-  getCandidate(id: number): Observable<any> {
+  getCandidatebyId(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<any>(url);
   }

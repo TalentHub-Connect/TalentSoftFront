@@ -39,15 +39,15 @@ export class EditarIncidenteComponent implements OnInit {
 
 
   editEvento() {
-    console.log('Datos2 del evento:', this.inputdata);
+    console.log('Datos del incidente:', this.inputdata);
     if (this.inputdata) {
-      console.log('id:', this.inputdata);
-      const id = this.inputdata.evento.id;
+      const id = this.inputdata.incidente.id;
+      console.log(this.inputdata.incidente.id);
 
 
       const newStatus = this.editForm.get('status')?.value || this.currentIncidente.status;
       const newDescription = this.editForm.get('description')?.value || this.currentIncidente.description;
-      console.log('id:', newStatus);
+      
 
       this.service.editincident1(id, newStatus, newDescription).subscribe(
         () => {

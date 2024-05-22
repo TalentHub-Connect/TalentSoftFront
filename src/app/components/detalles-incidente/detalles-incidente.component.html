@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>Detalles del Evento</h1>
-<img src="./assets/aspirante.png" alt="">
-<div mat-dialog-content *ngIf="data && data.evento">
-  <p><strong>Descripción:</strong> {{ data.evento.description }}</p>
-  <p><strong>Fecha:</strong> {{ data.evento.incidentdate }}</p>
-  <p><strong>Estado:</strong> {{ data.evento.status }}</p>
+<h1 mat-dialog-title>Detalles del Incidente</h1>
+<img src="./assets/Incidentes.png" alt="">
+<div mat-dialog-content *ngIf="data && data.incidente">
+  <p><strong>Descripción:</strong> {{ data.incidente.description }}</p>
+  <p><strong>Fecha:</strong> {{ data.incidente.incidentdate }}</p>
+  <p><strong>Estado:</strong> {{ data.incidente.status }}</p>
 </div>
 <div mat-dialog-actions>
   <button (click)="closePopup()" color="warn">Close</button>

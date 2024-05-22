@@ -16,12 +16,12 @@ export class offerService {
   }
   
   editoffer(id: number, status: string): Observable<any> {
-    const url = `${this.apiUrl}/deleteOffer/${id}`;
+    const url = `${this.apiUrl}/updateStatus/${id}`;
     return this.http.put(url, { status });
   }
-  editoffer1(id: number, status: string, tittleoffer: string, description: string, requeriments: string): Observable<any> {
+  editoffer1(id: number, status: string, tittleOffer: string, description: string, requirements: string): Observable<any> {
     const url = `${this.apiUrl}/updateOffer/${id}`;
-    return this.http.put(url, { status, tittleoffer, description, requeriments });
+    return this.http.put(url, { status, tittleOffer, description, requirements });
   }
   agregaroffer(offer: offer): Observable<any> {
     const url = `${this.apiUrl}/createOffer`;

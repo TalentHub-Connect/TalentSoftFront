@@ -1,0 +1,52 @@
+/* Estilos personalizados para el formulario */
+.custom-form .form-row {
+    margin-bottom: 15px;
+}
+
+.custom-form label {
+    font-weight: bold;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.custom-form .form-control {
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.btn-primary,
+.btn-secondary {
+    background-color: #33A69A;
+    border-color: #33A69A;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 10px 16px;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #346C73;
+    border-color: #346C73;
+}
+
+.background-container {
+    background-color: #E3E3E3;
+    /* Color de fondo */
+    padding: 20px;
+    /* Espaciado interno */
+    border: 2px solid #E3E3E3;
+    /* Borde */
+    border-radius: 10px;
+    /* Permitir desplazamiento horizontal */
+}
+
+.form-group {
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+/* Ajustes adicionales para los botones, si necesitas más personalización */
+.btn-primary,
+.btn-secondary {
+    width: auto;
+}

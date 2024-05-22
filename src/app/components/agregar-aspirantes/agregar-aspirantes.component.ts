@@ -37,7 +37,7 @@ export class AgregarAspirantesComponent {
     this.customerform.setValue({
       name: 'MeVale',
       surname: 'Monda',
-      phoneNumber: 31,
+      phoneNumber: '3102934015',
       offer: '',
       status: 'Inicial',
     });
@@ -54,29 +54,27 @@ export class AgregarAspirantesComponent {
   customerform = this.builder.group({
     name: ['', Validators.required],
     surname: ['', Validators.required],
-    phoneNumber: [0, Validators.required],
+    phoneNumber: ['', Validators.required],
     offer: ['', Validators.required],
     status: ['', Validators.required],
   });
   openCurriculumDialog(): void {
 
     if (this.customerform.valid) {
-      console.log('Valor de offer antes de convertir a número:', this.customerform.value.offer);
       const offerId = Number(this.customerform.value.offer);
-      console.log('Valor de offer después de convertir a número:', offerId);
       const statusId=Number(this.customerform.value.status);
 
       const aspiranteData: candidate = {
         name: this.customerform.value.name || '',
         surname: this.customerform.value.surname || '',
-        phonenumber: this.customerform.value.phoneNumber || 0,
+        phoneNumber: this.customerform.value.phoneNumber || '',
         offerId: offerId || 0,
-        candidatestatusid: statusId || 0,
+        candidateStatusId: statusId || 0,
         companyid: this.companyId ? this.companyId : 0,
       };
-      console.log('Datos del aspiranteAgregarAspirante:', aspiranteData); // Para verificar que los datos sean correctos
       this.curriculumDialogService.openCurriculumDialog(aspiranteData);
     }
+    
   }
 
 

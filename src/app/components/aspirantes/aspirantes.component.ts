@@ -14,22 +14,23 @@ import { EditarAspiranteComponent } from '../editar-aspirante/editar-aspirante.c
 import { ComunicacionAspService } from 'src/app/shared/model/service/comunicacion-asp.service';
 import { offerService } from 'src/app/shared/model/service/offer.service';
 import { offer } from 'src/app/shared/model/Entities/offer';
-import {candidateStatus} from 'src/app/shared/model/Entities/candidatestatus';
+import { candidateStatus } from 'src/app/shared/model/Entities/candidatestatus';
 import { CandidatestatusService } from 'src/app/shared/model/service/candidatestatus.service';
 
 @Component({
   selector: 'app-aspirantes',
   templateUrl: './aspirantes.component.html',
-  styleUrl: './aspirantes.component.css',
+  styleUrls: ['./aspirantes.component.css'],
 })
 export class AspirantesComponent implements AfterViewInit {
   nombreFilterValue: string = '';
+  statusFilterValue: string = '';
   apiResponse: any = [];
   companyIdString: string | null = null;
   companyId: number | null = null;
   nStatusMap: Map<number, string> = new Map<number, string>();
   offersMap: Map<number, string> = new Map<number, string>();
-  statusFilterValue: string = '';
+
   constructor(
     private router: Router,
     private _liveAnnouncer: LiveAnnouncer,
@@ -38,8 +39,9 @@ export class AspirantesComponent implements AfterViewInit {
     private snackBar: MatSnackBar,
     private aspiranteEditService: ComunicacionAspService,
     private offerService: offerService,
-    private serviceStatus:CandidatestatusService
+    private serviceStatus: CandidatestatusService
   ) {}
+
   displayedColumns: string[] = [
     'name',
     'surname',
@@ -59,17 +61,20 @@ export class AspirantesComponent implements AfterViewInit {
     } else {
       console.error('No se encontró el ID de la compañía en el almacenamiento local');
     }
+    this.loadCandidates();
+  }
+
+  loadCandidates() {
     this.aspiranteService.getCandidates(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.customFilterPredicate();
       this.loadOfferTitles();
       this.loadStatusTitles();
     });
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
     this.aspiranteEditService.onAspiranteEdit().subscribe(() => {
       this.refreshTableData();
     });
@@ -81,6 +86,7 @@ export class AspirantesComponent implements AfterViewInit {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.customFilterPredicate();
     });
   }
 
@@ -91,16 +97,29 @@ export class AspirantesComponent implements AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  applyFilter() {
-    this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
+
+  customFilterPredicate() {
+    return (data: candidate, filter: string): boolean => {
+      const searchTerms = JSON.parse(filter);
+      const matchesName = data.name.toLowerCase().includes(searchTerms.nombre.toLowerCase());
+      const matchesStatus = this.getStatusName(data.candidateStatusId).toLowerCase().includes(searchTerms.status.toLowerCase());
+      return matchesName && matchesStatus;
+    };
   }
+
+  applyFilter() {
+    const filterValues = {
+      nombre: this.nombreFilterValue,
+      status: this.statusFilterValue
+    };
+    this.dataSource.filter = JSON.stringify(filterValues);
+  }
+
   loadOfferTitles() {
     this.apiResponse.forEach((candidate: candidate) => {
-      this.offerService
-        .getoffer(candidate.offerId)
-        .subscribe((offer: offer) => {
-          this.offersMap.set(candidate.offerId, offer.tittleoffer);
-        });
+      this.offerService.getoffer(candidate.offerId).subscribe((offer: offer) => {
+        this.offersMap.set(candidate.offerId, offer.tittleoffer);
+      });
     });
   }
 
@@ -110,49 +129,40 @@ export class AspirantesComponent implements AfterViewInit {
 
   loadStatusTitles() {
     this.apiResponse.forEach((candidate: candidate) => {
-      this.serviceStatus
-        .getstatus(candidate.candidatestatusid)
-        .subscribe((statusid: candidateStatus) => {
-          this.nStatusMap.set(candidate.candidatestatusid, statusid.description);
-        });
+      this.serviceStatus.getstatus(candidate.candidateStatusId).subscribe((statusid: candidateStatus) => {
+        this.nStatusMap.set(candidate.candidateStatusId, statusid.description);
+      });
     });
   }
+
   getStatusName(statusId: number): string {
-    return this.nStatusMap.get(statusId) || ''; 
+    return this.nStatusMap.get(statusId) || '';
   }
+
   onChange($event: any) {
-    if ($event.value === '') {
-      // Si se selecciona "Todos", mostrar todos los datos
-      this.dataSource = new MatTableDataSource(this.apiResponse);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    } else {
-      // Filtrar según la selección
-      let filteredData = _.filter(this.apiResponse, (item) => {
-        return item.status === $event.value;
-      });
-      this.dataSource = new MatTableDataSource(filteredData);
-    }
+    this.statusFilterValue = $event.value;
+    this.applyFilter();
   }
+
   filterData($event: any) {
-    this.dataSource.filter = $event.target.value;
+    this.nombreFilterValue = $event.target.value;
+    this.applyFilter();
   }
 
   edit(element: candidate) {
-    const index = this.apiResponse.findIndex(
-      (item: candidate) => item === element
-    );
+    const index = this.apiResponse.findIndex((item: candidate) => item === element);
     if (index !== -1) {
-      this.apiResponse[index].status = 'Rechazado';
+      this.apiResponse[index].status = 'Eliminado';
       if (element.id !== undefined) {
-        this.aspiranteService.editCandidate(element.id, 'Rechazado').subscribe(
+        this.aspiranteService.editCandidate(element.id, 'Eliminado').subscribe(
           (response) => {
-            console.log('Aspirante editado con éxito');
+            console.log('Aspirante eliminado con éxito');
+            this.refreshTableData();
             this.showSuccessMessage();
           },
           (error) => {
-            console.error('Error al editar aspirante:', error);
-            this.apiResponse[index].status = element.candidatestatusid;
+            console.error('Error al eliminar aspirante:', error);
+            this.apiResponse[index].status = element.candidateStatusId;
           }
         );
       } else {
@@ -165,13 +175,19 @@ export class AspirantesComponent implements AfterViewInit {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se cambió a Rechazado con éxito', 'Cerrar', {
+    this.snackBar.open('Se eliminó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
   }
 
-  
+  showSuccessEditMessage() {
+    this.snackBar.open('Se editó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
+  }
+
   routAgregar() {
     this.router.navigate(['/agregar-aspirante']);
   }
@@ -185,6 +201,7 @@ export class AspirantesComponent implements AfterViewInit {
       console.log('Popup cerrado');
     });
   }
+
   editpopup(aspirante: candidate) {
     console.log('Datos del aspirante:', aspirante);
     const dialogRef = this.dialog.open(EditarAspiranteComponent, {
@@ -192,8 +209,8 @@ export class AspirantesComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.showSuccessEditMessage();
       console.log('Popup cerrado');
-      // Aquí puedes manejar cualquier lógica después de cerrar el diálogo, si es necesario
     });
   }
 }

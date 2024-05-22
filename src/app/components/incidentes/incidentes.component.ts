@@ -142,11 +142,12 @@ export class IncidentesComponent implements AfterViewInit {
       (item: incident) => item === element
     );
     if (index !== -1) {
-      this.apiResponse[index].status = 'Cerrado';
+      this.apiResponse[index].status = 'Eliminado';
       if (element.id !== undefined) {
-        this.incidentService.editincident(element.id, 'Cerrado').subscribe(
+        this.incidentService.editincident(element.id, 'Eliminado').subscribe(
           (response) => {
             console.log('evento editado con éxito');
+            this.refreshTableData();
             this.showSuccessMessage();
           },
           (error) => {
@@ -165,6 +166,12 @@ export class IncidentesComponent implements AfterViewInit {
 
   showSuccessMessage() {
     this.snackBar.open('El estado se cambió a Cerrado con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
+  }
+  showSuccessEditMessage() {
+    this.snackBar.open('Se editó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
@@ -190,6 +197,7 @@ export class IncidentesComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.showSuccessEditMessage();
       console.log('Popup cerrado');
     });
   }

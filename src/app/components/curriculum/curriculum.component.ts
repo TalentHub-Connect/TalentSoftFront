@@ -57,18 +57,16 @@ export class CurriculumComponent {
     if (this.curriculumForm.valid) {
       const curriculumData = this.curriculumForm.value;
       console.log('curriculum', curriculumData);
-
+  
       // Guarda el currículum en el backend
       this.curriculumService.agregarCurriculum(curriculumData).subscribe(
-        (curriculumId: number) => {
+        (response: { id: number }) => {
+          this.aspirante.cvId = response.id;
           
-          this.aspirante.cvId = curriculumId;
-          console.log('VIDAHP',this.aspirante.cvId);
           // Guarda el aspirante actualizado en el backend
           this.candidateService.agregarCandidate(this.aspirante).subscribe(
             () => {
               console.log(this.aspirante);
-              // Si la operación fue exitosa, muestra un mensaje de éxito
               this.showSuccessMessage();
             },
             error => {
@@ -79,7 +77,7 @@ export class CurriculumComponent {
           );
         },
         error => {
-          console.error('No es valido el forms:', error);
+          console.error('Error al agregar el curriculum:', error);
           // Si hay un error, muestra un mensaje de error
           this.showErrorMessage();
         }
@@ -89,6 +87,7 @@ export class CurriculumComponent {
       this.showErrorMessage();
     }
   }
+  
 
   // Función para mostrar un mensaje de éxito
   showSuccessMessage(): void {

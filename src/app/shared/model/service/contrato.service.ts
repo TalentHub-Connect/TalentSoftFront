@@ -4,12 +4,13 @@ import { Observable, of } from 'rxjs';
 import { contrato } from '../Entities/contrato';
 import { map } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ContratoService {
 
-  private apiUrl = 'https://662dcbbda7dda1fa378b4cfc.mockapi.io/create-aspirantes/Contrato';
+  private apiUrl = 'https://empresasnominamicroservice-qa.up.railway.app/contract';
   constructor(private http: HttpClient) { }
 
   getContratos(): Observable<contrato[]> {
@@ -19,9 +20,23 @@ export class ContratoService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, { status });
   }
-  
+  /*
   agregarContrato(Contrato: contrato): Observable<number> {
-    return this.http.post<any>(`${this.apiUrl}`, Contrato);
+    const url = `${this.apiUrl}/createContract`;
+    return this.http.post<any>(`${url}`, Contrato);
+  }*/
+  agregarContrato(Contrato: contrato): Observable<{ contractId: number }> {
+    const url = `${this.apiUrl}/createContract`;
+    return this.http.post<{ contractId: number }>(url, Contrato).pipe(
+      map(response => {
+        if (response && response.contractId) {
+          console.log(response.contractId);
+          return response;
+        } else {
+          throw new Error('El ID del contrato no está presente en la respuesta del servidor');
+        }
+      })
+    );
   }
   getContrato(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;

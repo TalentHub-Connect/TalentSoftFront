@@ -35,6 +35,8 @@ import { IncidentesComponent } from './components/incidentes/incidentes.componen
 import { BiComponent } from './components/bi/bi.component';
 import { AgregarCapacitacionComponent } from './components/agregar-capacitacion/agregar-capacitacion.component';
 import { CapacitacionesComponent } from './components/capacitaciones/capacitaciones.component';
+import { AgregarNovedadComponent } from './components/agregar-novedad/agregar-novedad.component';
+import { VerEmpleadoComponent } from './components/ver-empleado/ver-empleado.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -230,7 +232,15 @@ const routes: Routes = [
         path: 'capacitaciones',
         component: CapacitacionesComponent
       },
-      
+      {
+        path: 'agregar-novedad/:id',
+        component: AgregarNovedadComponent
+      },
+      {
+        path: 'ver-empleado/:id',
+        component: VerEmpleadoComponent
+      },
+
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí
     ],

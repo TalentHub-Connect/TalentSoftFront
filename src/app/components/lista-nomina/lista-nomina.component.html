@@ -70,23 +70,24 @@
                         <tr *ngFor="let empleado of empleados; let i = index">
                             <td>{{ i + 1 }}</td>
                             <td>{{ empleado.nombre }}</td>
-                            <td>{{ empleado.departamento }}</td>
-                            <td>{{ empleado.tipoContrato }}</td>
+                            <td>{{ empleado.department }}</td>
+                            <td>{{ empleado.contractType }}</td>
                             <td>${{ empleado.salario }}</td>
-                            <td>{{ empleado.fechaInicio }}</td>
-                            <td>{{ empleado.novedad }}</td>
+                            <td>{{ empleado.startdate | date }}</td>
+                            <td>{{ empleado.status }}</td>
                             <td>
                                 <!-- Botones de acciones -->
-                                <button class="btn btn-custom-search btn-sm" (click)="agregarNovedad(empleado.id)">
+                                <button class="btn btn-custom-search btn-sm"
+                                    [routerLink]="['/agregar-novedad', empleado.id]">
                                     <i class="fas fa-plus-circle"></i> <!-- Icono de novedad -->
                                 </button>
                                 <button class="btn btn-custom-search btn-sm"
                                     [routerLink]="['/ver-empleado', empleado.id]">
                                     <i class="fas fa-search"></i> <!-- Icono de lupa -->
                                 </button>
-                                <button class="btn btn-danger btn-sm" (click)="eliminarEmpleado(empleado.id)">
-                                    <i class="fas fa-trash"></i> <!-- Icono de caneca -->
-                                </button>
+                                <!--<button class="btn btn-danger btn-sm" (click)="eliminarEmpleado(empleado.id)">
+                                    <i class="fas fa-trash"></i> <!-- Icono de caneca 
+                                </button> -->
                             </td>
                         </tr>
                     </tbody>

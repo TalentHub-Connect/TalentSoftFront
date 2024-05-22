@@ -20,12 +20,12 @@ export class CurriculumService {
     return this.http.put(url, { status });
   }
   
-  agregarCurriculum(curriculum: curriculum): Observable<number> {
+  agregarCurriculum(curriculum: curriculum): Observable<{ id: number }> {
     const url = `${this.apiUrl}/createCurriculum`;
-    return this.http.post<any>(`${url}`, curriculum).pipe(
-      map((response: number) => {
-        if (response) {
-          console.log(response);
+    return this.http.post<{ id: number }>(url, curriculum).pipe(
+      map(response => {
+        if (response && response.id) {
+          console.log(response.id);
           return response;
         } else {
           throw new Error('El ID del currículum no está presente en la respuesta del servidor');
@@ -33,6 +33,7 @@ export class CurriculumService {
       })
     );
   }
+  
   getCurriculum(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<any>(url);

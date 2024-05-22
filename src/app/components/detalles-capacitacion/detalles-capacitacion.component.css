@@ -30,4 +30,7 @@ img{
     background-color: #388089;
     margin-top: 0px!important;
 }
-  
+.centered-title {
+  text-align: center;
+  margin: 0;
+}

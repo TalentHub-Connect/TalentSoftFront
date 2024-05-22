@@ -10,29 +10,21 @@ import { incident } from 'src/app/shared/model/Entities/incident';
   styleUrl: './detalles-incidente.component.css'
 })
 export class DetallesIncidenteComponent {
-  evento: incident | null = null;
+  incidente: incident | null = null;
   eventoId: number | null = null;
 
   constructor(private route: ActivatedRoute, private EventoService: IncidentesService ,
-    @Inject(MAT_DIALOG_DATA) public data: { evento: incident }, private ref:MatDialogRef<DetallesIncidenteComponent>) {}
+    @Inject(MAT_DIALOG_DATA) public data: { incidente: incident }, private ref:MatDialogRef<DetallesIncidenteComponent>) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam !== null) {
-      this.eventoId = +idParam;
-      console.log('ID del evento:', this.eventoId);
-      this.obtenerDetallesEvento(this.eventoId);
-    } else {
-      console.error('El ID del eventoId es null');
-    }
+    
   }
 
   obtenerDetallesEvento(id: number): void {
     this.EventoService.getincident(id).subscribe(
-      (evento: incident) => {
-        this.evento = evento;
-        console.log('Detalles del evento:', this.evento);
-        // Aquí puedes manejar los detalles del Evento
+      (incident: incident) => {
+        this.incidente = incident;
+        console.log('Detalles del incidente:', this.incidente);
       },
       error => {
         console.error('Error al obtener detalles del Evento:', error);

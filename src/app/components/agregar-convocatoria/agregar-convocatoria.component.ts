@@ -26,10 +26,10 @@ export class AgregarConvocatoriaComponent {
   ngOnInit(): void {
     this.convocatoriaform.setValue({
       tittleoffer: '',
-      description: 'MeVale mondaaaaa',
+      description: '',
       experience: 0,
       publishdate: null,
-      requeriments: 'sistemas',
+      requeriments: '',
       status: 'Abierta',
     });
     this.companyIdString = localStorage.getItem('companyid');

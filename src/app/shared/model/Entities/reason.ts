@@ -1,9 +1,15 @@
-// src/app/shared/model/causal.ts
 export class Reason {
-    constructor(
-        public id: number,
-        public name: string,
-        public description: string,
-        public createForUser?: string  // El creador es opcional
-    ) { }
+    id: number;
+    name: string;
+    description: string;
+    createForUser: string;
+    companyId: number;
+
+    constructor(id: number = 0, name: string = '', description: string = '', createForUser: string = 'Admin', companyId: number = 0) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createForUser = createForUser;
+        this.companyId = companyId;
+    }
 }

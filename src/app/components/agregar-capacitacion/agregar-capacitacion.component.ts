@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CapacitacionesService } from 'src/app/shared/model/service/capacitaciones.service';
 import { TipocapacitacionService } from 'src/app/shared/model/service/tipocapacitacion.service';
 import { typecapacitation } from 'src/app/shared/model/Entities/typecapacitation';
@@ -10,32 +10,41 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-agregar-capacitacion',
   templateUrl: './agregar-capacitacion.component.html',
-  styleUrl: './agregar-capacitacion.component.css'
+  styleUrls: ['./agregar-capacitacion.component.css']
 })
-export class AgregarCapacitacionComponent {
+export class AgregarCapacitacionComponent implements OnInit {
   companyId: number | null = null;
   companyIdString: string | null = null;
   estados = ['Abierto'];
-  tcapacitaciones: typecapacitation [] = [];
+  tcapacitaciones: typecapacitation[] = [];
+  capacitacionform: FormGroup;
 
   constructor(
     private builder: FormBuilder,
     private capacitacionService: CapacitacionesService,
     private tCapacitacionService: TipocapacitacionService,
     private snackBar: MatSnackBar,
-    private router: Router,
-  ) { }
-
+    private router: Router
+  ) {
+    // Inicialización del formulario
+    this.capacitacionform = this.builder.group({
+      place: ['', Validators.required],
+      description: ['', Validators.required],
+      dateevent: [new Date().toLocaleDateString('es-CO'), Validators.required],
+      capacitacion: ['', Validators.required],
+      status: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.capacitacionform.setValue({
-      place: 'Monda',
-      description: 'aaaaaaa@gmail.com',
-      capacitacion: '',
+      place: '',
+      description: '',
       dateevent: null,
-      status: 'Inicial',
+      capacitacion: '',
+      status: '',
     });
-    
+
     this.loadCapacitaciones();
     this.companyIdString = localStorage.getItem('companyid');
     if (this.companyIdString) {
@@ -44,14 +53,7 @@ export class AgregarCapacitacionComponent {
       console.error('No se encontró el ID de la compañía en el almacenamiento local');
     }
   }
-  capacitacionform = this.builder.group({
-    place: ['', Validators.required],
-    description: ['', Validators.required],
-    dateevent: [new Date().toLocaleDateString('es-CO'), Validators.required],
-    capacitacion: ['', Validators.required],
-    status: ['', Validators.required],
-  });
-  
+
   SaveCapacitacion() {
     console.log('capacitacion', this.capacitacionform);
     if (this.capacitacionform.valid) {
@@ -63,7 +65,7 @@ export class AgregarCapacitacionComponent {
 
       const capacitacionData: capacitation = {
         place: this.capacitacionform.value.place || '',
-        description: this.capacitacionform.value.description|| '',
+        description: this.capacitacionform.value.description || '',
         capacitationDate: currentDate.toJSON().slice(0, 10), // Formatear la fecha sin la hora
         typeCapacitationId: capacitationId || 0,
         status: this.capacitacionform.value.status || '',

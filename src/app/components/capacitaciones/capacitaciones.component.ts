@@ -60,6 +60,7 @@ export class CapacitacionesComponent {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loadCapacitationName();
+      this.setupFilter();
     });
 
     this.dataSource.paginator = this.paginator;
@@ -78,7 +79,12 @@ export class CapacitacionesComponent {
       this.dataSource.sort = this.sort;
     });
   }
-
+  setupFilter() {
+    this.dataSource.filterPredicate = (data: capacitation, filter: string) => {
+      const transformedFilter = filter.trim().toLowerCase();
+      return this.getCapacitationName(data.typeCapacitationId).toLowerCase().includes(transformedFilter);
+    };
+  }
   announceSortChange(sortState: Sort) {
     if (sortState.active) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
@@ -118,7 +124,8 @@ export class CapacitacionesComponent {
     }
   }
   filterData($event: any) {
-    this.dataSource.filter = $event.target.value;
+    this.nombreFilterValue = $event.target.value;
+    this.applyFilter();
   }
 
   edit(element: capacitation) {
@@ -126,15 +133,16 @@ export class CapacitacionesComponent {
       (item: capacitation) => item === element
     );
     if (index !== -1) {
-      this.apiResponse[index].status = 'Cancelado';
+      this.apiResponse[index].status = 'Eliminado';
       if (element.id !== undefined) {
-        this.capacitacionService.editcapacitation(element.id, 'Cancelado').subscribe(
+        this.capacitacionService.editcapacitation(element.id, 'Eliminado').subscribe(
           (response) => {
-            console.log('capacitación editado con éxito');
+            console.log('capacitación eliminada con éxito');
+            this.refreshTableData();
             this.showSuccessMessage();
           },
           (error) => {
-            console.error('Error al editar capacitación:', error);
+            console.error('Error al eliminar la capacitación:', error);
             this.apiResponse[index].status = element.status;
           }
         );
@@ -148,7 +156,13 @@ export class CapacitacionesComponent {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se cambió a Rechazado con éxito', 'Cerrar', {
+    this.snackBar.open('Se eliminó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
+  }
+  showSuccessEditMessage() {
+    this.snackBar.open('Se editó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
@@ -174,6 +188,7 @@ export class CapacitacionesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.showSuccessEditMessage();
       console.log('Popup cerrado');
     });
   }
