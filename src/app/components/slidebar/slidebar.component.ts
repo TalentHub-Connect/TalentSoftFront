@@ -94,12 +94,13 @@ export class SlidebarComponent implements OnInit {
   setCardVisibility(): void {
     console.log('Setting card visibility based on modulos:', this.modulos);
 
-    this.showAdminCard = this.modulos.some(modulo => modulo.description === 'ADMIN');
-    this.showRecruitmentCard = this.modulos.some(modulo => modulo.description === 'RECLUTAMIENTO');
-    this.showDismissalCard = this.modulos.some(modulo => modulo.description === 'DESPIDO');
-    this.showNominaCard = this.modulos.some(modulo => modulo.description === 'NOMINA_ELECTRONICA');
-    this.showSSTCard = this.modulos.some(modulo => modulo.description === 'SST');
-    this.showBICard = this.modulos.some(modulo => modulo.description === 'BI');
+    const isAdmin = this.modulos.some(modulo => modulo.description === 'ADMIN');
+    this.showAdminCard = isAdmin
+    this.showRecruitmentCard =isAdmin|| this.modulos.some(modulo => modulo.description === 'RECLUTAMIENTO');
+    this.showDismissalCard = isAdmin||this.modulos.some(modulo => modulo.description === 'DESPIDO');
+    this.showNominaCard = isAdmin|| this.modulos.some(modulo => modulo.description === 'NOMINA_ELECTRONICA');
+    this.showSSTCard = isAdmin|| this.modulos.some(modulo => modulo.description === 'SST');
+    this.showBICard = isAdmin||this.modulos.some(modulo => modulo.description === 'BI');
 
     console.log('Card visibility - Admin:', this.showAdminCard);
     console.log('Card visibility - Recruitment:', this.showRecruitmentCard);
