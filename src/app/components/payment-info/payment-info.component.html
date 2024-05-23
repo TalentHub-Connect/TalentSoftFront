@@ -29,14 +29,14 @@
                 <div (click)="cambiarPlan()" class="payment-method">
                     <div  class="text">
                         <p class="plan">Tu plan</p>
-                        <p class="contract">{{ planData.contract }}</p>
-                        <p class="card-number">Tarjeta Visa terminada en {{ planData.cardNumber }}</p>
-                        <p class="deadline">Le quedan {{ planData.deadline }} días de su plan</p>
+<!--                        <p class="contract">{{ planData.contract }}</p>-->
+                        <p class="card-number">Tarjeta Visa terminada en {{ card?.cardNumber }}</p>
+<!--                        <p class="deadline">Le quedan {{ planData.deadline }} días de su plan</p>-->
                     </div>
                 </div>
-    
+
             </div>
-    
+
             <div class="container-plan-buttom">
                 <div (click)="registerCoupon()" class="coupon">
                     <img src="assets/pencil.svg" class="pencil" >
@@ -49,10 +49,10 @@
                     <p>Método de Pago</p>
                 </div>
             </div>
-    
+
         </div>
     </section>
-    
+
 
 
 </body>

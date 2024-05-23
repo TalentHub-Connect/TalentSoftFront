@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { DataService } from 'src/app/shared/model/service/data.service';
+import {Card} from "../../model/card";
 
 
 @Component({
@@ -8,7 +9,7 @@ import { DataService } from 'src/app/shared/model/service/data.service';
   templateUrl: './payment-info.component.html',
   styleUrl: './payment-info.component.css'
 })
-export class PaymentInfoComponent {
+export class PaymentInfoComponent  implements  OnInit{
 
   constructor(private dataService: DataService,private router: Router) { }
   registerCoupon() {
@@ -21,15 +22,14 @@ export class PaymentInfoComponent {
     this.router.navigate(['/cambiar-plan']);
   }
   planData: any;
+  card: Card | undefined;
   // ESTO ERA PARA VER SI FUNCIONABA
   ngOnInit() {
-    this.planData = {
-      contract: "Trial",
-      cardNumber: "XXXX-XXXX-XXXX-3465",
-      deadline: 30
-    };
+    console.log(localStorage.getItem("email"));
+    //this.dataService.getCardData(localStorage.getItem("email")).subscribe(card => this.card = card);
+    this.dataService.getCardData("emailpro@hoas.com").subscribe(card => this.card = card);
   }
-  
+
   //Acá si hace toda la lógica de la base de datos-Falta la URL, ponerla en el servisio que se llama data
 
   /*ngOnInit(): void {
