@@ -61,6 +61,7 @@ import { EditarCapacitacionComponent } from './components/editar-capacitacion/ed
 import { AgregarNovedadComponent } from './components/agregar-novedad/agregar-novedad.component';
 import { VerEmpleadoComponent } from './components/ver-empleado/ver-empleado.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {PaymentInfoComponent} from "./components/payment-info/payment-info.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +113,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     DetallesCapacitacionComponent,
     EditarCapacitacionComponent,
     AgregarNovedadComponent,
-    VerEmpleadoComponent
+    VerEmpleadoComponent,
+    PaymentInfoComponent
   ],
   imports: [
     BrowserModule,
