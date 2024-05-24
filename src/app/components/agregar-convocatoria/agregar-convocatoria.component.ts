@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { offerService } from 'src/app/shared/model/service/offer.service';
 import { offer } from 'src/app/shared/model/Entities/offer';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DateFormatPipe } from 'src/app/date-format.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +19,6 @@ export class AgregarConvocatoriaComponent {
   constructor(private builder: FormBuilder,
     private convocatoriaService: offerService,
     private snackBar: MatSnackBar,
-    private datePipe: DateFormatPipe,
     private router: Router,) { }
 
   ngOnInit(): void {
