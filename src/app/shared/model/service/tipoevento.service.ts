@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {typeevent} from '../Entities/typeevent';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TipoeventoService {
-  private apiUrl = 'https://sstback-qa.up.railway.app/api/type/events';
+  private apiUrl = environment.SST+'/api/type/events';
 
 
   constructor(private http: HttpClient) { }
