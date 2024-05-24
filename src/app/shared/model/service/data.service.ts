@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Card} from "../../../model/card";
+import {Plan} from "../../../model/plan";
 
 
 @Injectable({
@@ -11,9 +12,8 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getPlanData(): Observable<any> {
-    // Aquí debes reemplazar la URL con la dirección de tu API que proporciona los datos del plan
-    return this.http.get<any>('URL_DE_TU_API');
+  getPlanData(companyid: string | null) {
+    return this.http.get<Plan>(`http://localhost:8082/plan/company/${companyid}`);
   }
 
   getCardData(item: string | null) {

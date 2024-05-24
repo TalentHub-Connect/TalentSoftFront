@@ -29,9 +29,9 @@
                 <div (click)="cambiarPlan()" class="payment-method">
                     <div  class="text">
                         <p class="plan">Tu plan</p>
-<!--                        <p class="contract">{{ planData.contract }}</p>-->
+                        <p class="contract">{{ planData?.name }}</p>
                         <p class="card-number">Tarjeta Visa terminada en {{ card?.cardNumber }}</p>
-<!--                        <p class="deadline">Le quedan {{ planData.deadline }} días de su plan</p>-->
+                        <p class="deadline">{{ planData?.description }}</p>
                     </div>
                 </div>
 
