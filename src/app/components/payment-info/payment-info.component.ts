@@ -1,6 +1,9 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { DataService } from 'src/app/shared/model/service/data.service';
+import {Card} from "../../model/card";
+import {Plan} from "../../model/plan";
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -8,7 +11,7 @@ import { DataService } from 'src/app/shared/model/service/data.service';
   templateUrl: './payment-info.component.html',
   styleUrl: './payment-info.component.css'
 })
-export class PaymentInfoComponent {
+export class PaymentInfoComponent  implements  OnInit{
 
   constructor(private dataService: DataService,private router: Router) { }
   registerCoupon() {
@@ -20,26 +23,56 @@ export class PaymentInfoComponent {
   cambiarPlan() {
     this.router.navigate(['/cambiar-plan']);
   }
-  planData: any;
+  planData: Plan | undefined;
+  card: Card | undefined;
+
+  paymentInfo : string = "";
   // ESTO ERA PARA VER SI FUNCIONABA
   ngOnInit() {
-    this.planData = {
-      contract: "Trial",
-      cardNumber: "XXXX-XXXX-XXXX-3465",
-      deadline: 30
-    };
-  }
-  
-  //Acá si hace toda la lógica de la base de datos-Falta la URL, ponerla en el servisio que se llama data
+    let timerInterval: any;
+    Swal.fire({
+      title: "Cargando...",
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading(null);
+        let timer: any;
+        timerInterval = setInterval(() => {
+        }, 50);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
 
-  /*ngOnInit(): void {
-    this.getPlanData();
-  }*/
-
-  getPlanData(): void {
-    this.dataService.getPlanData()
-      .subscribe(data => {
-        this.planData = data;
+    console.log(localStorage.getItem("email"));
+    this.dataService.getCardData(localStorage.getItem("username")).subscribe(card => this.card = card);
+    if(this.card?.cardHolder != null || this.card?.cardHolder != undefined){
+      this.paymentInfo = "Tarjeta terminada en "+this.card.cardNumber;
+    }else{
+      this.paymentInfo = "Pago asociado a la plataforma PSE"
+    }
+    this.dataService.getPlanData(localStorage.getItem("companyid")).subscribe(plan => {
+      this.planData = plan;
+      let timerInterval: any;
+      Swal.fire({
+        title: "Listo!",
+        timer: 600,
+        confirmButtonColor: '#2E575A',
+        timerProgressBar: true,
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
       });
+    })
   }
+
 }
