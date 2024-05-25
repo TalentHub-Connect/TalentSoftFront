@@ -10,7 +10,7 @@
                         <strong>El total a pagar en el mes de {{ mesActual }} es de:</strong> ${{ totalLiquidacion }}
                     </div>
                     <div class="ml-auto"> <!-- Esta clase empuja el botón al extremo derecho -->
-                        <button class="btn btn-dispersar">Dispersar</button>
+                        <button class="btn btn-dispersar" (click)="dispersarPagos()">Dispersar</button>
                     </div>
                 </div>
             </div>

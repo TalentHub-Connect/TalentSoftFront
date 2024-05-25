@@ -21,7 +21,7 @@ export class ListaNominaComponent implements OnInit {
   ngOnInit() {
     const companyIdString = localStorage.getItem('companyid');
     if (companyIdString) {
-      this.companyId = +companyIdString; // Convertir a número
+      this.companyId = +companyIdString;
       this.cargarEmpleados();
       this.obtenerMesActual();
     }
@@ -36,11 +36,20 @@ export class ListaNominaComponent implements OnInit {
   }
 
   calcularTotalLiquidacion() {
-    this.totalLiquidacion = this.empleados.reduce((acc, empleado) => acc + empleado.salario, 0);
+    this.empleadoNService.getSalaries(this.companyId).subscribe(total => {
+      this.totalLiquidacion = total;
+    });
   }
 
-  agregarNovedad(id: number) {
-    // Lógica para agregar novedad
+  dispersarPagos() {
+    this.empleadoNService.disperse(this.companyId).subscribe(success => {
+      if (success) {
+        alert('Pagos dispersados con éxito');
+        this.cargarEmpleados();
+      } else {
+        alert('Error al dispersar los pagos');
+      }
+    });
   }
 
   eliminarEmpleado(id: number) {
