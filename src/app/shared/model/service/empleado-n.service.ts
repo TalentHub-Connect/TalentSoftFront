@@ -18,7 +18,7 @@ export class EmpleadoNService {
   constructor(private http: HttpClient) { }
 
   getEmpleadosNByCompanyId(companyId: number): Observable<EmpleadoN[]> {
-    return this.http.get<EmpleadoN[]>(`${this.apiUrl}/getEmployees/${companyId}`).pipe(
+    return this.http.get<EmpleadoN[]>(`${this.apiUrl}/getEmployeesDTO/company/${companyId}`).pipe(
       map(empleados => empleados.map(e => ({
         ...e,
         nombre: `${e.name} ${e.surname}`

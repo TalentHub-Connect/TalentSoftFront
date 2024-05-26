@@ -29,9 +29,8 @@ export class CausalesDespidoComponent implements OnInit {
       const companyId = parseInt(companyIdString, 10);
       this.causalService.obtenerReasons(companyId).subscribe({
         next: (data) => {
-          console.log('Causales cargadas:', data); // Verifica qué datos estás recibiendo exactamente
           this.causales = data;
-          this.filtrarCausales();
+          this.filtrarCausales(); // Aplicar filtros después de cargar causales
         },
         error: (error) => {
           console.error('Error al cargar causales:', error);
@@ -72,7 +71,7 @@ export class CausalesDespidoComponent implements OnInit {
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.causalesFiltradas = this.causales.slice(startIndex, endIndex);
+    this.causalesFiltradas = this.causalesFiltradas.slice(startIndex, endIndex);
   }
 
   onPreviousPage() {
@@ -83,7 +82,7 @@ export class CausalesDespidoComponent implements OnInit {
   }
 
   onNextPage() {
-    const totalPages = Math.ceil(this.causales.length / this.itemsPerPage);
+    const totalPages = Math.ceil(this.causalesFiltradas.length / this.itemsPerPage);
     if (this.currentPage < totalPages) {
       this.currentPage++;
       this.updatePagination();

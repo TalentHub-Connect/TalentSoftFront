@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- causales-despido.component.html -->
 
 <body class="background-container">
     <div class="container mt-4">
@@ -8,7 +7,6 @@
                 <h2 class="text-left mb-2">Causales de despidos</h2>
             </div>
             <div class="col-auto">
-                <!-- Botón para registrar nuevo empleado -->
                 <button type="button" routerLink="/registrar-causal" class="btn btn-custom ">Registrar causal</button>
             </div>
         </div>
@@ -55,9 +53,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- Controles de paginación y selector de elementos por página -->
                 <div class="pagination-container d-flex justify-content-end align-items-center">
-                    <!-- Selector de elementos por página -->
                     <div class="items-per-page mr-3 d-inline-flex align-items-center">
                         <div class="d-inline-flex mr-2">Elementos por página:</div>
                         <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage"
@@ -68,8 +64,6 @@
                             <option value="20">20</option>
                         </select>
                     </div>
-
-                    <!-- Botones de paginación -->
                     <div class="pagination-buttons">
                         <button class="btn btn-custom-pagination mr-1" [disabled]="currentPage === 1"
                             (click)="onPreviousPage()">Anterior</button>
