@@ -73,6 +73,7 @@ export class AgregarConvocatoriaComponent {
       );
     } else {
       console.log('Formulario inválido');
+      this.showErrorMessage();
     }
   }
 
@@ -85,6 +86,12 @@ export class AgregarConvocatoriaComponent {
   }
   showSuccessMessage() {
     this.snackBar.open('La convocatoria se agregó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top'
+    });
+  }
+  showErrorMessage() {
+    this.snackBar.open('Hacen falta datos por llenar', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top'
     });

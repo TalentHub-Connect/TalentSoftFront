@@ -11,12 +11,7 @@
           Agregar
         </button>
       </div>
-      <div class="d-inline-block mr-3">
-        <mat-form-field appearance="fill" style="min-width: 240px;">
-          <mat-label>Filtrar por nombre empleado </mat-label>
-          <input matInput placeholder="search" autocomplete="off" (keyup)="filterData($event)">
-        </mat-form-field>
-      </div>
+      
     
     
       <div class="d-inline-block mr-3">
@@ -25,7 +20,7 @@
           <mat-select (selectionChange)="onChange($event)">
             <mat-option value="">Todos</mat-option>
             <mat-option value="Abierto">Abierto</mat-option>
-            <mat-option value="En proceso">En proceso</mat-option>
+            <mat-option value="Proceso">En proceso</mat-option>
             <mat-option value="Resuelto">Resuelto</mat-option>
             <mat-option value="Cerrado">Cerrado</mat-option>
           </mat-select>

@@ -81,6 +81,7 @@ export class AgregarEventoComponent {
       );
     } else {
       console.log('Formulario inválido');
+      this.showErrorMessage();
     }
   }
 
@@ -113,6 +114,12 @@ export class AgregarEventoComponent {
 
   showSuccessMessage() {
     this.snackBar.open('El evento se agregó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top'
+    });
+  }
+  showErrorMessage() {
+    this.snackBar.open('Hacen falta datos por llenar', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top'
     });
