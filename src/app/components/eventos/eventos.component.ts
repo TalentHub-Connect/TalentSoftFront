@@ -163,7 +163,7 @@ export class EventosComponent implements AfterViewInit {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se eliminó con éxito', 'Cerrar', {
+    this.snackBar.open('El evento se eliminó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });

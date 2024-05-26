@@ -65,6 +65,9 @@ export class IncidentesComponent implements AfterViewInit {
       this.dataSource.sort = this.sort;
       this.loadEmployeeNames();
       this.loadIncidentName();
+      this.dataSource.filterPredicate = (data: incident, filter: string) => {
+        return this.getEmployeeName(data.employeeid).toLowerCase().includes(filter);
+      };
     });
 
     this.dataSource.paginator = this.paginator;
@@ -72,8 +75,10 @@ export class IncidentesComponent implements AfterViewInit {
     this.aspiranteEditService.onAspiranteEdit().subscribe(() => {
       this.refreshTableData();
     });
+    
   }
-
+  
+  
   refreshTableData() {
     this.incidentService.getincidentsbyCompany(this.companyId ? this.companyId : 0).subscribe((response: any) => {
       this.apiResponse = response;
@@ -90,9 +95,7 @@ export class IncidentesComponent implements AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  applyFilter() {
-    this.dataSource.filter = this.nombreFilterValue.trim().toLowerCase();
-  }
+  
   loadEmployeeNames() {
     this.apiResponse.forEach((incidente: incident) => {
       this.empleadoService
@@ -165,7 +168,7 @@ export class IncidentesComponent implements AfterViewInit {
   }
 
   showSuccessMessage() {
-    this.snackBar.open('El estado se cambió a Cerrado con éxito', 'Cerrar', {
+    this.snackBar.open('El incidente se eliminó con éxito', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top',
     });
@@ -201,5 +204,6 @@ export class IncidentesComponent implements AfterViewInit {
       console.log('Popup cerrado');
     });
   }
+  
 }
 
