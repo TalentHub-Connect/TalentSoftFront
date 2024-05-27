@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- causales-despido.component.html -->
 
 <body class="background-container">
     <div class="container mt-4">
@@ -8,8 +7,7 @@
                 <h2 class="text-left mb-2">Causales de despidos</h2>
             </div>
             <div class="col-auto">
-                <!-- Botón para registrar nuevo empleado -->
-                <button type="button" routerLink="/registrar-causal" class="btn btn-custom ">Registrar causal</button>
+                <button type="button" routerLink="/registrar-causal" class="btn btn-custom">Registrar causal</button>
             </div>
         </div>
         <div class="row mb-3">
@@ -17,14 +15,14 @@
                 <div class="form-group">
                     <label for="filtroNombre">Filtrar por Causal:</label>
                     <input type="text" class="form-control" id="filtroNombre" [(ngModel)]="filtroNombre"
-                        (input)="filtrarCausales()" placeholder="Escriba la causal a filtrar...">
+                        (input)="onNombreFiltroChange($event)" placeholder="Escriba la causal a filtrar...">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="filtroCreador">Filtrar por Encargado de Creación:</label>
                     <input type="text" class="form-control" id="filtroCreador" [(ngModel)]="filtroCreador"
-                        (input)="filtrarCausales()" placeholder="Escriba el encargado a filtrar...">
+                        (input)="onCreadorFiltroChange($event)" placeholder="Escriba el encargado a filtrar...">
                 </div>
             </div>
         </div>
@@ -41,23 +39,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let causal of causalesFiltradas; let i = index">
-                            <td>{{ i + 1 }}</td>
+                        <tr *ngFor="let causal of paginatedCausales; let i = index">
+                            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
                             <td>{{ causal.name }}</td>
                             <td>{{ causal.description }}</td>
                             <td>{{ causal.createForUser }}</td>
                             <td>
-                                <button class="btn btn-custom-search btn-sm mr-2" (click)="editarCausal(causal.id)"><i
-                                        class="fas fa-search"></i></button>
-                                <button class="btn btn-danger btn-sm" (click)="eliminarCausal(causal.id)"><i
-                                        class="fas fa-trash"></i></button>
+                                <button class="btn btn-custom-search btn-sm mr-2" (click)="editarCausal(causal.id)">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="eliminarCausal(causal.id)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- Controles de paginación y selector de elementos por página -->
                 <div class="pagination-container d-flex justify-content-end align-items-center">
-                    <!-- Selector de elementos por página -->
                     <div class="items-per-page mr-3 d-inline-flex align-items-center">
                         <div class="d-inline-flex mr-2">Elementos por página:</div>
                         <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage"
@@ -68,8 +66,6 @@
                             <option value="20">20</option>
                         </select>
                     </div>
-
-                    <!-- Botones de paginación -->
                     <div class="pagination-buttons">
                         <button class="btn btn-custom-pagination mr-1" [disabled]="currentPage === 1"
                             (click)="onPreviousPage()">Anterior</button>

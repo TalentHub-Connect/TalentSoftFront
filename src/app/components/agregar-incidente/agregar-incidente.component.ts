@@ -80,7 +80,6 @@ export class AgregarIncidenteComponent {
         response => {
           console.log('Incidente agregado correctamente:', response);
           this.showSuccessMessage();
-          this.clearform();
         },
         error => {
           console.error('Error al agregar Incidente:', error);
@@ -88,6 +87,7 @@ export class AgregarIncidenteComponent {
       );
     } else {
       console.log('Formulario inválido');
+      this.showErrorMessage();
     }
   }
 
@@ -95,7 +95,25 @@ export class AgregarIncidenteComponent {
     this.router.navigate(['/incidentes']);
   }
   clearform() {
-    this.incidenteform.reset();
+    this.incidenteform.reset({
+      incidentdate: null,
+      description: '',
+      empleado: '',
+      incidente: '',
+      status: 'Inicial',
+    });
+  
+    // Marcar todos los controles como "pristine" y "untouched"
+  this.incidenteform.markAsPristine();
+  this.incidenteform.markAsUntouched();
+    // Marcar todos los controles como "pristine" y "untouched"
+    Object.keys(this.incidenteform.controls).forEach(key => {
+      const control = this.incidenteform.get(key);
+      if (control) {
+        control.markAsPristine();
+        control.markAsUntouched();
+      }
+    });
   }
 
   loadIncidentes(): void {
@@ -121,6 +139,12 @@ export class AgregarIncidenteComponent {
 
   showSuccessMessage() {
     this.snackBar.open('El incidente se agregó con éxito', 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top'
+    });
+  }
+  showErrorMessage() {
+    this.snackBar.open('Hacen falta datos por llenar', 'Cerrar', {
       duration: 3000,
       verticalPosition: 'top'
     });

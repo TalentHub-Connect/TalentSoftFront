@@ -13,11 +13,12 @@ export class EmpleadoNService {
 
   private apiUrl = `${environment.NominaURL}/employee`;
   private apiUrlNew = `${environment.NominaURL}/news`;
+  private apiUrlPay = `${environment.NominaURL}/pay`;
 
   constructor(private http: HttpClient) { }
 
   getEmpleadosNByCompanyId(companyId: number): Observable<EmpleadoN[]> {
-    return this.http.get<EmpleadoN[]>(`${this.apiUrl}/getEmployees/${companyId}`).pipe(
+    return this.http.get<EmpleadoN[]>(`${this.apiUrl}/getEmployeesDTO/company/${companyId}`).pipe(
       map(empleados => empleados.map(e => ({
         ...e,
         nombre: `${e.name} ${e.surname}`
@@ -26,7 +27,7 @@ export class EmpleadoNService {
   }
 
   getEmpleadoNById(id: number): Observable<EmpleadoN> {
-    return this.http.get<EmpleadoN>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<EmpleadoN>(`${this.apiUrl}/dto/${id}`).pipe(
       map(e => ({
         ...e,
         nombre: `${e.name} ${e.surname}`
@@ -40,5 +41,13 @@ export class EmpleadoNService {
 
   agregarNovedad(id: number, novedad: New): Observable<New> {
     return this.http.post<New>(`${this.apiUrlNew}/createNews/${id}`, novedad);
+  }
+
+  disperse(id: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrlPay}/disperse/${id}`);
+  }
+
+  getSalaries(id: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrlPay}/getSalaries/${id}`);
   }
 }

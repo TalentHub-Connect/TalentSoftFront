@@ -16,29 +16,22 @@
                 </select>
             </div>
 
-            <!-- Campos de datos personales -->
-            <div class="form-row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="correo">Correo para solicitar creación de usuario</label>
-                        <input type="email" class="form-control" id="correo" [(ngModel)]="nuevoUsuario.email "
-                            name="correo" required>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" [(ngModel)]="nuevoUsuario.firstName"
-                            name="nombre" required>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" [(ngModel)]="nuevoUsuario.lastName"
-                            name="apellido" required>
-                    </div>
-                </div>
+            <!-- Campo para el correo -->
+            <div class="form-group">
+                <label for="correo">Correo para solicitar creación de usuario</label>
+                <input type="email" class="form-control" id="correo" [(ngModel)]="nuevoUsuario.email" name="correo"
+                    required>
+            </div>
+
+            <!-- Campo desplegable para empleados -->
+            <div class="form-group">
+                <label for="employee">Seleccionar Empleado</label>
+                <select class="form-control" id="employee" [(ngModel)]="selectedEmployee" name="employee">
+                    <option value="">Seleccione un empleado</option>
+                    <option *ngFor="let empleado of empleados" [ngValue]="empleado">
+                        {{ empleado.name }} {{ empleado.surname }}
+                    </option>
+                </select>
             </div>
 
             <!-- Botones -->

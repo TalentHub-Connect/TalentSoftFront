@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { typecapacitation } from '../Entities/typecapacitation';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TipocapacitacionService {
-  private apiUrl = 'https://sstback-qa.up.railway.app/api/type/capacitations';
+  private apiUrl = environment.SST+'/api/type/capacitations';
 
 
   constructor(private http: HttpClient) { }

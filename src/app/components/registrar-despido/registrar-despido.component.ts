@@ -8,19 +8,39 @@ import { Reason } from 'src/app/shared/model/Entities/reason';
 @Component({
   selector: 'app-registrar-despido',
   templateUrl: './registrar-despido.component.html',
-  styleUrls: ['./registrar-despido.component.css'] // Corregido styleUrl a styleUrls
+  styleUrls: ['./registrar-despido.component.css']
 })
 export class RegistrarDespidoComponent implements OnInit {
   empleados: Empleado[] = [];
   causales: Reason[] = [];
   selectedEmpleado!: Empleado;
-  selectedCausal!: string;
+  selectedCausal!: Reason;
 
-  constructor(private empleadoService: EmpleadoService, private reasonService: ReasonService, private router: Router) { }
+  constructor(
+    private empleadoService: EmpleadoService,
+    private reasonService: ReasonService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.empleados = this.empleadoService.getEmpleados(); // Asegúrate de tener un método que obtenga solo los empleados activos
+    this.cargarEmpleados();
     this.cargarCausales();
+  }
+
+  cargarEmpleados() {
+    const companyIdString = localStorage.getItem('companyid');
+    if (companyIdString) {
+      const companyId = parseInt(companyIdString, 10);
+      this.empleadoService.getEmpleadosByCompanyId(companyId).subscribe({
+        next: (empleados) => {
+          this.empleados = empleados;
+          console.log('Empleados cargados:', this.empleados);
+        },
+        error: (err) => console.error('Error al cargar empleados:', err)
+      });
+    } else {
+      console.error('Company ID not found in localStorage');
+    }
   }
 
   cargarCausales() {
@@ -29,7 +49,7 @@ export class RegistrarDespidoComponent implements OnInit {
       const companyId = parseInt(companyIdString, 10);
       this.reasonService.obtenerReasons(companyId).subscribe({
         next: (reasons) => {
-          this.causales = reasons;  // Almacenamos directamente el array de Reason
+          this.causales = reasons;
         },
         error: (err) => console.error('Error al cargar causales:', err)
       });
@@ -39,22 +59,23 @@ export class RegistrarDespidoComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Lógica para registrar el nuevo proceso de despido
     const newId = this.empleadoService.getEmpleados().length + 1;
     const newEmpleado: Empleado = {
       id: newId,
-      nombre: this.selectedEmpleado.nombre,
-      status: 'Notificación', // La etapa inicial es siempre 'Notificación'
-      causal: this.selectedCausal,
+      nombre: `${this.selectedEmpleado.name} ${this.selectedEmpleado.surname}`,
+      status: 'Notificación',
+      causal: this.selectedCausal.name,
       progreso: 25,
       salario: 0,
-      documentos: []
+      documentos: [],
+      name: this.selectedEmpleado.name,
+      surname: this.selectedEmpleado.surname
     };
     this.empleadoService.addEmpleado(newEmpleado);
     this.router.navigate(['/progreso-salida']);
   }
 
   onDiscard(): void {
-    this.router.navigate(['/progreso-salida']); // Navega de vuelta sin realizar ninguna acción
+    this.router.navigate(['/progreso-salida']);
   }
 }

@@ -10,9 +10,10 @@ import { ReasonService } from 'src/app/shared/model/service/reason.service';
 })
 export class CausalesDespidoComponent implements OnInit {
   causales: Reason[] = [];
+  causalesFiltradas: Reason[] = [];
+  paginatedCausales: Reason[] = [];
   filtroNombre: string = '';
   filtroCreador: string = '';
-  causalesFiltradas: Reason[] = [];
 
   currentPage = 1;
   itemsPerPage: number = 5;
@@ -29,9 +30,9 @@ export class CausalesDespidoComponent implements OnInit {
       const companyId = parseInt(companyIdString, 10);
       this.causalService.obtenerReasons(companyId).subscribe({
         next: (data) => {
-          console.log('Causales cargadas:', data); // Verifica qué datos estás recibiendo exactamente
           this.causales = data;
-          this.filtrarCausales();
+          console.log('Causales cargadas:', this.causales);
+          this.filtrarCausales(); // Aplicar filtros después de cargar causales
         },
         error: (error) => {
           console.error('Error al cargar causales:', error);
@@ -49,6 +50,7 @@ export class CausalesDespidoComponent implements OnInit {
         const creatorMatch = causal.createForUser ? causal.createForUser.toLowerCase().includes(this.filtroCreador.toLowerCase()) : true;
         return nameMatch && creatorMatch;
       });
+      console.log('Causales filtradas:', this.causalesFiltradas);
       this.updatePagination();
     }
   }
@@ -56,37 +58,56 @@ export class CausalesDespidoComponent implements OnInit {
   eliminarCausal(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar esta causal?')) {
       this.causalService.eliminarReason(id).subscribe(() => {
+        console.log('Causal eliminada con ID:', id);
         this.cargarCausales();
       });
     }
   }
 
   editarCausal(id: number) {
+    console.log('Editando causal con ID:', id);
     this.router.navigate(['editar-causal', id]);
   }
 
   onChangeItemsPerPage(): void {
+    console.log('Cambiando elementos por página a:', this.itemsPerPage);
     this.updatePagination();
   }
 
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.causalesFiltradas = this.causales.slice(startIndex, endIndex);
+    this.paginatedCausales = this.causalesFiltradas.slice(startIndex, endIndex);
+    console.log(`Mostrando causales del ${startIndex + 1} al ${endIndex}`);
   }
 
   onPreviousPage() {
     if (this.currentPage > 1) {
+      console.log('Navegando a la página anterior');
       this.currentPage--;
       this.updatePagination();
     }
   }
 
   onNextPage() {
-    const totalPages = Math.ceil(this.causales.length / this.itemsPerPage);
+    const totalPages = Math.ceil(this.causalesFiltradas.length / this.itemsPerPage);
     if (this.currentPage < totalPages) {
+      console.log('Navegando a la página siguiente');
       this.currentPage++;
       this.updatePagination();
     }
+  }
+
+  // Métodos para actualizar filtros
+  onNombreFiltroChange(event: Event) {
+    this.filtroNombre = (event.target as HTMLInputElement).value;
+    console.log('Filtro por nombre cambiado a:', this.filtroNombre);
+    this.filtrarCausales();
+  }
+
+  onCreadorFiltroChange(event: Event) {
+    this.filtroCreador = (event.target as HTMLInputElement).value;
+    console.log('Filtro por creador cambiado a:', this.filtroCreador);
+    this.filtrarCausales();
   }
 }

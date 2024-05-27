@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {empleado} from '../Entities/empleadoP';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoPService {
-  private apiUrl = 'https://empresasnominamicroservice-qa.up.railway.app/employee';
+  private apiUrl = environment.NominaURL+'/employee';
 
 
   constructor(private http: HttpClient) { }

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
 import { capacitation } from '../Entities/capacitation';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CapacitacionesService {
-  private apiUrl = 'https://sstback-qa.up.railway.app/api/capacitations';
+  private apiUrl = environment.SST+'/api/capacitations';
 
 
   constructor(private http: HttpClient) { }

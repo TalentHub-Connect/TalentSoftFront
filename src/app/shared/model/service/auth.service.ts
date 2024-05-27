@@ -51,7 +51,8 @@ export class AuthService {
       email: email,
       username: username,
       password: '12345',
-      role: role
+      role: role,
+      companyid: 0,
     };
     return this.http.post<any>(`${environment.authURL}/${role}`, user);
   }

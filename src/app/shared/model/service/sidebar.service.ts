@@ -9,10 +9,7 @@ export class SidebarService {
 
   constructor(private http: HttpClient) { }
 
-  // Nombre empresa
-  obtenerNombreEmpresa(): Observable<string> {
-    return this.http.get<string>('URL_DEL_BACKEND/nombre-empresa');
-  }
+  
 
   // Módulos nuevos
   obtenerModulos(roleId: number): Observable<any[]> {

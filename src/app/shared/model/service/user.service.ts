@@ -5,11 +5,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { User } from '../auth/user';
+import { Employee } from "../Entities/employee";
+import { UsuarioPermisoDto } from "../Entities/usuario-permiso-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  private apiUrl = environment.NominaURL + '/employee';
 
   constructor(private http: HttpClient) { }
 
@@ -21,5 +25,41 @@ export class UserService {
     });
 
     return this.http.post<any>(url, user, { headers, responseType: 'text' as 'json' });
+  }
+
+  findAllEmployees(companyid: number): Observable<Employee[]> {
+    const url = `${this.apiUrl}/getEmployees/company/${companyid}`;
+    return this.http.get<Employee[]>(url);
+  }
+
+  agregarEmpleado(empleado: Employee) {
+    return this.http.post<any>(`https://empresasnominamicroservice-qa.up.railway.app/employee/createEmployee`, empleado);
+  }
+
+  agregarUsuario(usuario: User): Observable<any> {
+    return this.http.post<any>(`https://canelausermanagementmicroservice-qa.up.railway.app/user/save`, usuario);
+  }
+
+  findAllUsers(): Observable<UsuarioPermisoDto[]> {
+    return this.http.get<UsuarioPermisoDto[]>(
+      'https://canelausermanagementmicroservice-qa.up.railway.app/user/find_all_with_roles'
+    );
+  }
+
+  findAllUsersbyCompanyId(id: string | null) {
+    return this.http.get<UsuarioPermisoDto[]>(
+      `https://canelausermanagementmicroservice-qa.up.railway.app/user/find_all_with_roles_by_company_id/${id}`
+    );
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(
+      `https://canelausermanagementmicroservice-qa.up.railway.app/user/update/${id}`
+    );
+  }
+
+  updateUser(id: number, user: User): Observable<User> {
+    const url = `${this.apiUrl}/user/update/${id}`;
+    return this.http.put<User>(url, user);
   }
 }

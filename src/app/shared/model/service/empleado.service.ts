@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Empleado } from '../Entities/empleado';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -34,6 +34,10 @@ export class EmpleadoService {
 
   getEmpleados(): Empleado[] {
     return this.empleados;
+  }
+
+  getEmpleadosByCompanyId(companyId: number): Observable<Empleado[]> {
+    return this.http.get<Empleado[]>(`${this.apiUrl}/getEmployees/company/${companyId}`);
   }
 
   filterEmpleados(nombre: string, etapa: string, causal: string): Empleado[] {

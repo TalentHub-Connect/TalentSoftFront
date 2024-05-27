@@ -7,7 +7,7 @@ export class EmpleadoN {
         public contractType: string,
         public startdate: Date,
         public status: string,
-        public salario: number,
+        public discount: number,
     ) { }
 
     get nombre(): string {
