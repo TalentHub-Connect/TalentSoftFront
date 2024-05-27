@@ -54,12 +54,11 @@ export class UserService {
 
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(
-      `https://canelausermanagementmicroservice-qa.up.railway.app/user/update/${id}`
+      `https://canelausermanagementmicroservice-qa.up.railway.app/user/${id}`
     );
   }
 
   updateUser(id: number, user: User): Observable<User> {
-    const url = `${this.apiUrl}/user/update/${id}`;
-    return this.http.put<User>(url, user);
+    return this.http.put<User>(`https://canelausermanagementmicroservice-qa.up.railway.app/user/update/${id}`, user);
   }
 }
