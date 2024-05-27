@@ -1,7 +1,6 @@
 export const environment = {
   production: false,
-  authURL: 'https://canelaauth-qa.up.railway.app/api/talentsoft/auth',
-  //authURL: 'https://canelaauth-production.up.railway.app/api/talentsoft/auth',
+  authURL: 'https://canelaauth-production.up.railway.app/api/talentsoft/auth',
   DespidosURL: 'https://talentsoftdespidos-qa.up.railway.app',
   CompanyURL: 'https://rootempresamicroservice-qa.up.railway.app',
   NominaURL: 'https://empresasnominamicroservice-qa.up.railway.app',
@@ -9,6 +8,6 @@ export const environment = {
 
   QaURL: 'https://talentsoftdespidos-qa.up.railway.app',
   SST: 'https://sstback-qa.up.railway.app',
-  RECLUTAMIENTO:'https://talentsoftreclutamientospring-qa.up.railway.app',
+  RECLUTAMIENTO:'https://reclutamiento-production.up.railway.app',
   secretKey: 'ThisIsASecretKey'
 };
