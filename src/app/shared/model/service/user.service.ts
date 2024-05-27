@@ -5,13 +5,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { User } from '../auth/user';
-import {Employee} from "../Entities/employee";
-import {UsuarioPermisoDto} from "../Entities/usuario-permiso-dto";
+import { Employee } from "../Entities/employee";
+import { UsuarioPermisoDto } from "../Entities/usuario-permiso-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  private apiUrl = environment.NominaURL + '/employee';
 
   constructor(private http: HttpClient) { }
 
@@ -25,8 +27,9 @@ export class UserService {
     return this.http.post<any>(url, user, { headers, responseType: 'text' as 'json' });
   }
 
-  findAllEmployees(id : string | null) :Observable<Employee[]>{
-    return this.http.get<Employee[]>(`http://localhost:8080/employee/getEmployees/${id}`)
+  findAllEmployees(companyid: number): Observable<Employee[]> {
+    const url = `${this.apiUrl}/getEmployees/company/${companyid}`;
+    return this.http.get<Employee[]>(url);
   }
 
   agregarEmpleado(empleado: Employee) {
@@ -34,7 +37,7 @@ export class UserService {
   }
 
   agregarUsuario(usuario: User): Observable<any> {
-    return this.http.post<any>(`http://localhost:8083/user/save`, usuario);
+    return this.http.post<any>(`https://canelausermanagementmicroservice-qa.up.railway.app/user/save`, usuario);
   }
 
   findAllUsers(): Observable<UsuarioPermisoDto[]> {
@@ -45,7 +48,7 @@ export class UserService {
 
   findAllUsersbyCompanyId(id: string | null) {
     return this.http.get<UsuarioPermisoDto[]>(
-      `http://localhost:8083/user/find_all_with_roles_by_company_id/${id}`
+      `https://canelausermanagementmicroservice-qa.up.railway.app/user/find_all_with_roles_by_company_id/${id}`
     );
   }
 }

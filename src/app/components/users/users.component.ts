@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../shared/model/service/user.service";
-import {Router} from "@angular/router";
-import {User} from "../../shared/model/auth/user";
-import {Employee} from "../../shared/model/Entities/employee";
-import {UsuarioPermisoDto} from "../../shared/model/Entities/usuario-permiso-dto";
+import { Component, OnInit } from '@angular/core';
+import { UserService } from "../../shared/model/service/user.service";
+import { Router } from "@angular/router";
+import { User } from "../../shared/model/auth/user";
+import { Employee } from "../../shared/model/Entities/employee";
+import { UsuarioPermisoDto } from "../../shared/model/Entities/usuario-permiso-dto";
 import Swal from "sweetalert2";
 
 @Component({
@@ -14,20 +14,20 @@ import Swal from "sweetalert2";
 export class UsersComponent implements OnInit {
 
   constructor(
-    private  userService: UserService,
+    private userService: UserService,
     private router: Router
   ) {
   }
 
-  users : Employee[]  | undefined
+  users: Employee[] | undefined;
   username: string | null = null;
-
-
   rolesPorUsuario: { [key: string]: string[] } = {};
   usuarios: UsuarioPermisoDto[] | undefined;
+  filteredUsuarios: UsuarioPermisoDto[] | undefined;
+  filterUsername: string = '';
+  filterModule: string = '';
 
-
-  ngOnInit(){
+  ngOnInit() {
     let timerInterval: any;
     Swal.fire({
       title: 'Cargando...',
@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
       didOpen: () => {
         Swal.showLoading(null);
         let timer: any;
-        timerInterval = setInterval(() => {}, 100);
+        timerInterval = setInterval(() => { }, 100);
       },
       willClose: () => {
         clearInterval(timerInterval);
@@ -47,29 +47,35 @@ export class UsersComponent implements OnInit {
     });
 
     this.username = localStorage.getItem('username');
+    const companyIdStr = localStorage.getItem("companyid");
 
-    this.userService.findAllUsersbyCompanyId(localStorage.getItem("companyid")).subscribe((users) => {
-      this.usuarios = users;
-      this.usuarios.forEach((user) => {
-        console.log(user.username)
-        this.rolesPorUsuario[user.username] = user.roles;
+    if (companyIdStr) {
+      const companyId = +companyIdStr;
+
+      this.userService.findAllUsersbyCompanyId(companyIdStr).subscribe((users) => {
+        this.usuarios = users;
+        this.filteredUsuarios = users;
+        this.usuarios.forEach((user) => {
+          console.log(user.username);
+          this.rolesPorUsuario[user.username] = user.roles;
+        });
       });
-    });
 
-    console.log("company: "+localStorage.getItem("companyid"))
-    this.userService.findAllEmployees(localStorage.getItem("companyid")).subscribe(users =>
-    {
-      this.users = users;
-      console.log("Users: "+ this.users);
-      Swal.fire({
-        icon: 'warning',
-        title: 'Gestión de usuarios',
-        text: 'No olvide guardar los cambios al finalizar',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#346C73',
+      console.log("company: " + companyId);
+      this.userService.findAllEmployees(companyId).subscribe(employees => {
+        this.users = employees;
+        console.log("Users: " + this.users);
+        Swal.fire({
+          icon: 'warning',
+          title: 'Gestión de usuarios',
+          text: 'No olvide guardar los cambios al finalizar',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#346C73',
+        });
       });
-    });
-
+    } else {
+      console.error('No se encontró el companyid en el localStorage');
+    }
   }
 
   public handleCheckboxChange(
@@ -86,6 +92,7 @@ export class UsersComponent implements OnInit {
       console.error('El target es null en el evento del checkbox.');
     }
   }
+
   actualizarRoles(username: string, rol: string, isChecked: boolean): void {
     // Verificar si el usuario ya tiene este rol
     this.username = username;
@@ -108,5 +115,14 @@ export class UsersComponent implements OnInit {
       this.rolesPorUsuario[username]
     );
   }
-}
 
+  applyFilters(): void {
+    if (!this.usuarios) return;
+
+    this.filteredUsuarios = this.usuarios.filter(user => {
+      const matchesUsername = user.username.toLowerCase().includes(this.filterUsername.toLowerCase());
+      const matchesModule = this.filterModule ? user.roles.includes(this.filterModule) : true;
+      return matchesUsername && matchesModule;
+    });
+  }
+}
