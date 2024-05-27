@@ -51,4 +51,15 @@ export class UserService {
       `https://canelausermanagementmicroservice-qa.up.railway.app/user/find_all_with_roles_by_company_id/${id}`
     );
   }
+
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(
+      `https://canelausermanagementmicroservice-qa.up.railway.app/user/update/${id}`
+    );
+  }
+
+  updateUser(id: number, user: User): Observable<User> {
+    const url = `${this.apiUrl}/user/update/${id}`;
+    return this.http.put<User>(url, user);
+  }
 }
