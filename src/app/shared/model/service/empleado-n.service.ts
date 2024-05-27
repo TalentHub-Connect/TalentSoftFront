@@ -27,7 +27,7 @@ export class EmpleadoNService {
   }
 
   getEmpleadoNById(id: number): Observable<EmpleadoN> {
-    return this.http.get<EmpleadoN>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<EmpleadoN>(`${this.apiUrl}/dto/${id}`).pipe(
       map(e => ({
         ...e,
         nombre: `${e.name} ${e.surname}`

@@ -7,7 +7,7 @@
                 <h2 class="text-left mb-2">Causales de despidos</h2>
             </div>
             <div class="col-auto">
-                <button type="button" routerLink="/registrar-causal" class="btn btn-custom ">Registrar causal</button>
+                <button type="button" routerLink="/registrar-causal" class="btn btn-custom">Registrar causal</button>
             </div>
         </div>
         <div class="row mb-3">
@@ -15,14 +15,14 @@
                 <div class="form-group">
                     <label for="filtroNombre">Filtrar por Causal:</label>
                     <input type="text" class="form-control" id="filtroNombre" [(ngModel)]="filtroNombre"
-                        (input)="filtrarCausales()" placeholder="Escriba la causal a filtrar...">
+                        (input)="onNombreFiltroChange($event)" placeholder="Escriba la causal a filtrar...">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="filtroCreador">Filtrar por Encargado de Creación:</label>
                     <input type="text" class="form-control" id="filtroCreador" [(ngModel)]="filtroCreador"
-                        (input)="filtrarCausales()" placeholder="Escriba el encargado a filtrar...">
+                        (input)="onCreadorFiltroChange($event)" placeholder="Escriba el encargado a filtrar...">
                 </div>
             </div>
         </div>
@@ -39,16 +39,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let causal of causalesFiltradas; let i = index">
-                            <td>{{ i + 1 }}</td>
+                        <tr *ngFor="let causal of paginatedCausales; let i = index">
+                            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
                             <td>{{ causal.name }}</td>
                             <td>{{ causal.description }}</td>
                             <td>{{ causal.createForUser }}</td>
                             <td>
-                                <button class="btn btn-custom-search btn-sm mr-2" (click)="editarCausal(causal.id)"><i
-                                        class="fas fa-search"></i></button>
-                                <button class="btn btn-danger btn-sm" (click)="eliminarCausal(causal.id)"><i
-                                        class="fas fa-trash"></i></button>
+                                <button class="btn btn-custom-search btn-sm mr-2" (click)="editarCausal(causal.id)">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="eliminarCausal(causal.id)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>

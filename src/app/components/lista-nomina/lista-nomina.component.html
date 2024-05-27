@@ -26,23 +26,23 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="nombre">Filtrar por Nombre:</label>
-                    <input type="text" class="form-control" id="nombre">
+                    <input type="text" class="form-control" id="nombre" (input)="onNombreFiltroChange($event)">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="status">Filtrar por status de novedad:</label>
-                    <select class="form-control" id="status">
+                    <select class="form-control" id="status" (change)="onStatusFiltroChange($event)">
                         <option value="">Todos</option>
-                        <option value="activo">Revisado</option>
-                        <option value="inactivo">No revisado</option>
+                        <option value="Revisado">Revisado</option>
+                        <option value="No revisado">No revisado</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="departamento">Filtrar por Departamento:</label>
-                    <select class="form-control" id="departamento">
+                    <select class="form-control" id="departamento" (change)="onDepartamentoFiltroChange($event)">
                         <option value="">Todos los departamentos</option>
                         <!-- Opciones de departamento se agregarán dinámicamente -->
                     </select>
@@ -67,8 +67,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let empleado of empleados; let i = index">
-                            <td>{{ i + 1 }}</td>
+                        <tr *ngFor="let empleado of paginatedEmpleados; let i = index">
+                            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
                             <td>{{ empleado.nombre }}</td>
                             <td>{{ empleado.department }}</td>
                             <td>{{ empleado.contractType }}</td>
@@ -112,7 +112,7 @@
                             (click)="onPreviousPage()">Anterior</button>
                         <span class="current-page">Página {{ currentPage }}</span>
                         <button class="btn btn-custom-pagination ml-1"
-                            [disabled]="currentPage * itemsPerPage >= empleados.length"
+                            [disabled]="currentPage * itemsPerPage >= filteredEmpleados.length"
                             (click)="onNextPage()">Siguiente</button>
                     </div>
                 </div>
