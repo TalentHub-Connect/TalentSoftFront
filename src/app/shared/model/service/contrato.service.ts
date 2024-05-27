@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { contrato } from '../Entities/contrato';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContratoService {
-
-  private apiUrl = 'https://empresasnominamicroservice-qa.up.railway.app/contract';
+  private apiUrl = environment.NominaURL+'/contract';
   constructor(private http: HttpClient) { }
 
   getContratos(): Observable<contrato[]> {
@@ -20,11 +20,7 @@ export class ContratoService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, { status });
   }
-  /*
-  agregarContrato(Contrato: contrato): Observable<number> {
-    const url = `${this.apiUrl}/createContract`;
-    return this.http.post<any>(`${url}`, Contrato);
-  }*/
+  
   agregarContrato(Contrato: contrato): Observable<{ contractId: number }> {
     const url = `${this.apiUrl}/createContract`;
     return this.http.post<{ contractId: number }>(url, Contrato).pipe(

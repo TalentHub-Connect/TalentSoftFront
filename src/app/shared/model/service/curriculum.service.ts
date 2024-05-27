@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { curriculum } from '../Entities/curriculum';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurriculumService {
-
-  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/curriculum';
+  
+  private apiUrl = environment.RECLUTAMIENTO+'/curriculum';
   constructor(private http: HttpClient) { }
 
   getCurriculums(): Observable<curriculum[]> {

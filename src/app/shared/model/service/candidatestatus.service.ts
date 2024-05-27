@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { candidateStatus } from '../Entities/candidatestatus';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidatestatusService {
-  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/candidatestatus';
-
+  private apiUrl = environment.RECLUTAMIENTO+'/candidatestatus';
 
   constructor(private http: HttpClient) { }
 

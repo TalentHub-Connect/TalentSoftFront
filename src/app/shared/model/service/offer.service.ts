@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {offer} from '../Entities/offer';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class offerService {
-  private apiUrl = 'https://talentsoftreclutamientospring-qa.up.railway.app/offer';
+  private apiUrl = environment.RECLUTAMIENTO+'/offer';
   constructor(private http: HttpClient) { }
 
   getoffers(companyid:number): Observable<offer[]> {
