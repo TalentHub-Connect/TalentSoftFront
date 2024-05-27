@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
 import { incident } from '../Entities/incident';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class IncidentesService {
 
 
   constructor(private http: HttpClient) { }
-  
+
   getincidentsbyCompany(companyid:number): Observable<incident[]> {
     const url = `${this.apiUrl}/company/${companyid}`;
     return this.http.get<incident[]>(url);

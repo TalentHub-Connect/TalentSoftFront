@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 import { DataService } from 'src/app/shared/model/service/data.service';
-import {Card} from "../../model/card";
-import {Plan} from "../../model/plan";
+
 import Swal from "sweetalert2";
+import {Plan} from "../../model/plan";
+import {Card} from "../../model/card";
 
 
 @Component({
