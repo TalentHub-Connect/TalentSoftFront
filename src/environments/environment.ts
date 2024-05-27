@@ -7,7 +7,7 @@ export const environment = {
   cardURL: 'NOSECUAL',
 
   QaURL: 'https://talentsoftdespidos-qa.up.railway.app',
-  SST: 'https://sstback-qa.up.railway.app',
+  SST: 'https://sstback-production.up.railway.app',
   RECLUTAMIENTO:'https://reclutamiento-production.up.railway.app',
   secretKey: 'ThisIsASecretKey'
 };
