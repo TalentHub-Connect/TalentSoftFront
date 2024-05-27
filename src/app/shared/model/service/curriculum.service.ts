@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { curriculum } from '../Entities/curriculum';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurriculumService {
-  
+
   private apiUrl = environment.RECLUTAMIENTO+'/curriculum';
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,7 @@ export class CurriculumService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, { status });
   }
-  
+
   agregarCurriculum(curriculum: curriculum): Observable<{ id: number }> {
     const url = `${this.apiUrl}/createCurriculum`;
     return this.http.post<{ id: number }>(url, curriculum).pipe(
@@ -34,7 +34,7 @@ export class CurriculumService {
       })
     );
   }
-  
+
   getCurriculum(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<any>(url);

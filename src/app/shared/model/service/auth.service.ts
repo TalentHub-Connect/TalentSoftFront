@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequest } from '../auth/aut.req';
 import { TokenResponse } from '../auth/token';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../auth/user';
 import { tap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { encrypt } from '../../../utils/encrypt';
 export class AuthService {
   constructor(private http: HttpClient) { }
   login(username: string, password: string): Observable<TokenResponse> {
-    password=encrypt(password);
+    password=password;
     console.log(password);
     const authReq: AuthenticationRequest = {
       username: username,
@@ -51,7 +51,8 @@ export class AuthService {
       email: email,
       username: username,
       password: '12345',
-      role: role
+      role: role,
+      companyid: 0,
     };
     return this.http.post<any>(`${environment.authURL}/${role}`, user);
   }

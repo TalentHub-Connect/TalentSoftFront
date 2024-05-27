@@ -3,6 +3,7 @@ import { UserService } from '../../shared/model/service/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../shared/model/auth/user';
 import Swal from 'sweetalert2';
+import {Employee} from "../../shared/model/Entities/employee";
 
 @Component({
   selector: 'app-crear-usuario',
@@ -29,7 +30,52 @@ export class CrearUsuarioComponent implements OnInit {
         this.userService.createUser(this.nuevoUsuario, this.nuevoUsuario.role, token).subscribe(
           (data: any) => {
             console.log("Respuesta del servidor:", data);
-            this.router.navigate(['/users']);
+
+            this.nuevoUsuario.username = data
+            this.nuevoUsuario.email = data
+            let companyId : number = 0;
+            let companyIdStr =localStorage.getItem("companyid");
+            if(companyIdStr!=null){
+              companyId = +companyIdStr;
+            }
+            this.nuevoUsuario.companyid = companyId;
+            // let empleado = new Employee(
+            //   -1,
+            //   this.nuevoUsuario.firstName,
+            //   this.nuevoUsuario.lastName,
+            //   "",
+            //   -1,
+            //   -1,
+            //   -1,
+            //   -1,
+            //   companyId,
+            //   "",
+            //   this.nuevoUsuario.username,
+            //   0,
+            //   ""
+            // );
+            // console.log(empleado);
+            // this.userService.agregarEmpleado(empleado).subscribe(response => {
+            //     console.log('Empleado agregado correctamente:', response);
+            //     this.router.navigate(['/users']);
+            //     //this.router.navigate(['/canela/permisos']);
+            //   },
+            //   error => {
+            //     console.error('Error al agregar Empleado:', error);
+            //     //this.router.navigate(['/canela/permisos']);
+            //   });
+            console.log("NUEVO USUARIO: ")
+            console.log(this.nuevoUsuario)
+            this.userService.agregarUsuario(this.nuevoUsuario).subscribe(
+              response => {
+                console.log('Usuario agregado correctamente:', response);
+                this.router.navigate(['/users']);
+              },
+              error => {
+                console.error('Error al agregar Usuario:', error);
+                this.router.navigate(['/canela/permisos']);
+              }
+            );
           },
           (error: any) => {
             console.error("Error en la suscripción:", error);

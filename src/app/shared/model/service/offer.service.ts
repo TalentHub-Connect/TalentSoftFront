@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {offer} from '../Entities/offer';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class offerService {
     const url = `${this.apiUrl}/getOffers/${companyid}`;
     return this.http.get<offer[]>(url);
   }
-  
+
   editoffer(id: number, status: string): Observable<any> {
     const url = `${this.apiUrl}/updateStatus/${id}`;
     return this.http.put(url, { status });

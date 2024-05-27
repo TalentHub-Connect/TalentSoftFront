@@ -6,5 +6,9 @@ export const environment = {
   CompanyURL: 'https://rootempresamicroservice-qa.up.railway.app',
   NominaURL: 'https://empresasnominamicroservice-qa.up.railway.app',
   cardURL: 'NOSECUAL',
+
+  QaURL: 'https://talentsoftdespidos-qa.up.railway.app',
+  SST: 'https://sstback-qa.up.railway.app',
+  RECLUTAMIENTO:'https://talentsoftreclutamientospring-qa.up.railway.app',
   secretKey: 'ThisIsASecretKey'
 };

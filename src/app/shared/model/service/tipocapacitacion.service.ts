@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { typecapacitation } from '../Entities/typecapacitation';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 
 
 @Injectable({
