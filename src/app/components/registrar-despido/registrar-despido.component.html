@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <body class="background-container">
     <div class="container">
         <h2>Iniciar proceso de despido</h2>
@@ -7,7 +9,8 @@
                 <label for="empleado">Seleccionar Empleado:</label>
                 <select class="form-control" id="empleado" [(ngModel)]="selectedEmpleado" name="selectedEmpleado"
                     required>
-                    <option *ngFor="let empleado of empleados" [ngValue]="empleado">{{ empleado.nombre }}</option>
+                    <option *ngFor="let empleado of empleados" [ngValue]="empleado">{{ empleado.name }} {{
+                        empleado.surname }}</option>
                 </select>
             </div>
 
@@ -15,7 +18,7 @@
             <div class="form-group">
                 <label for="causal">Seleccionar Causal:</label>
                 <select class="form-control" id="causal" [(ngModel)]="selectedCausal" name="selectedCausal" required>
-                    <option *ngFor="let causal of causales" [ngValue]="causal">{{ causal }}</option>
+                    <option *ngFor="let causal of causales" [ngValue]="causal">{{ causal.name }}</option>
                 </select>
             </div>
 

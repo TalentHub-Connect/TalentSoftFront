@@ -13,5 +13,7 @@ export class Empleado {
     public tipoContrato?: string,
     public fechaInicio?: Date,
     public novedad?: string,
+    public name?: string,  // Nuevo campo para nombre
+    public surname?: string  // Nuevo campo para apellido
   ) { }
 }
